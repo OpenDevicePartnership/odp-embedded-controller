@@ -1,9 +1,7 @@
 #![no_std]
-pub mod battery;
 pub mod board;
 #[cfg(feature = "mock")]
 pub mod mock;
-pub mod thermal;
 
 // Shared relay handler for ODP reference platforms
 embedded_services::relay::mctp::impl_odp_mctp_relay_handler!(

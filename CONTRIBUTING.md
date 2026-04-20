@@ -16,7 +16,7 @@ pull request so that the project team can discuss the situation with you.
 
 ## Commit Message
 
-* Use meaningful commit messages. See [this blogpost](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+* Use meaningful commit messages. See [this blogpost](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
 ## PR Etiquette
 

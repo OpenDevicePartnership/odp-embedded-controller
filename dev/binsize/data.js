@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776787703544,
+  "lastUpdate": 1776792024692,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -83,6 +83,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/43c220b30d49f9bab9f2da8b72a5ccfa0a5c3aad"
         },
         "date": 1776787649929,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.32,
+            "unit": "KiB",
+            "extra": "RAM Size: 7.48 KiB\nDependency Count: 356\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1733a4007743ca2b6cc9144c1f0f81ebdb2818ec",
+          "message": "Add platform-common to clippy CI job (#5)",
+          "timestamp": "2026-04-21T12:18:54-05:00",
+          "tree_id": "4b3cc9dc3d9d00003e1bc30ab4332d882c3d8d1c",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/1733a4007743ca2b6cc9144c1f0f81ebdb2818ec"
+        },
+        "date": 1776792024278,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

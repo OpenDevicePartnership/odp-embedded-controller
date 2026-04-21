@@ -1,0 +1,52 @@
+# Runs cargo vet against each platform's Cargo.lock to catch unvetted dependencies.
+# Each platform has its own supply-chain/ store, so we vet once per platform via a matrix.
+permissions:
+  contents: read
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+name: cargo-vet
+
+jobs:
+  vet:
+    name: vet-dependencies (${{ matrix.platform }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ["dev-imxrt", "dev-npcx", "dev-qemu"]
+    env:
+      CARGO_VET_VERSION: 0.10.2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.tool_cache }}/cargo-vet
+          key: cargo-vet-bin-${{ env.CARGO_VET_VERSION }}
+      - name: Add the tool cache directory to the search path
+        run: echo "${{ runner.tool_cache }}/cargo-vet/bin" >> $GITHUB_PATH
+      - name: Ensure that the tool cache is populated with the cargo-vet binary
+        run: cargo install --root ${{ runner.tool_cache }}/cargo-vet --version ${{ env.CARGO_VET_VERSION }} cargo-vet
+      - name: Invoke cargo-vet
+        working-directory: platform/${{ matrix.platform }}
+        run: cargo vet --locked
+      - name: Save PR number
+        # The PR number is the same for all matrix legs; we still save it from each leg so
+        # the cargo-vet-pr-comment workflow can find at least one artifact even if some legs fail.
+        if: ${{ always() }}
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/NR
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: pr-${{ matrix.platform }}
+          path: pr/
+          overwrite: true

@@ -1,0 +1,428 @@
+
+# cargo-vet imports lock
+
+[[audits.OpenDevicePartnership.audits.aquamarine]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.6.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.bare-metal]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.2.5"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.bitfield]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.13.2"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.cortex-m]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.7.7"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.critical-section]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.2.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.defmt]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.defmt-macros]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.defmt-parser]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embassy-executor-timer-queue]]
+who = "Felipe Balbi <febalbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.1.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embassy-imxrt/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embassy-time-queue-utils]]
+who = "Felipe Balbi <febalbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.3.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embassy-imxrt/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-batteries]]
+who = "matteotullo <matteotullo@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.3.4"
+notes = "ODP crates are always trusted."
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-batteries-async]]
+who = "matteotullo <matteotullo@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.3.4"
+notes = "ODP crates are always trusted."
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-crc-macros]]
+who = "Matteo Tullo <matteotullo@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-fans]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.1.0"
+notes = "ODP crates are always trusted."
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-fans-async]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.2.0"
+notes = "ODP crates are always trusted."
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-hal]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.2.7"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.embedded-sensors-hal-async]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.3.0"
+notes = "ODP crates are always trusted."
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.heck]]
+who = "Matteo Tullo <matteotullo@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.4.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.include_dir]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.7.4"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.include_dir_macros]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.7.4"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.itertools]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.10.5"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.proc-macro-error-attr2]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "2.0.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.proc-macro-error2]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "2.0.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.rustc_version]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.2.3"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.rustversion]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "1.0.20 -> 1.0.22"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embassy-imxrt/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.semver]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.9.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.semver-parser]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.7.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.serde]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.228"
+notes = "Changes are mostly a reorganization of the internal module structure"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.serde_core]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.226"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.serde_derive]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.228"
+notes = "Diff is clean-up in proc macros"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.smbus-pec]]
+who = "Matteo Tullo <matteotullo@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.static_cell]]
+who = "Robert Zieba <robertzieba@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "2.1.1"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.uuid]]
+who = "Jerry Xie <jerryxie@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.17.0"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.vcell]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.1.3"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.volatile-register]]
+who = "Felipe Balbi <felipe.balbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.2.2"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.bytecode-alliance.audits.embedded-io]]
+who = "Alex Crichton <alex@alexcrichton.com>"
+criteria = "safe-to-deploy"
+version = "0.4.0"
+notes = "No `unsafe` code and only uses `std` in ways one would expect the crate to do so."
+
+[[audits.bytecode-alliance.audits.embedded-io]]
+who = "Alex Crichton <alex@alexcrichton.com>"
+criteria = "safe-to-deploy"
+delta = "0.4.0 -> 0.6.1"
+notes = "Major updates, but almost all safe code. Lots of pruning/deletions, nothing out of the ordrinary."
+
+[[audits.bytecode-alliance.audits.heck]]
+who = "Alex Crichton <alex@alexcrichton.com>"
+criteria = "safe-to-deploy"
+delta = "0.4.1 -> 0.5.0"
+notes = "Minor changes for a `no_std` upgrade but otherwise everything looks as expected."
+
+[[audits.bytecode-alliance.audits.num-traits]]
+who = "Andrew Brown <andrew.brown@intel.com>"
+criteria = "safe-to-deploy"
+version = "0.2.19"
+notes = "As advertised: a numeric library. The only `unsafe` is from some float-to-int conversions, which seems expected."
+
+[[audits.bytecode-alliance.audits.static_assertions]]
+who = "Andrew Brown <andrew.brown@intel.com>"
+criteria = "safe-to-deploy"
+version = "1.1.0"
+notes = "No dependencies and completely a compile-time crate as advertised. Uses `unsafe` in one module as a compile-time check only: `mem::transmute` and `ptr::write` are wrapped in an impossible-to-run closure."
+
+[[audits.google.audits.bitflags]]
+who = "Lukasz Anforowicz <lukasza@chromium.org>"
+criteria = "safe-to-deploy"
+version = "1.3.2"
+notes = """
+Security review of earlier versions of the crate can be found at
+(Google-internal, sorry): go/image-crate-chromium-security-review
+
+The crate exposes a function marked as `unsafe`, but doesn't use any
+`unsafe` blocks (except for tests of the single `unsafe` function).  I
+think this justifies marking this crate as `ub-risk-1`.
+
+Additional review comments can be found at https://crrev.com/c/4723145/31
+"""
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.byteorder]]
+who = "danakj <danakj@chromium.org>"
+criteria = "safe-to-deploy"
+version = "1.5.0"
+notes = "Unsafe review in https://crrev.com/c/5838022"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.either]]
+who = "Manish Goregaokar <manishearth@google.com>"
+criteria = "safe-to-deploy"
+version = "1.13.0"
+notes = "Unsafe code pertaining to wrapping Pin APIs. Mostly passes invariants down."
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.either]]
+who = "Daniel Cheng <dcheng@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.13.0 -> 1.14.0"
+notes = """
+Inheriting ub-risk-1 from the baseline review of 1.13.0. While the delta has some diffs in unsafe code, they are either:
+- migrating code to use helper macros
+- migrating match patterns to take advantage of default bindings mode from RFC 2005
+Either way, the result is code that does exactly the same thing and does not change the risk of UB.
+
+See https://crrev.com/c/6323164 for more audit details.
+"""
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.either]]
+who = "Lukasz Anforowicz <lukasza@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.14.0 -> 1.15.0"
+notes = 'The delta in `lib.rs` only tweaks doc comments and `#[cfg(feature = "std")]`.'
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.nb]]
+who = "George Burgess IV <gbiv@google.com>"
+criteria = "safe-to-deploy"
+version = "1.0.0"
+aggregated-from = "https://chromium.googlesource.com/chromiumos/third_party/rust_crates/+/refs/heads/main/cargo-vet/audits.toml?format=TEXT"
+
+[[audits.google.audits.nb]]
+who = "George Burgess IV <gbiv@google.com>"
+criteria = "safe-to-deploy"
+delta = "1.0.0 -> 0.1.3"
+aggregated-from = "https://chromium.googlesource.com/chromiumos/third_party/rust_crates/+/refs/heads/main/cargo-vet/audits.toml?format=TEXT"
+
+[[audits.google.audits.nb]]
+who = "George Burgess IV <gbiv@google.com>"
+criteria = "safe-to-deploy"
+delta = "1.0.0 -> 1.1.0"
+aggregated-from = "https://chromium.googlesource.com/chromiumos/third_party/rust_crates/+/refs/heads/main/cargo-vet/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Lukasz Anforowicz <lukasza@chromium.org>"
+criteria = "safe-to-deploy"
+version = "1.0.14"
+notes = """
+Grepped for `-i cipher`, `-i crypto`, `'\bfs\b'``, `'\bnet\b'``, `'\bunsafe\b'``
+and there were no hits except for:
+
+* Using trivially-safe `unsafe` in test code:
+
+    ```
+    tests/test_const.rs:unsafe fn _unsafe() {}
+    tests/test_const.rs:const _UNSAFE: () = unsafe { _unsafe() };
+    ```
+
+* Using `unsafe` in a string:
+
+    ```
+    src/constfn.rs:            "unsafe" => Qualifiers::Unsafe,
+    ```
+
+* Using `std::fs` in `build/build.rs` to write `${OUT_DIR}/version.expr`
+  which is later read back via `include!` used in `src/lib.rs`.
+
+Version `1.0.6` of this crate has been added to Chromium in
+https://source.chromium.org/chromium/chromium/src/+/28841c33c77833cc30b286f9ae24c97e7a8f4057
+"""
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Adrian Taylor <adetaylor@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.14 -> 1.0.15"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "danakj <danakj@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.15 -> 1.0.16"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Dustin J. Mitchell <djmitche@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.16 -> 1.0.17"
+notes = "Just updates windows compat"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Liza Burakova <liza@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.17 -> 1.0.18"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Dustin J. Mitchell <djmitche@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.18 -> 1.0.19"
+notes = "No unsafe, just doc changes"
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.rustversion]]
+who = "Daniel Cheng <dcheng@chromium.org>"
+criteria = "safe-to-deploy"
+delta = "1.0.19 -> 1.0.20"
+notes = "Only minor updates to documentation and the mock today used for testing."
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.strsim]]
+who = "danakj@chromium.org"
+criteria = "safe-to-deploy"
+version = "0.10.0"
+notes = """
+Reviewed in https://crrev.com/c/5171063
+
+Previously reviewed during security review and the audit is grandparented in.
+"""
+aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
+
+[[audits.google.audits.void]]
+who = "George Burgess IV <gbiv@google.com>"
+criteria = "safe-to-deploy"
+version = "1.0.2"
+aggregated-from = "https://chromium.googlesource.com/chromiumos/third_party/rust_crates/+/refs/heads/main/cargo-vet/audits.toml?format=TEXT"
+
+[[audits.mozilla.audits.fnv]]
+who = "Bobby Holley <bobbyholley@gmail.com>"
+criteria = "safe-to-deploy"
+version = "1.0.7"
+notes = "Simple hasher implementation with no unsafe code."
+aggregated-from = "https://hg.mozilla.org/mozilla-central/raw-file/tip/supply-chain/audits.toml"
+
+[[audits.mozilla.audits.serde_core]]
+who = "Erich Gubler <erichdongubler@gmail.com>"
+criteria = "safe-to-deploy"
+delta = "1.0.226 -> 1.0.227"
+aggregated-from = "https://hg.mozilla.org/mozilla-central/raw-file/tip/supply-chain/audits.toml"
+
+[[audits.mozilla.audits.serde_core]]
+who = "Jan-Erik Rediger <jrediger@mozilla.com>"
+criteria = "safe-to-deploy"
+delta = "1.0.227 -> 1.0.228"
+aggregated-from = "https://raw.githubusercontent.com/mozilla/glean/main/supply-chain/audits.toml"
+
+[[audits.mozilla.audits.strsim]]
+who = "Ben Dean-Kawamura <bdk@mozilla.com>"
+criteria = "safe-to-deploy"
+delta = "0.10.0 -> 0.11.1"
+aggregated-from = "https://hg.mozilla.org/mozilla-central/raw-file/tip/supply-chain/audits.toml"

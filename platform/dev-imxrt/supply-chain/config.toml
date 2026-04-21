@@ -1,0 +1,315 @@
+
+# cargo-vet config file
+
+[cargo-vet]
+version = "0.10"
+
+[imports.OpenDevicePartnership]
+url = "https://raw.githubusercontent.com/OpenDevicePartnership/rust-crate-audits/main/audits.toml"
+
+[imports.bytecode-alliance]
+url = "https://raw.githubusercontent.com/bytecodealliance/wasmtime/main/supply-chain/audits.toml"
+
+[imports.google]
+url = "https://raw.githubusercontent.com/google/rust-crate-audits/main/audits.toml"
+
+[imports.mozilla]
+url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
+
+[policy.embassy-imxrt]
+audit-as-crates-io = true
+
+[policy.embedded-mcu-hal]
+audit-as-crates-io = true
+
+[[exemptions.autocfg]]
+version = "1.5.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.az]]
+version = "1.3.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.bincode]]
+version = "2.0.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitfield]]
+version = "0.15.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitfield]]
+version = "0.17.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitfield]]
+version = "0.19.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitfield-macros]]
+version = "0.19.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitfield-struct]]
+version = "0.12.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitflags]]
+version = "2.11.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.bitvec]]
+version = "1.0.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.bq40z50-rx]]
+version = "0.8.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.bytemuck]]
+version = "1.25.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.cfg-if]]
+version = "1.0.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.crunchy]]
+version = "0.2.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.darling]]
+version = "0.20.11"
+criteria = "safe-to-deploy"
+
+[[exemptions.darling_core]]
+version = "0.20.11"
+criteria = "safe-to-deploy"
+
+[[exemptions.darling_macro]]
+version = "0.20.11"
+criteria = "safe-to-deploy"
+
+[[exemptions.defmt]]
+version = "0.3.100"
+criteria = "safe-to-deploy"
+
+[[exemptions.defmt-rtt]]
+version = "0.4.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.device-driver]]
+version = "1.0.8"
+criteria = "safe-to-deploy"
+
+[[exemptions.document-features]]
+version = "0.2.12"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-embedded-hal]]
+version = "0.6.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-executor]]
+version = "0.9.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-executor-macros]]
+version = "0.7.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-futures]]
+version = "0.1.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-hal-internal]]
+version = "0.3.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-hal-internal]]
+version = "0.4.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-imxrt]]
+version = "0.1.0@git:f02744fa75e6c8711a18f00e0d8b722bdb61ce1d"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-sync]]
+version = "0.7.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-sync]]
+version = "0.8.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-time]]
+version = "0.5.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-time-driver]]
+version = "0.2.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-hal]]
+version = "1.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-hal-async]]
+version = "1.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-hal-nb]]
+version = "1.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-io]]
+version = "0.7.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-io-async]]
+version = "0.6.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-io-async]]
+version = "0.7.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-mcu-hal]]
+version = "0.1.0@git:6956ebdaf9d3725959dae2c57c2ab6baefae9330"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-sensors-hal]]
+version = "0.1.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-storage]]
+version = "0.3.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-storage-async]]
+version = "0.4.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.fixed]]
+version = "1.31.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.funty]]
+version = "2.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.futures-core]]
+version = "0.3.32"
+criteria = "safe-to-deploy"
+
+[[exemptions.futures-sink]]
+version = "0.3.32"
+criteria = "safe-to-deploy"
+
+[[exemptions.half]]
+version = "2.7.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.hash32]]
+version = "0.3.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.heapless]]
+version = "0.8.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.heapless]]
+version = "0.9.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.ident_case]]
+version = "1.0.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.litrs]]
+version = "1.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.mimxrt600-fcb]]
+version = "0.2.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.num_enum]]
+version = "0.7.6"
+criteria = "safe-to-deploy"
+
+[[exemptions.num_enum_derive]]
+version = "0.7.6"
+criteria = "safe-to-deploy"
+
+[[exemptions.panic-probe]]
+version = "1.0.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.paste]]
+version = "1.0.15"
+criteria = "safe-to-deploy"
+
+[[exemptions.portable-atomic]]
+version = "1.13.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.proc-macro2]]
+version = "1.0.106"
+criteria = "safe-to-deploy"
+
+[[exemptions.quote]]
+version = "1.0.45"
+criteria = "safe-to-deploy"
+
+[[exemptions.radium]]
+version = "0.7.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.stable_deref_trait]]
+version = "1.2.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.subenum]]
+version = "1.1.3"
+criteria = "safe-to-deploy"
+
+[[exemptions.syn]]
+version = "2.0.117"
+criteria = "safe-to-deploy"
+
+[[exemptions.tap]]
+version = "1.0.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.thiserror]]
+version = "2.0.18"
+criteria = "safe-to-deploy"
+
+[[exemptions.thiserror-impl]]
+version = "2.0.18"
+criteria = "safe-to-deploy"
+
+[[exemptions.typenum]]
+version = "1.19.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.unicode-ident]]
+version = "1.0.24"
+criteria = "safe-to-deploy"
+
+[[exemptions.unty]]
+version = "0.0.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.wyz]]
+version = "0.5.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.zerocopy]]
+version = "0.8.48"
+criteria = "safe-to-deploy"
+
+[[exemptions.zerocopy-derive]]
+version = "0.8.48"
+criteria = "safe-to-deploy"

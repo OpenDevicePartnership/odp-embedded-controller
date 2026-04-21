@@ -28,7 +28,7 @@ jobs:
     outputs:
       comment-id: ${{ steps.get-comment-id.outputs.comment-id }}
       pr-number: ${{ steps.get-pr-number.outputs.pr_number }}
-    if: github.event.workflow_run.event == 'pull_request'
+    if: github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion != 'cancelled'
     steps:
       - name: 'Download artifacts'
         # cargo-vet workflow uploads one artifact per platform (pr-dev-imxrt, pr-dev-npcx, pr-dev-qemu);
@@ -74,7 +74,7 @@ jobs:
             # Cargo Vet Audit Failed
 
             `cargo vet` has failed for one or more platforms in this PR. See the [cargo-vet workflow run](${{ github.event.workflow_run.html_url }}) for which platform(s) failed, and run `cargo vet --locked` locally from `platform/<dev-*>/` to reproduce.
-            Details about the vetting process can be found in [docs/supply-chain.md](../blob/main/docs/supply-chain.md).
+            Details about the vetting process can be found in [docs/supply-chain.md](https://github.com/${{ github.repository }}/blob/${{ github.event.workflow_run.head_sha }}/docs/supply-chain.md).
 
             ## If the unvetted dependencies are not needed
             Please modify Cargo.toml file to avoid including the dependencies.

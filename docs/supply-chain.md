@@ -54,7 +54,7 @@ Follow the process below to ensure compliance:
 2. **Audit new dependencies**:
   - Inspect the `cargo vet` failures using your preferred method
     - Use [gh pr checkout](https://cli.github.com/manual/gh_pr_checkout) to checkout the PR and run `cargo vet --locked`
-    - Use [Github Pull Requests for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) to checkout the PR and run `cargo vet --locked`
+    - Use [GitHub Pull Requests for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) to checkout the PR and run `cargo vet --locked`
     - For more suggestions: [Checking out pull requests locally](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally)
 
 3. **Follow `cargo vet` recommendations**:

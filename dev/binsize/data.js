@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776787650692,
+  "lastUpdate": 1776787703544,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -145,6 +145,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/4eb2158253ef1bc4dcfa46ed749aca164ab6de07"
         },
         "date": 1776782392769,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 81.79,
+            "unit": "KiB",
+            "extra": "RAM Size: 10.62 KiB\nDependency Count: 378\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "43c220b30d49f9bab9f2da8b72a5ccfa0a5c3aad",
+          "message": "platform-common: Downgrade embedded-mcu-hal (#4)",
+          "timestamp": "2026-04-21T11:05:13-05:00",
+          "tree_id": "51cd7477d05c3b0e4b2afb8ee7b311d7c745744b",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/43c220b30d49f9bab9f2da8b72a5ccfa0a5c3aad"
+        },
+        "date": 1776787702996,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

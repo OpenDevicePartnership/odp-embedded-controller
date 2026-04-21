@@ -67,7 +67,7 @@ jobs:
       matrix:
         # Get early warning of new lints which are regularly introduced in beta channels.
         toolchain: [stable]
-        platform: ["dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["platform-common", "dev-imxrt", "dev-npcx", "dev-qemu"]
 
     steps:
       - uses: actions/checkout@v4

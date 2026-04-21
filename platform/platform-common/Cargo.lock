@@ -579,8 +579,8 @@ dependencies = [
 
 [[package]]
 name = "embedded-mcu-hal"
-version = "0.2.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-mcu#528045934782abc704531aa423169c75016e7727"
+version = "0.1.0"
+source = "git+https://github.com/OpenDevicePartnership/embedded-mcu#6956ebdaf9d3725959dae2c57c2ab6baefae9330"
 dependencies = [
  "defmt 1.0.1",
  "num_enum",

@@ -52,8 +52,8 @@ embassy-time = { version = "0.5.0", features = [
     "defmt-timestamp-uptime-us",
     "tick-hz-32_768",
 ] }
-embassy-executor = { version = "0.9.1", features = [
-    "arch-cortex-m",
+embassy-executor = { version = "0.10.0", features = [
+    "platform-cortex-m",
     "executor-thread",
     "defmt",
 ] }
@@ -71,7 +71,8 @@ ignored = ["cortex-m", "cortex-m-rt", "embassy-time"]
 # The npcx HAL uses git deps, which causes silent breakage (likely due to time-driver issues)
 # So patch them all to crates.io
 [patch."https://github.com/embassy-rs/embassy"]
-embassy-executor = "=0.9.1"
+embassy-executor = "=0.10.0"
+embassy-futures = "=0.1.2"
 embassy-time-driver = "=0.2.1"
 embassy-time-queue-utils = "=0.3.0"
 embassy-time = "=0.5.0"

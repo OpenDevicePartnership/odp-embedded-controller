@@ -19,10 +19,30 @@ embedded-services = { git = "https://github.com/OpenDevicePartnership/embedded-s
 battery-service = { package = "battery-service", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
     "defmt",
 ] }
+battery-service-interface = { package = "battery-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+battery-service-relay = { package = "battery-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+
 thermal-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
     "defmt",
 ] }
+thermal-service-interface = { package = "thermal-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+thermal-service-relay = { package = "thermal-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+
 time-alarm-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+time-alarm-service-interface = { package = "time-alarm-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+time-alarm-service-relay = { package = "time-alarm-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
     "defmt",
 ] }
 odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0" }
@@ -32,13 +52,12 @@ embedded-hal-async = "1.0.0"
 embedded-batteries-async = "0.3.4"
 embedded-sensors-hal-async = "0.3.0"
 embedded-fans-async = "0.2.0"
-embedded-mcu-hal = { git = "https://github.com/OpenDevicePartnership/embedded-mcu", features = [
-    "defmt",
-] }
+embedded-mcu-hal = { version = "0.2.0", features = ["defmt"] }
 
-embassy-sync = { version = "0.7.2" }
+embassy-futures = "0.1.2"
+embassy-sync = { version = "0.8.0" }
 embassy-time = { version = "0.5.0" }
-embassy-executor = { version = "0.9.1" }
+embassy-executor = { version = "0.10.0" }
 
 bq40z50-rx = { version = "0.8.0", features = ["r5"] }
 

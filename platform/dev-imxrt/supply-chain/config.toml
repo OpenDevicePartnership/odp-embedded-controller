@@ -19,8 +19,9 @@ url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
 [policy.embassy-imxrt]
 audit-as-crates-io = true
 
-[policy.embedded-mcu-hal]
-audit-as-crates-io = true
+[[exemptions.aho-corasick]]
+version = "1.1.4"
+criteria = "safe-to-deploy"
 
 [[exemptions.autocfg]]
 version = "1.5.0"
@@ -70,8 +71,16 @@ criteria = "safe-to-deploy"
 version = "1.25.0"
 criteria = "safe-to-deploy"
 
+[[exemptions.cc]]
+version = "1.2.59"
+criteria = "safe-to-deploy"
+
 [[exemptions.cfg-if]]
 version = "1.0.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.cordyceps]]
+version = "0.3.4"
 criteria = "safe-to-deploy"
 
 [[exemptions.crunchy]]
@@ -131,15 +140,15 @@ version = "0.4.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-imxrt]]
-version = "0.1.0@git:f02744fa75e6c8711a18f00e0d8b722bdb61ce1d"
-criteria = "safe-to-deploy"
-
-[[exemptions.embassy-sync]]
-version = "0.7.2"
+version = "0.1.0@git:d95ffe560071e942d917b422bbdea7e73f6c4602"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-sync]]
 version = "0.8.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-sync]]
+version = "0.8.0@git:6b015329e6784d084c1b589ba31af7a7dee13a7e"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-time]]
@@ -190,6 +199,10 @@ criteria = "safe-to-deploy"
 version = "0.4.1"
 criteria = "safe-to-deploy"
 
+[[exemptions.find-msvc-tools]]
+version = "0.1.9"
+criteria = "safe-to-deploy"
+
 [[exemptions.fixed]]
 version = "1.31.0"
 criteria = "safe-to-deploy"
@@ -204,6 +217,10 @@ criteria = "safe-to-deploy"
 
 [[exemptions.futures-sink]]
 version = "0.3.32"
+criteria = "safe-to-deploy"
+
+[[exemptions.generator]]
+version = "0.8.8"
 criteria = "safe-to-deploy"
 
 [[exemptions.half]]
@@ -226,12 +243,28 @@ criteria = "safe-to-deploy"
 version = "1.0.1"
 criteria = "safe-to-deploy"
 
+[[exemptions.libc]]
+version = "0.2.184"
+criteria = "safe-to-deploy"
+
 [[exemptions.litrs]]
 version = "1.0.0"
 criteria = "safe-to-deploy"
 
+[[exemptions.loom]]
+version = "0.7.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.memchr]]
+version = "2.8.0"
+criteria = "safe-to-deploy"
+
 [[exemptions.mimxrt600-fcb]]
 version = "0.2.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.mycelium-bitfield]]
+version = "0.1.5"
 criteria = "safe-to-deploy"
 
 [[exemptions.num_enum]]
@@ -242,12 +275,20 @@ criteria = "safe-to-deploy"
 version = "0.7.6"
 criteria = "safe-to-deploy"
 
+[[exemptions.once_cell]]
+version = "1.21.4"
+criteria = "safe-to-deploy"
+
 [[exemptions.panic-probe]]
 version = "1.0.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.paste]]
 version = "1.0.15"
+criteria = "safe-to-deploy"
+
+[[exemptions.pin-project-lite]]
+version = "0.2.17"
 criteria = "safe-to-deploy"
 
 [[exemptions.portable-atomic]]
@@ -264,6 +305,18 @@ criteria = "safe-to-deploy"
 
 [[exemptions.radium]]
 version = "0.7.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.regex-automata]]
+version = "0.4.14"
+criteria = "safe-to-deploy"
+
+[[exemptions.regex-syntax]]
+version = "0.8.10"
+criteria = "safe-to-deploy"
+
+[[exemptions.scoped-tls]]
+version = "1.0.1"
 criteria = "safe-to-deploy"
 
 [[exemptions.stable_deref_trait]]
@@ -290,6 +343,22 @@ criteria = "safe-to-deploy"
 version = "2.0.18"
 criteria = "safe-to-deploy"
 
+[[exemptions.tracing]]
+version = "0.1.44"
+criteria = "safe-to-deploy"
+
+[[exemptions.tracing-attributes]]
+version = "0.1.31"
+criteria = "safe-to-deploy"
+
+[[exemptions.tracing-core]]
+version = "0.1.36"
+criteria = "safe-to-deploy"
+
+[[exemptions.tracing-subscriber]]
+version = "0.3.23"
+criteria = "safe-to-deploy"
+
 [[exemptions.typenum]]
 version = "1.19.0"
 criteria = "safe-to-deploy"
@@ -300,6 +369,18 @@ criteria = "safe-to-deploy"
 
 [[exemptions.unty]]
 version = "0.0.4"
+criteria = "safe-to-deploy"
+
+[[exemptions.windows-link]]
+version = "0.2.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.windows-result]]
+version = "0.4.1"
+criteria = "safe-to-deploy"
+
+[[exemptions.windows-sys]]
+version = "0.61.2"
 criteria = "safe-to-deploy"
 
 [[exemptions.wyz]]

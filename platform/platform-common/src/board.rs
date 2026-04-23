@@ -39,7 +39,7 @@
 //! // In main.rs:
 //! let p = hal::init(Default::default());
 //! let board = Board::init(p);
-//! spawner.must_spawn(button_task(board.power_button));
+//! spawner.spawn(button_task(board.power_button).expect("Failed to spawn button task"));
 //! ```
 
 /// Trait for standardized board IO initialization.

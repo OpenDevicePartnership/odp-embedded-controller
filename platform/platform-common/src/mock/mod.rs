@@ -6,8 +6,14 @@ pub mod battery;
 pub mod thermal;
 pub mod time_alarm;
 
+crate::impl_relay_handler!(
+    MockOdpRelayHandler,
+    battery_service::Service<'static, 1>,
+    crate::mock::thermal::ThermalService
+);
+
 /// Initialize mock embedded services.
-pub async fn init(spawner: embassy_executor::Spawner) -> super::OdpRelayHandler<'static> {
+pub async fn init(spawner: embassy_executor::Spawner) -> MockOdpRelayHandler {
     embedded_services::info!("Initializing mock services...");
     embedded_services::init().await;
 
@@ -15,5 +21,9 @@ pub async fn init(spawner: embassy_executor::Spawner) -> super::OdpRelayHandler<
     let battery = battery::init(spawner).await;
     let tas = time_alarm::init(spawner).await;
 
-    super::OdpRelayHandler::new(battery, thermal, tas)
+    MockOdpRelayHandler::new(
+        battery_service_relay::BatteryServiceRelayHandler::new(battery),
+        thermal_service_relay::ThermalServiceRelayHandler::new(thermal),
+        time_alarm_service_relay::TimeAlarmServiceRelayHandler::new(tas),
+    )
 }

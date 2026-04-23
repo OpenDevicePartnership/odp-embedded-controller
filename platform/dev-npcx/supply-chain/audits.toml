@@ -1,4 +1,33 @@
 
 # cargo-vet audits file
 
-[audits]
+[[audits.cc]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "1.2.59 -> 1.2.60"
+
+[[audits.embassy-executor]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.9.1 -> 0.10.0"
+
+[[audits.embassy-executor-macros]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.7.0 -> 0.8.0"
+
+[[audits.embassy-hal-internal]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.4.0 -> 0.5.0"
+
+[[audits.embassy-hal-internal]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.5.0 -> 0.5.0@git:6b015329e6784d084c1b589ba31af7a7dee13a7e"
+importable = false
+
+[[audits.libc]]
+who = "Billy Price <williamp@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.2.184 -> 0.2.185"

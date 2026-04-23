@@ -16,20 +16,12 @@ url = "https://raw.githubusercontent.com/google/rust-crate-audits/main/audits.to
 [imports.mozilla]
 url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
 
-[policy."embassy-futures:0.1.2"]
-
-[policy."embassy-futures:0.1.2@git:5830ce1b47246b853d9ba8a024193ac39e2ba560"]
-audit-as-crates-io = true
-
 [policy.embassy-hal-internal]
 audit-as-crates-io = true
 
-[policy."embassy-sync:0.7.2"]
+[policy."embassy-sync:0.8.0"]
 
-[policy."embassy-sync:0.8.0@git:5830ce1b47246b853d9ba8a024193ac39e2ba560"]
-audit-as-crates-io = true
-
-[policy.embedded-mcu-hal]
+[policy."embassy-sync:0.8.0@git:6b015329e6784d084c1b589ba31af7a7dee13a7e"]
 audit-as-crates-io = true
 
 [[exemptions.aho-corasick]]
@@ -128,16 +120,12 @@ criteria = "safe-to-deploy"
 version = "0.1.2@git:5830ce1b47246b853d9ba8a024193ac39e2ba560"
 criteria = "safe-to-deploy"
 
-[[exemptions.embassy-hal-internal]]
-version = "0.5.0@git:5830ce1b47246b853d9ba8a024193ac39e2ba560"
+[[exemptions.embassy-sync]]
+version = "0.8.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-sync]]
-version = "0.7.2"
-criteria = "safe-to-deploy"
-
-[[exemptions.embassy-sync]]
-version = "0.8.0@git:5830ce1b47246b853d9ba8a024193ac39e2ba560"
+version = "0.8.0@git:6b015329e6784d084c1b589ba31af7a7dee13a7e"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-time-driver]]

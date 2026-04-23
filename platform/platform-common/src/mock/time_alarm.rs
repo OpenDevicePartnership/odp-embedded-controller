@@ -4,7 +4,7 @@ use time_alarm_service as tas;
 
 type TimeAlarmService = tas::Service<'static>;
 
-pub async fn init(spawner: embassy_executor::Spawner) -> &'static TimeAlarmService {
+pub async fn init(spawner: embassy_executor::Spawner) -> TimeAlarmService {
     info!("Initializing time and alarm service...");
 
     static TZ_STORAGE: StaticCell<tas::mock::MockNvramStorage<'static>> = StaticCell::new();
@@ -38,9 +38,6 @@ pub async fn init(spawner: embassy_executor::Spawner) -> &'static TimeAlarmServi
         }
     )
     .expect("Failed to initialize time-alarm service");
-
-    static SERVICE: StaticCell<TimeAlarmService> = StaticCell::new();
-    let service = SERVICE.init(service);
 
     service
 }

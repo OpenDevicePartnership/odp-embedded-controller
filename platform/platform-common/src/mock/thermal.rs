@@ -1,48 +1,58 @@
-use embassy_sync::once_lock::OnceLock;
+use embassy_sync::channel::Sender as ChannelSender;
 use embedded_services::info;
+use embedded_services::GlobalRawMutex;
 use static_cell::StaticCell;
 use thermal_service as ts;
-use ts::mock::{TsMockFan, TsMockSensor};
+use thermal_service_interface::{fan, sensor};
+use ts::mock::{fan::MockFan, sensor::MockSensor};
 
-pub async fn init(spawner: embassy_executor::Spawner) -> &'static ts::Service<'static> {
+const SENSOR_EVENT_CHANNEL_SIZE: usize = 8;
+const FAN_EVENT_CHANNEL_SIZE: usize = 8;
+
+type SensorEventSender = ChannelSender<'static, GlobalRawMutex, sensor::Event, SENSOR_EVENT_CHANNEL_SIZE>;
+type FanEventSender = ChannelSender<'static, GlobalRawMutex, fan::Event, FAN_EVENT_CHANNEL_SIZE>;
+type SensorService = ts::sensor::Service<'static, MockSensor, SensorEventSender, 16>;
+type FanService = ts::fan::Service<'static, MockFan, SensorService, FanEventSender, 16>;
+pub type ThermalService = ts::Service<'static, SensorService, FanService>;
+
+pub async fn init(spawner: embassy_executor::Spawner) -> ThermalService {
     info!("Initializing thermal service...");
 
-    static SENSOR: StaticCell<TsMockSensor> = StaticCell::new();
-    let sensor = SENSOR.init(ts::mock::new_sensor());
-
-    static FAN: StaticCell<TsMockFan> = StaticCell::new();
-    let fan = FAN.init(ts::mock::new_fan());
-
-    static SENSORS: StaticCell<[&'static ts::sensor::Device; 1]> = StaticCell::new();
-    let sensors = SENSORS.init([sensor.device()]);
-
-    static FANS: StaticCell<[&'static ts::fan::Device; 1]> = StaticCell::new();
-    let fans = FANS.init([fan.device()]);
-
-    static STORAGE: OnceLock<ts::Service<'static>> = OnceLock::new();
-    let service = ts::Service::init(&STORAGE, sensors, fans).await;
-
-    type MockSensorService = ts::sensor::Service<'static, ts::mock::sensor::MockSensor, 16>;
-    odp_service_common::spawn_service!(
+    // Create and spawn mock sensor service
+    let sensor_service = odp_service_common::spawn_service!(
         spawner,
-        MockSensorService,
+        SensorService,
         ts::sensor::InitParams {
-            sensor,
-            thermal_service: service,
+            driver: MockSensor::new(),
+            config: MockSensor::config(),
+            event_senders: &mut [],
         }
     )
     .expect("Failed to spawn mock sensor service");
 
-    type MockFanService = ts::fan::Service<'static, ts::mock::fan::MockFan, 16>;
-    odp_service_common::spawn_service!(
+    // Create and spawn mock fan service
+    let fan_service = odp_service_common::spawn_service!(
         spawner,
-        MockFanService,
+        FanService,
         ts::fan::InitParams {
-            fan,
-            thermal_service: service,
+            driver: MockFan::new(),
+            config: MockFan::config(),
+            sensor_service,
+            event_senders: &mut [],
         }
     )
     .expect("Failed to spawn mock fan service");
+
+    // Create the thermal service
+    static SENSORS: StaticCell<[SensorService; 1]> = StaticCell::new();
+    let sensors = SENSORS.init([sensor_service]);
+
+    static FANS: StaticCell<[FanService; 1]> = StaticCell::new();
+    let fans = FANS.init([fan_service]);
+
+    static RESOURCES: StaticCell<ts::Resources<SensorService, FanService>> = StaticCell::new();
+    let resources = RESOURCES.init(ts::Resources::default());
+    let service = ts::Service::init(resources, ts::InitParams { sensors, fans });
 
     service
 }

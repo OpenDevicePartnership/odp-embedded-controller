@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776792060066,
+  "lastUpdate": 1776983826001,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -113,6 +113,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/1733a4007743ca2b6cc9144c1f0f81ebdb2818ec"
         },
         "date": 1776792024278,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.32,
+            "unit": "KiB",
+            "extra": "RAM Size: 7.48 KiB\nDependency Count: 356\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f515a4ab25809d15b4df5fe9705ebf71a7e8e6c",
+          "message": "dev-qemu: Update to use async UART (#9)\n\nJust finished adding async support to the embassy qemu riscv HAL: https://github.com/kurtjd/qemu-riscv-rs/pull/1\n\nSo this updates the `dev-qemu` platform to use it, which resolves the task starvation issue. I'm not sure if QEMU exposes the hardware flow control interface externally so had to go with a buffered UART approach to prevent the 16 byte RX FIFO from being overrun.\n\nResolves #7",
+          "timestamp": "2026-04-23T15:35:30-07:00",
+          "tree_id": "8ee276ef1b936020472f81919ed9fe3d8b0abf9b",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/0f515a4ab25809d15b4df5fe9705ebf71a7e8e6c"
+        },
+        "date": 1776983825111,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

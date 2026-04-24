@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776983859140,
+  "lastUpdate": 1776989880255,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -150,6 +150,36 @@ window.BENCHMARK_DATA = {
             "value": 78.32,
             "unit": "KiB",
             "extra": "RAM Size: 7.48 KiB\nDependency Count: 356\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "45800072+williampMSFT@users.noreply.github.com",
+            "name": "Billy Price",
+            "username": "williampMSFT"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78c2e985c5faba85cc4d6e13d915b809f5087859",
+          "message": "Uptake embedded-services commit 01bc3655 #8\n\nThis change updates the version of embedded-services to commit 01bc3655b3afe01f7d8c92ed855f7befad571e52.\nThere are a number of changes associated with this version of embedded-services:\n- Updates to embassy transitive dependencies:\n  - embassy-executor bumped to v0.10.0\n    - changed task creation slightly due to removal of spawner.must_spawn()\n    - platform features renamed from 'arch-*' to 'platform-*'\n  - embassy-sync updated to v0.8.0\n  - embedded-mcu-hal updated from git to crates.io v0.2.0\n    - new version renamed several types and functions for nvram and clocks\n- Updates to embedded-services itself\n  - thermal, battery, and time-alarm services split interface into traits\n  - thermal, battery, and time-alarm services split relay handling into a separate object\n  - thermal, battery, and time-alarm services moved to uniform-init spawning\n  - thermal service interface reworked substantially to support interface changes\n  - thermal and battery services moved to be generic over some hardware-specific types\n    - required moving the OdpRelayHandler definition out of platform_common because the type needs to be different on different hardware",
+          "timestamp": "2026-04-23T17:16:22-07:00",
+          "tree_id": "41b6de49677d4aa0776c0ce57e13a6801724c9a0",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/78c2e985c5faba85cc4d6e13d915b809f5087859"
+        },
+        "date": 1776989879375,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.45,
+            "unit": "KiB",
+            "extra": "RAM Size: 6.08 KiB\nDependency Count: 362\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
           }
         ]
       }

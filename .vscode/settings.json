@@ -22,5 +22,6 @@
         "platform/dev-imxrt/Cargo.toml",
         "platform/dev-npcx/Cargo.toml",
         "platform/dev-qemu/Cargo.toml",
+        "platform/winhec-demo/Cargo.toml",
     ]
 }

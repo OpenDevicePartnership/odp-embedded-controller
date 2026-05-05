@@ -25,6 +25,8 @@ jobs:
             target: thumbv7em-none-eabihf
           - platform: dev-qemu
             target: riscv32imac-unknown-none-elf
+          - platform: dev-mcxa
+            target: thumbv8m.main-none-eabihf
 
     steps:
       - uses: actions/checkout@v4

@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1777584757561,
+  "lastUpdate": 1778107000409,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -203,6 +203,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/29d4fe988c83f4502c47c572a1bd6509c1be0075"
         },
         "date": 1777584718061,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.45,
+            "unit": "KiB",
+            "extra": "RAM Size: 6.08 KiB\nDependency Count: 362\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "139205137+jerrysxie@users.noreply.github.com",
+            "name": "Jerry Xie",
+            "username": "jerrysxie"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4d75129297945d2bfc38d26413c6f78beef4593",
+          "message": "Update LICENSE copyright and add AI attribution instructions (#13)\n\n* Update LICENSE copyright and add AI attribution instructions\n\n* Consolidate copilot-instructions commit message section\n\nRemove duplicate commit message guidance and normalize heading\nlevels for Commit Messages, AI Attribution, and Formatting\nsections to ### (h3) for consistency with the rest of the file.",
+          "timestamp": "2026-05-06T15:35:02-07:00",
+          "tree_id": "48c9ca3e0f5978e2274e987ea5e4ba46ca3be5d7",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/a4d75129297945d2bfc38d26413c6f78beef4593"
+        },
+        "date": 1778106999511,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

@@ -2,13 +2,13 @@
 #![no_main]
 
 mod board;
+mod clocks;
 mod uart_adapter;
 
 use board::Board;
 use defmt::info;
 use defmt_rtt as _;
 use embassy_executor::Spawner;
-use embassy_mcxa::clocks::config::Div8;
 use panic_probe as _;
 use platform_common::board::BoardIo;
 use platform_common::mock::MockOdpRelayHandler;
@@ -29,10 +29,7 @@ async fn uart_service(uart: UartAdapter, relay: MockOdpRelayHandler) {
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
     let mut cfg = embassy_mcxa::config::Config::default();
-    // Copied from embassy-mcxa, used to enable clock for LPUART
-    cfg.clock_cfg.sirc.fro_12m_enabled = true;
-    cfg.clock_cfg.sirc.fro_lf_div = Some(Div8::no_div());
-
+    cfg.clock_cfg = clocks::config();
     let p = embassy_mcxa::init(cfg);
     let board = Board::init(p);
 

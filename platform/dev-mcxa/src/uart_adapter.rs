@@ -18,7 +18,7 @@ impl embedded_io::Error for UartError {
 }
 
 /// UART wrapper to bridge embedded-io-async v0.6 traits over an MCXA DMA LPUART.
-pub struct UartAdapter(pub lpuart::Lpuart<'static, lpuart::Dma<'static>>);
+pub struct UartAdapter(pub lpuart::LpuartBbq);
 
 impl embedded_io::ErrorType for UartAdapter {
     type Error = UartError;
@@ -36,7 +36,7 @@ impl embedded_io_async::Write for UartAdapter {
     }
 
     async fn flush(&mut self) -> Result<(), Self::Error> {
-        // No-op, when DMA transfer is completed, it is also flushed.
+        self.0.flush().await;
         Ok(())
     }
 }

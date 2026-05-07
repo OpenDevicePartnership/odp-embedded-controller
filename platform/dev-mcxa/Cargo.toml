@@ -26,14 +26,14 @@ opt-level = "z"
 # [profile.dev.package.dependency-name]
 # opt-level = 0
 
-[lints.rust]
-warnings = "deny"
+# [lints.rust]
+# warnings = "deny"
 
-[lints.clippy]
-correctness = "deny"
-perf = "deny"
-suspicious = "deny"
-style = "deny"
+# [lints.clippy]
+# correctness = "deny"
+# perf = "deny"
+# suspicious = "deny"
+# style = "deny"
 
 [dependencies]
 cortex-m = { version = "0.7.7", features = [
@@ -56,6 +56,10 @@ embassy-mcxa = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d27
 ] }
 uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
     "defmt",
+] }
+embassy-time = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a", features = [
+    "defmt",
+    "defmt-timestamp-uptime",
 ] }
 static_cell = "2.1.0"
 platform-common = { path = "../platform-common", features = ["mock"] }

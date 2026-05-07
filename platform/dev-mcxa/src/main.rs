@@ -33,6 +33,9 @@ async fn main(spawner: Spawner) {
     let p = embassy_mcxa::init(cfg);
     let board = Board::init(p);
 
+    embassy_time::Timer::after_secs(3).await;
+    info!("Helloworld");
+
     let relay = platform_common::mock::init(spawner).await;
     spawner.spawn(uart_service(UartAdapter(board.uart), relay).expect("Failed to spawn UART service task"));
 }

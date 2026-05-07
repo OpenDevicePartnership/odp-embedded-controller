@@ -1,0 +1,23 @@
+{
+    "folders": [
+        {
+            "path": "../.."
+        },
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "rust-analyzer.checkOnSave": true,
+        "rust-analyzer.cargo.target": "thumbv8m.main-none-eabihf",
+        "rust-analyzer.linkedProjects": [
+            "platform/winhec-demo/Cargo.toml"
+        ],
+        "rust-analyzer.check.workspace": false,
+        "terminal.integrated.cwd": ".",
+        //
+        // Variables for launch.json customization
+        // (grayed out in UI, but can be used in launch.json)
+        "platform": "winhec-demo",
+    },
+}

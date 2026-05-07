@@ -1,0 +1,83 @@
+[package]
+edition = "2021"
+license = "MIT"
+publish = false
+name = "winhec-demo"
+version = "0.1.0"
+
+[[bin]]
+bench = false
+name = "winhec-demo"
+test = false
+
+[profile.release]
+lto = true          # better optimizations
+codegen-units = 1
+debug = true
+opt-level = "z"
+panic = "abort"
+incremental = false
+
+# Optimize dependencies for size but keep root crate unoptimized for better debuggability
+[profile.dev.package."*"]
+opt-level = "z"
+
+[lints.rust]
+warnings = "deny"
+
+[lints.clippy]
+correctness = "deny"
+perf = "deny"
+suspicious = "deny"
+style = "deny"
+
+[dependencies]
+cortex-m = { version = "0.7.7", features = [
+    "inline-asm",
+    "critical-section-single-core",
+] }
+cortex-m-rt = "0.7.3"
+defmt = "0.3.6"
+defmt-rtt = "0.4.0"
+embassy-embedded-hal = { version = "0.5.0", features = ["defmt"] }
+embassy-executor = { version = "0.9.1", features = [
+    "arch-cortex-m",
+    "executor-thread",
+    "executor-interrupt",
+    "defmt",
+] }
+embassy-imxrt = { git = "https://github.com/OpenDevicePartnership/embassy-imxrt", features = [
+    "defmt",
+    "time-driver-os-timer",
+    "time",
+    "mimxrt685s",
+] }
+embassy-sync = { version = "0.7.2", features = ["defmt"] }
+embassy-time = { version = "0.5.0", features = [
+    "defmt",
+    "defmt-timestamp-uptime",
+] }
+embedded-fans-async = "0.2.0"
+embedded-sensors-hal-async = "0.3.0"
+embedded-services = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0" }
+thermal-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+tmp108 = { version = "0.4.0", features = [
+    "async",
+    "embedded-sensors-hal-async",
+] }
+static_cell = "2.1.0"
+platform-common = { path = "../platform-common", features = ["mock"] }
+
+mimxrt600-fcb = "0.2.0"
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+
+[package.metadata.cargo-machete]
+ignored = ["cortex-m", "cortex-m-rt"]

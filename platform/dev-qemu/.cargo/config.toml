@@ -8,3 +8,18 @@ target = "riscv32imac-unknown-none-elf"
 
 [env]
 DEFMT_LOG = "trace"
+
+[alias]
+# This disables defmt logging (hence `headless` since there is no output),
+# which allows us to turn off semihosting
+#
+# Main use-case for this is running `dev-qemu` in CI where we don't care about logging
+# and don't want to have to install `defmt-print` for it to run
+run-headless = [
+    "run",
+    "--release",
+    "--config",
+    'env.DEFMT_LOG="off"',
+    "--config",
+    'target.riscv32imac-unknown-none-elf.runner="qemu-system-riscv32 -machine virt -bios none -serial pty -nographic -monitor none -kernel"',
+]

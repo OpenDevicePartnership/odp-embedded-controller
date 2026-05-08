@@ -311,3 +311,35 @@ jobs:
       - name: cargo build --locked
         working-directory: platform/${{ matrix.platform }}
         run: cargo build --locked
+
+  integration-test:
+    # Runs `dev-qemu` and exercises all `ec-test-cli` commands against it
+    runs-on: ubuntu-latest
+    name: dev-qemu / integration-test
+    env:
+      # We keep this pinned to a specific commit since we don't want to accidentally break our CI
+      # if there are breaking changes in `ec-test-cli`
+      #
+      # We can update this commit when we want to pull in a new `ec-test-cli`
+      EC_TEST_CLI_REV: e674ca93
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: rustup target add riscv32imac-unknown-none-elf
+        run: rustup target add riscv32imac-unknown-none-elf
+
+      # Note: qemu-system-misc contains the `qemu-system-riscv32` binary which is needed to run `dev-qemu`
+      - name: Install qemu-system-misc
+        run: sudo apt-get update && sudo apt-get install -y qemu-system-misc
+
+      - name: Install ec-test-cli
+        run: cargo install --git https://github.com/OpenDevicePartnership/odp-platform-common --locked --rev ${{ env.EC_TEST_CLI_REV }} ec-test-cli
+
+      - name: Run integration tests
+        run: ./scripts/integration-test.sh

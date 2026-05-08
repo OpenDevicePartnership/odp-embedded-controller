@@ -11,12 +11,13 @@
 
 # Causes script to exit non-zero on the first test failure,
 # which will then cause entire script to return non-zero and fail CI
-set -eo pipefail
+set -euo pipefail
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
 # Dump all `dev-qemu` output here so we can extract info or print it on failure
 QEMU_LOG=$(mktemp)
+QEMU_PID=""
 
 # The dev-qemu process is launched in the background, so we need to ensure it gets killed when this
 # script exits regardless of whether it succeeded or failed
@@ -37,12 +38,12 @@ trap cleanup EXIT
 # Build `dev-qemu` (with DEFMT disabled since we don't need logs)
 cd "$REPO_ROOT/platform/dev-qemu"
 echo "Building dev-qemu..."
-cargo build --release --config 'env.DEFMT_LOG="off"'
+cargo build --locked --release --config 'env.DEFMT_LOG="off"'
 
 # Then launch it in "headless mode" (again, DEFMT disabled),
 # and sleeping a bit to ensure serial comms are ready
 echo "Starting dev-qemu..."
-cargo run-headless > "$QEMU_LOG" 2>&1 &
+cargo run-headless --locked > "$QEMU_LOG" 2>&1 &
 QEMU_PID=$!
 sleep 1
 
@@ -53,7 +54,7 @@ if ! kill -0 "$QEMU_PID" 2>/dev/null; then
 fi
 
 # Extract PTY path and pass it to `ec-test-cli`
-PTY_PATH=$(grep -oP '/dev/pts/\d+' "$QEMU_LOG" || true)
+PTY_PATH=$(grep -oE '/dev/pts/[0-9]+' "$QEMU_LOG" || true)
 if [[ -z "$PTY_PATH" ]]; then
     echo "ERROR: Could not find PTY path in dev-qemu output"
     exit 1

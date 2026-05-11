@@ -335,8 +335,9 @@ jobs:
         run: rustup target add riscv32imac-unknown-none-elf
 
       # Note: qemu-system-misc contains the `qemu-system-riscv32` binary which is needed to run `dev-qemu`
-      - name: Install qemu-system-misc
-        run: sudo apt-get update && sudo apt-get install -y qemu-system-misc
+      # libudev-dev is needed by `ec-test-cli` (via libudev-sys)
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y qemu-system-misc libudev-dev
 
       - name: Install ec-test-cli
         run: cargo install --git https://github.com/OpenDevicePartnership/odp-platform-common --locked --rev ${{ env.EC_TEST_CLI_REV }} ec-test-cli

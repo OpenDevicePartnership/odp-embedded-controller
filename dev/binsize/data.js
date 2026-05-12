@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1778107036092,
+  "lastUpdate": 1778607236845,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -233,6 +233,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/a4d75129297945d2bfc38d26413c6f78beef4593"
         },
         "date": 1778106999511,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.45,
+            "unit": "KiB",
+            "extra": "RAM Size: 6.08 KiB\nDependency Count: 362\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matteotullo@microsoft.com",
+            "name": "Matteo Tullo",
+            "username": "tullom"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "028f621c94898a6d7ad4a365e9d53630e49691be",
+          "message": "Initialize dev-mcxa platform (#12)\n\n* Initialize dev-mcxa platform\n\n- Add Cargo.toml for the dev-mcxa platform with dependencies for cortex-m, defmt, and embassy.\n- Create build.rs to manage memory.x file for linker.\n- Add VSCode workspace configuration for the dev-mcxa project.\n- Implement Board struct for UART communication using embassy-mcxa.\n- Create main.rs to initialize the platform and spawn UART service task.\n- Implement UartAdapter to bridge embedded-io-async traits for UART communication.\n\n* add workflows\n\n* Address review comments\n\n- Updated embassy dependencies in Cargo.toml to pin to a specific git hash.\n- Increased RAM size in memory.x from 128K to 244K.\n- Refactored UART to use BBQ with DMA support.\n- Added clocks.rs for clock configuration management.\n- Adjusted main.rs to utilize the new clock configuration.\n\n* Init cargo-vet\n\n* Fix silent linker failures\n\n* Fold dev-mcxa into shared tooling and lints\n\nNow that dev-mcxa builds cleanly, treat it like the other dev-*\ntargets across CI and docs.\n\n- Add dev-mcxa to scripts/check-all.sh and mention it in README.md\n  and docs/supply-chain.md\n- Enable the standard deny lints and bump to edition 2024\n- Alias embedded-io{,-async} 0.6 and 0.7 as distinct packages and\n  switch the LPUART adapter to the 0.6 traits required by\n  uart-service\n- Drop the 3 s startup delay and tidy clocks.rs imports\n\n* cargo vet: import more audits and prune exemptions\n\n* Update README and supply-chain documentation; fix memory.x comments for clarity\n\n---------\n\nCo-authored-by: Matteo Tullo <tullom@mcmaster.ca>\nCo-authored-by: Jerry Xie <139205137+jerrysxie@users.noreply.github.com>\nCo-authored-by: Jerry Xie <jerryxie@microsoft.com>",
+          "timestamp": "2026-05-12T10:32:15-07:00",
+          "tree_id": "30a772cefcf4020f1a1c84ca659c0d64a4675503",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/028f621c94898a6d7ad4a365e9d53630e49691be"
+        },
+        "date": 1778607235932,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

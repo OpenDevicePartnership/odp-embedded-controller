@@ -3,7 +3,7 @@
 
 mod board;
 
-use board::{Board, UartWrap};
+use board::Board;
 use defmt::info;
 use embassy_executor::Spawner;
 use platform_common::board::BoardIo;
@@ -12,7 +12,10 @@ use static_cell::StaticCell;
 use {defmt_rtt as _, panic_probe as _};
 
 #[embassy_executor::task]
-async fn uart_service(uart: UartWrap, relay: MockOdpRelayHandler) {
+async fn uart_service(
+    uart: embassy_npcx::uart::Uart<'static, embassy_npcx::peripherals::CR_UART1>,
+    relay: MockOdpRelayHandler,
+) {
     info!("Starting uart service");
 
     static UART_SERVICE: StaticCell<uart_service::Service<MockOdpRelayHandler>> = StaticCell::new();

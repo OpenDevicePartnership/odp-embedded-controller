@@ -3,20 +3,19 @@
 
 mod board;
 mod clocks;
-mod uart_adapter;
 
 use board::Board;
 use defmt::info;
 use defmt_rtt as _;
 use embassy_executor::Spawner;
+use embassy_mcxa::lpuart;
 use panic_probe as _;
 use platform_common::board::BoardIo;
 use platform_common::mock::MockOdpRelayHandler;
 use static_cell::StaticCell;
-use uart_adapter::UartAdapter;
 
 #[embassy_executor::task]
-async fn uart_service(uart: UartAdapter, relay: MockOdpRelayHandler) {
+async fn uart_service(uart: lpuart::LpuartBbq, relay: MockOdpRelayHandler) {
     info!("Starting uart service");
     static UART_SERVICE: StaticCell<uart_service::Service<MockOdpRelayHandler>> = StaticCell::new();
     let uart_service = uart_service::Service::new(relay).unwrap();
@@ -36,5 +35,5 @@ async fn main(spawner: Spawner) {
     info!("Hello world from MCXA!");
 
     let relay = platform_common::mock::init(spawner).await;
-    spawner.spawn(uart_service(UartAdapter(board.uart), relay).expect("Failed to spawn UART service task"));
+    spawner.spawn(uart_service(board.uart, relay).expect("Failed to spawn UART service task"));
 }

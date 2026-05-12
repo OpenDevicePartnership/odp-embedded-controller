@@ -7,7 +7,7 @@ integration testing, and as a starting point for downstream EC projects.
 
 ## Scope
 
-This repository hosts the three public `dev-*` development targets and their
+This repository hosts the four public `dev-*` development targets and their
 shared `platform-common` library. Vendor- and silicon-specific production
 platforms are maintained separately and are not in scope here.
 
@@ -17,6 +17,7 @@ platforms are maintained separately and are not in scope here.
 |-------|------|--------|
 | `platform-common` | Shared `no_std` library crate — HAL traits, board abstractions, common services | (library, no build target) |
 | `dev-imxrt` | Development target on NXP i.MXRT685S (Cortex-M33) | `thumbv8m.main-none-eabihf` |
+| `dev-mcxa` | Development target on NXP MCXA266 (Cortex-M33) | `thumbv8m.main-none-eabihf` |
 | `dev-npcx` | Development target on Nuvoton NPCX498M (Cortex-M4F) | `thumbv7em-none-eabihf` |
 | `dev-qemu` | Development target under QEMU `virt` machine (RISC-V 32-bit) | `riscv32imac-unknown-none-elf` |
 
@@ -33,7 +34,7 @@ Toolchain channel and targets are pinned in `rust-toolchain.toml`:
 All three `dev-*` targets are installed automatically the first time `cargo` is
 invoked inside this repo; no manual `rustup target add` is required.
 
-`dev-imxrt` and `dev-npcx` link via [`flip-link`](https://github.com/knurling-rs/flip-link)
+`dev-imxrt`, `dev-mcxa`, and `dev-npcx` link via [`flip-link`](https://github.com/knurling-rs/flip-link)
 for stack-overflow protection. Install it once:
 
 ```

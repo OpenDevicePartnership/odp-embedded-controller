@@ -7,7 +7,7 @@ It matches all dependencies against a set of audits conducted by the authors of 
 To learn more, visit [mozilla/cargo-vet](https://github.com/mozilla/cargo-vet)
 
 
-This repository contains three independent platform crates (`platform/dev-imxrt`, `platform/dev-npcx`, `platform/dev-qemu`), each with its own `Cargo.lock` and its own `supply-chain/` store. Run all `cargo vet` commands from the relevant platform directory.
+This repository contains platform crates (`platform/dev-imxrt`, `platform/dev-mcxa`, `platform/dev-npcx`, `platform/dev-qemu`), each with its own `Cargo.lock` and its own `supply-chain/` store. Run all `cargo vet` commands from the relevant platform directory.
 
 ---
 

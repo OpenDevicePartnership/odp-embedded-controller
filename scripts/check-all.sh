@@ -26,15 +26,15 @@ set -euo pipefail
 REPO_ROOT=$(git rev-parse --show-toplevel)
 cd "$REPO_ROOT"
 
-PLATFORMS=(dev-imxrt dev-npcx dev-qemu)
-FMT_CRATES=(platform-common dev-imxrt dev-npcx dev-qemu)
+PLATFORMS=(dev-imxrt dev-mcxa dev-npcx dev-qemu)
+FMT_CRATES=(platform-common dev-imxrt dev-mcxa dev-npcx dev-qemu)
 
 banner() { printf '\n=== %s ===\n' "$*"; }
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
 if ! have flip-link; then
-    echo "warning: flip-link not installed — dev-imxrt / dev-npcx builds will fail." >&2
+    echo "warning: flip-link not installed — dev-imxrt / dev-mcxa / dev-npcx builds will fail." >&2
     echo "         Install with: cargo install flip-link --locked" >&2
 fi
 

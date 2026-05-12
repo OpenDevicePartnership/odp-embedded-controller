@@ -1,0 +1,85 @@
+[package]
+edition = "2024"
+license = "MIT"
+publish = false
+name = "dev-mcxa"
+version = "0.1.0"
+
+[[bin]]
+bench = false
+name = "dev-mcxa"
+test = false
+
+[profile.release]
+lto = true          # better optimizations
+codegen-units = 1
+debug = true
+opt-level = "z"
+panic = "abort"
+incremental = false
+
+# Optimize dependencies for size but keep root crate unoptimized for better debuggability
+[profile.dev.package."*"]
+opt-level = "z"
+
+# Uncomment to turn off optimization for specific dependency (such as when debugging a service)
+# [profile.dev.package.dependency-name]
+# opt-level = 0
+
+[lints.rust]
+warnings = "deny"
+
+[lints.clippy]
+correctness = "deny"
+perf = "deny"
+suspicious = "deny"
+style = "deny"
+
+[dependencies]
+cortex-m = { version = "0.7.7", features = [
+    "inline-asm",
+    "critical-section-single-core",
+] }
+cortex-m-rt = { version = "0.7.3", features = ["set-sp", "set-vtor"] }
+defmt = "1.0"
+defmt-rtt = "1.0"
+embassy-executor = { version = "0.10.0", default-features = false, features = [
+    "platform-cortex-m",
+    "executor-thread",
+    "executor-interrupt",
+    "defmt",
+] }
+embassy-mcxa = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a", features = [
+    "defmt",
+    "unstable-pac",
+    "mcxa2xx",
+] }
+uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+    "defmt",
+] }
+static_cell = "2.1.0"
+platform-common = { path = "../platform-common", features = ["mock"] }
+# uart-service (v0.2.0 branch) depends on embedded-io-async 0.6, but
+# embassy-mcxa upstream uses 0.7. We bring in 0.6 explicitly so we can adapt
+# the Lpuart driver to the older trait surface required by uart-service.
+# TODO: once uart-service is updated to use embedded-io-async 0.7, remove this dependency.
+embedded-io-async-6 = { version = "0.6", package = "embedded-io-async" }
+embedded-io-6 = { version = "0.6", package = "embedded-io" }
+
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+
+[package.metadata.cargo-machete]
+ignored = ["cortex-m", "cortex-m-rt"]
+
+# embassy-mcxa pulls embassy-time-driver from the embassy-rs git repo, which
+# uses `links = "embassy-time"`. Other crates in the dependency graph pull
+# embassy-time/embassy-time-driver from crates.io, which would cause a duplicate
+# `links` conflict. Force everyone to use the git versions.
+[patch.crates-io]
+embassy-time = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-time-driver = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-time-queue-utils = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-sync = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-executor = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-futures = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }
+embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy", rev = "7af7d3d270f019ff70f919c62c78d51f28f2d50a" }

@@ -38,7 +38,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["platform-common", "dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["platform-common", "dev-imxrt", "dev-npcx", "dev-qemu", "dev-mcxa"]
 
     steps:
       - uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
       matrix:
         # Get early warning of new lints which are regularly introduced in beta channels.
         toolchain: [stable]
-        platform: ["platform-common", "dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["platform-common", "dev-imxrt", "dev-npcx", "dev-qemu", "dev-mcxa"]
 
     steps:
       - uses: actions/checkout@v4
@@ -117,6 +117,8 @@ jobs:
             target: thumbv7em-none-eabihf
           - platform: dev-qemu
             target: riscv32imac-unknown-none-elf
+          - platform: dev-mcxa
+            target: thumbv8m.main-none-eabihf
 
     steps:
       - uses: actions/checkout@v4
@@ -151,6 +153,8 @@ jobs:
             target: thumbv7em-none-eabihf
           - platform: dev-qemu
             target: riscv32imac-unknown-none-elf
+          - platform: dev-mcxa
+            target: thumbv8m.main-none-eabihf
 
     steps:
       - uses: actions/checkout@v4
@@ -180,7 +184,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["dev-imxrt", "dev-npcx", "dev-qemu", "dev-mcxa"]
 
     steps:
       - uses: actions/checkout@v4
@@ -205,7 +209,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["dev-imxrt", "dev-npcx", "dev-qemu", "dev-mcxa"]
 
     steps:
       - uses: actions/checkout@v4
@@ -237,6 +241,8 @@ jobs:
             target: thumbv7em-none-eabihf
           - platform: dev-qemu
             target: riscv32imac-unknown-none-elf
+          - platform: dev-mcxa
+            target: thumbv8m.main-none-eabihf
         msrv: ["1.83"] # We're relying on namespaced-features, which
                        # was released in 1.60
                        #
@@ -290,6 +296,9 @@ jobs:
           - platform: dev-qemu
             target: riscv32imac-unknown-none-elf
             needs_flip_link: false
+          - platform: dev-mcxa
+            target: thumbv8m.main-none-eabihf
+            needs_flip_link: true
 
     steps:
       - uses: actions/checkout@v4

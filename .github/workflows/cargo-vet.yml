@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: ["dev-imxrt", "dev-npcx", "dev-qemu"]
+        platform: ["dev-imxrt", "dev-npcx", "dev-qemu", "dev-mcxa"]
     env:
       CARGO_VET_VERSION: 0.10.2
     steps:

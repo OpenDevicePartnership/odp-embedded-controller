@@ -41,22 +41,33 @@ echo "Building dev-qemu..."
 cargo build --locked --release --config 'env.DEFMT_LOG="off"'
 
 # Then launch it in "headless mode" (again, DEFMT disabled),
-# and sleeping a bit to ensure serial comms are ready
+# and poll until serial comms are ready
 echo "Starting dev-qemu..."
 cargo run-headless --locked > "$QEMU_LOG" 2>&1 &
 QEMU_PID=$!
-sleep 1
 
-# Verify QEMU didn't exit for some reason
-if ! kill -0 "$QEMU_PID" 2>/dev/null; then
-    echo "ERROR: dev-qemu exited unexpectedly"
-    exit 1
-fi
+# Poll for the PTY path to appear in dev-qemu output, indicating serial is ready
+# Note: We do this poll-sleep loop in case the CI is under heavy load
+MAX_RETRIES=10
+WAIT_INTERVAL=1
+PTY_PATH=""
+for i in $(seq 1 $MAX_RETRIES); do
+    if ! kill -0 "$QEMU_PID" 2>/dev/null; then
+        echo "ERROR: dev-qemu exited unexpectedly"
+        exit 1
+    fi
 
-# Extract PTY path and pass it to `ec-test-cli`
-PTY_PATH=$(grep -oE '/dev/pts/[0-9]+' "$QEMU_LOG" || true)
+    PTY_PATH=$(grep -oE '/dev/pts/[0-9]+' "$QEMU_LOG" || true)
+    if [[ -n "$PTY_PATH" ]]; then
+        break
+    fi
+
+    echo "Waiting for dev-qemu to be ready... ($i/$MAX_RETRIES)"
+    sleep $WAIT_INTERVAL
+done
+
 if [[ -z "$PTY_PATH" ]]; then
-    echo "ERROR: Could not find PTY path in dev-qemu output"
+    echo "ERROR: Could not find PTY path in dev-qemu output after ${MAX_RETRIES}s"
     exit 1
 fi
 echo "dev-qemu serial port: $PTY_PATH"

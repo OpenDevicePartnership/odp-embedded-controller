@@ -317,7 +317,6 @@ dependencies = [
  "defmt-rtt",
  "embassy-executor",
  "embassy-mcxa",
- "embassy-time",
  "embedded-io 0.6.1",
  "embedded-io-async 0.6.1",
  "panic-probe",

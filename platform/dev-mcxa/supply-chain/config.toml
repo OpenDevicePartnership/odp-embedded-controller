@@ -4,6 +4,12 @@
 [cargo-vet]
 version = "0.10"
 
+[imports.mozilla]
+url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
+
+[imports.open-device-partnership]
+url = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/main/supply-chain/audits.toml"
+
 [policy.embassy-embedded-hal]
 audit-as-crates-io = true
 

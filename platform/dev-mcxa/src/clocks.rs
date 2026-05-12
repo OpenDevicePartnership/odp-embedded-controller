@@ -1,10 +1,10 @@
 //! Clock configuration for the MCXA dev board.
 
+use embassy_mcxa::clocks::PoweredClock;
 use embassy_mcxa::clocks::config::{
     ClocksConfig, CoreSleep, Div8, FircConfig, FircFreqSel, FlashSleep, MainClockConfig, MainClockSource,
     VddDriveStrength, VddLevel,
 };
-use embassy_mcxa::clocks::PoweredClock;
 
 /// Build the desired clock tree configuration for the board.
 pub fn config() -> ClocksConfig {

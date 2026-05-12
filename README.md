@@ -17,7 +17,7 @@ platforms are maintained separately and are not in scope here.
 |-------|------|--------|
 | `platform-common` | Shared `no_std` library crate — HAL traits, board abstractions, common services | (library, no build target) |
 | `dev-imxrt` | Development target on NXP i.MXRT685S (Cortex-M33) | `thumbv8m.main-none-eabihf` |
-| `dev-mxca` | Development target on NXP MCXA266 (Cortex-M33) | `thumbv8m.main-none-eabihf` |
+| `dev-mcxa` | Development target on NXP MCXA266 (Cortex-M33) | `thumbv8m.main-none-eabihf` |
 | `dev-npcx` | Development target on Nuvoton NPCX498M (Cortex-M4F) | `thumbv7em-none-eabihf` |
 | `dev-qemu` | Development target under QEMU `virt` machine (RISC-V 32-bit) | `riscv32imac-unknown-none-elf` |
 

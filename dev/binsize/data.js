@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1778691278831,
+  "lastUpdate": 1778691316100,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -565,6 +565,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/028f621c94898a6d7ad4a365e9d53630e49691be"
         },
         "date": 1778607266753,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 75.16,
+            "unit": "KiB",
+            "extra": "RAM Size: 9.53 KiB\nDependency Count: 377\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef14be12c8129f98ee8335164548eed4d36aa30c",
+          "message": "dev-qemu: Add integration test to CI (#14)\n\n* dev-qemu: Add integration test to CI\n\nAssisted-by: GitHub Copilot:claude-opus-4.6\nSigned-off-by: Kurtis Dinelle <kdinelle@microsoft.com>\n\n* dev-qemu: Address Copilot's suggestion\n\nAssisted-by: GitHub Copilot:claude-opus-4.6\nSigned-off-by: Kurtis Dinelle <kdinelle@microsoft.com>\n\n* dev-qemu: Install libudev-dev in job\n\nAssisted-by: GitHub Copilot:claude-opus-4.6\nSigned-off-by: Kurtis Dinelle <kdinelle@microsoft.com>\n\n* Add timeout/polling\n\n---------\n\nSigned-off-by: Kurtis Dinelle <kdinelle@microsoft.com>\nCo-authored-by: Jerry Xie <139205137+jerrysxie@users.noreply.github.com>",
+          "timestamp": "2026-05-13T09:52:54-07:00",
+          "tree_id": "cc706e846dddb0ee9b8d27900a2fd90d9c0bb78a",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/ef14be12c8129f98ee8335164548eed4d36aa30c"
+        },
+        "date": 1778691315149,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

@@ -286,7 +286,6 @@ dependencies = [
  "embassy-executor",
  "embassy-npcx",
  "embassy-time",
- "embedded-io-async 0.6.1",
  "panic-probe",
  "platform-common",
  "static_cell",

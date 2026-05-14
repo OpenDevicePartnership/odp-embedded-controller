@@ -3,7 +3,7 @@ use platform_common::board::BoardIo;
 use static_cell::ConstStaticCell;
 
 bind_interrupts!(struct Irqs {
-    LPUART3 => lpuart::BbqInterruptHandler::<embassy_mcxa::peripherals::LPUART3>;
+    LPUART2 => lpuart::BbqInterruptHandler::<embassy_mcxa::peripherals::LPUART2>;
 });
 
 const SIZE: usize = 4096;
@@ -34,7 +34,7 @@ impl BoardIo for Board {
         let tx_dma = embassy_mcxa::dma::DmaChannel::new(p.DMA0_CH0);
         let rx_dma = embassy_mcxa::dma::DmaChannel::new(p.DMA0_CH1);
 
-        let parts = lpuart::BbqParts::new(p.LPUART3, Irqs, p.P4_5, tx_buf, tx_dma, p.P4_2, rx_buf, rx_dma)
+        let parts = lpuart::BbqParts::new(p.LPUART2, Irqs, p.P2_2, tx_buf, tx_dma, p.P2_3, rx_buf, rx_dma)
             .expect("failed to create BbqParts");
 
         let lpuart = lpuart::LpuartBbq::new(parts, config, lpuart::BbqRxMode::Efficiency)

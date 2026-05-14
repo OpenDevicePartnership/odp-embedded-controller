@@ -22,10 +22,18 @@ criteria = "safe-to-deploy"
 delta = "0.4.0 -> 0.5.0"
 
 [[audits.embassy-hal-internal]]
-who = "Billy Price <williamp@microsoft.com>"
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
 criteria = "safe-to-deploy"
-delta = "0.5.0 -> 0.5.0@git:6b015329e6784d084c1b589ba31af7a7dee13a7e"
+delta = "0.5.0 -> 0.5.0@git:c8715fc1026a58f74df0b41483274e439d82aa4c"
 importable = false
+notes = "Delta: new aligned.rs module (4 transmute calls, all behind alignment assertions — sound), ring buffer Reader/Writer iterators (3 unsafe blocks for slice::from_raw_parts_mut and ptr reborrow — consistent with existing invariants). No new powerful imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-sync]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.8.0 -> 0.8.0@git:c8715fc1026a58f74df0b41483274e439d82aa4c"
+importable = false
+notes = "Delta: new rpc_service module (type-erased FnOnce dispatch, well-documented unsafe with clear invariants), OnceLock memory ordering fix (Relaxed->Acquire/Release), priority_channel bug fix, pubsub Send/Sync wrappers with proper bounds, pipe try_write_all. No new powerful imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
 
 [[audits.libc]]
 who = "Billy Price <williamp@microsoft.com>"

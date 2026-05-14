@@ -16,6 +16,13 @@ who = "Billy Price <williamp@microsoft.com>"
 criteria = "safe-to-deploy"
 delta = "0.7.0 -> 0.8.0"
 
+[[audits.embassy-imxrt]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.1.0@git:f3be03ca74bfefb062b4536848c2f1d1b7e06186"
+importable = false
+notes = "ODP-owned crate, internal dependency. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
 [[audits.libc]]
 who = "Billy Price <williamp@microsoft.com>"
 criteria = "safe-to-deploy"

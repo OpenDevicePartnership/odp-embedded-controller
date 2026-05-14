@@ -133,10 +133,6 @@ criteria = "safe-to-deploy"
 version = "0.2.12"
 criteria = "safe-to-deploy"
 
-[[exemptions.embassy-embedded-hal]]
-version = "0.6.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
-criteria = "safe-to-deploy"
-
 [[exemptions.embassy-executor]]
 version = "0.10.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
 criteria = "safe-to-deploy"
@@ -149,28 +145,12 @@ criteria = "safe-to-deploy"
 version = "0.1.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
 criteria = "safe-to-deploy"
 
-[[exemptions.embassy-futures]]
-version = "0.1.2@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
-criteria = "safe-to-deploy"
-
 [[exemptions.embassy-hal-internal]]
 version = "0.5.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
 criteria = "safe-to-deploy"
 
-[[exemptions.embassy-mcxa]]
-version = "0.1.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
-criteria = "safe-to-deploy"
-
-[[exemptions.embassy-sync]]
-version = "0.8.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
-criteria = "safe-to-deploy"
-
 [[exemptions.embassy-time]]
 version = "0.5.1@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
-criteria = "safe-to-deploy"
-
-[[exemptions.embassy-time-driver]]
-version = "0.2.2@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-time-queue-utils]]
@@ -267,14 +247,6 @@ criteria = "safe-to-deploy"
 
 [[exemptions.portable-atomic]]
 version = "1.13.1"
-criteria = "safe-to-deploy"
-
-[[exemptions.proc-macro2]]
-version = "1.0.106"
-criteria = "safe-to-deploy"
-
-[[exemptions.quote]]
-version = "1.0.45"
 criteria = "safe-to-deploy"
 
 [[exemptions.rand_core]]

@@ -1,4 +1,79 @@
 
 # cargo-vet audits file
 
-[audits]
+[[audits.embassy-embedded-hal]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.6.0 -> 0.6.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: Cargo.toml dep version bump only (embassy-hal-internal 0.4.0->0.5.0). No code changes, no unsafe. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-executor]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.10.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.10.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: added armv8r target, dep version bumps, doc comment fixes. No new unsafe, no new imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-executor-macros]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.8.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.8.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: proc macro hygiene fix — renamed POOL_SIZE to __POOL_SIZE to avoid name collisions. No new unsafe, generated code unchanged. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-executor-timer-queue]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.1.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.1.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: changelog fix and edition 2021->2024. No code changes, no unsafe. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-futures]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.1.2 -> 0.1.2@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: edition 2021->2024, explicit feature declarations. No code changes, no unsafe. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-hal-internal]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.5.0@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.5.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: new aligned.rs module (4 transmute calls, all behind alignment assertions — sound), ring buffer Reader/Writer iterators (3 unsafe blocks for slice::from_raw_parts_mut and ptr reborrow — consistent with existing invariants). No new powerful imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-mcxa]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "0.1.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Co-owned by ODP, trusted publisher (Dirbaio from Embedded WG). Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-sync]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.8.0 -> 0.8.0@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: new rpc_service module (type-erased FnOnce dispatch, well-documented unsafe with clear invariants), OnceLock memory ordering fix (Relaxed->Acquire/Release), priority_channel bug fix, pubsub Send/Sync wrappers with proper bounds, pipe try_write_all. No new powerful imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-time]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.5.1@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.5.1@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: added 62.5MHz tick rate, replaced custom div_ceil with u64::div_ceil, added core::error::Error impl for TimeoutError. No new unsafe, removed redundant helper fn. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-time-driver]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.2.2 -> 0.2.2@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "Delta: added 62.5MHz tick rate feature flag. No unsafe, no new imports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
+
+[[audits.embassy-time-queue-utils]]
+who = "Kurtis Dinelle <kdinelle@microsoft.com>"
+criteria = "safe-to-deploy"
+delta = "0.3.2@git:7af7d3d270f019ff70f919c62c78d51f28f2d50a -> 0.3.2@git:bef4118731ac69092bee4489240f59c89af0d944"
+importable = false
+notes = "No diff between crates.io and git versions — identical source. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"

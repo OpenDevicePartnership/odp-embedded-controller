@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1778691316100,
+  "lastUpdate": 1778792472894,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -293,6 +293,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/ef14be12c8129f98ee8335164548eed4d36aa30c"
         },
         "date": 1778691267599,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.45,
+            "unit": "KiB",
+            "extra": "RAM Size: 6.08 KiB\nDependency Count: 362\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matteotullo@microsoft.com",
+            "name": "Matteo Tullo",
+            "username": "tullom"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "186d487c74725951059c5e73035036f06074a324",
+          "message": "Fix UART mapping in dev-mcxa platform to use LPUART2 instead of LPUART3 (#17)",
+          "timestamp": "2026-05-14T13:59:36-07:00",
+          "tree_id": "23d5ec17b1f84c90a4ab33121bbdd98074b184a5",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/186d487c74725951059c5e73035036f06074a324"
+        },
+        "date": 1778792472089,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

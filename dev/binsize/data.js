@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1778859841677,
+  "lastUpdate": 1778859876189,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -692,6 +692,36 @@ window.BENCHMARK_DATA = {
             "value": 75.16,
             "unit": "KiB",
             "extra": "RAM Size: 9.53 KiB\nDependency Count: 377\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0cde32f7405ea47765a0a716ca5f89a3d1863bb4",
+          "message": "Update embedded-services + hals (#16)\n\n* Update embedded-services + hals\n\n* Remove unused embedded-io-async dep\n\n* Add cargo-vet audits and refresh imports for updated embassy dependencies\n\nAssisted-by: copilot-cli:claude-opus-4.6 cargo-vet",
+          "timestamp": "2026-05-15T08:42:28-07:00",
+          "tree_id": "662a01f3fd89ebdd38fc6bbf0b0a74aeac7777f5",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/0cde32f7405ea47765a0a716ca5f89a3d1863bb4"
+        },
+        "date": 1778859875200,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 75.24,
+            "unit": "KiB",
+            "extra": "RAM Size: 9.53 KiB\nDependency Count: 330\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
           }
         ]
       }

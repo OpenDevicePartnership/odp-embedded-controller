@@ -47,7 +47,7 @@ embassy-npcx = { git = "https://github.com/OpenDevicePartnership/embassy-npcx", 
     "defmt",
     "time-driver-mft16-3",
 ] }
-embassy-time = { version = "0.5.0", features = [
+embassy-time = { version = "0.5.1", features = [
     "defmt",
     "defmt-timestamp-uptime-us",
     "tick-hz-32_768",
@@ -72,6 +72,6 @@ ignored = ["cortex-m", "cortex-m-rt", "embassy-time"]
 [patch."https://github.com/embassy-rs/embassy"]
 embassy-executor = "=0.10.0"
 embassy-futures = "=0.1.2"
-embassy-time-driver = "=0.2.1"
+embassy-time-driver = "=0.2.2"
 embassy-time-queue-utils = "=0.3.0"
-embassy-time = "=0.5.0"
+embassy-time = "=0.5.1"

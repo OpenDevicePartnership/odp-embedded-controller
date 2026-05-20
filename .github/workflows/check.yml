@@ -333,7 +333,7 @@ jobs:
       # if there are breaking changes in `ec-test-cli`
       #
       # We can update this commit when we want to pull in a new `ec-test-cli`
-      EC_TEST_CLI_REV: e674ca93
+      EC_TEST_CLI_REV: d705cd4f
 
     steps:
       - uses: actions/checkout@v4

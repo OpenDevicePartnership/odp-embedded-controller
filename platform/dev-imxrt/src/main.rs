@@ -17,8 +17,8 @@ use static_cell::StaticCell;
 #[embassy_executor::task]
 async fn uart_service(uart: uart::Uart<'static, uart::Async>, relay: MockOdpRelayHandler) {
     info!("Starting uart service");
-    static UART_SERVICE: StaticCell<uart_service::Service<MockOdpRelayHandler>> = StaticCell::new();
-    let uart_service = uart_service::Service::new(relay).unwrap();
+    static UART_SERVICE: StaticCell<uart_service::DefaultService<MockOdpRelayHandler>> = StaticCell::new();
+    let uart_service = uart_service::DefaultService::default_smbusespi(relay).unwrap();
     let uart_service = UART_SERVICE.init(uart_service);
 
     let Err(e) = uart_service::task::uart_service(uart_service, uart).await;

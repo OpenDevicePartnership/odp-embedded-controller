@@ -39,6 +39,10 @@ criteria = "safe-to-deploy"
 version = "1.2.59"
 criteria = "safe-to-deploy"
 
+[[exemptions.cc]]
+version = "1.2.62"
+criteria = "safe-to-deploy"
+
 [[exemptions.cfg-if]]
 version = "1.0.4"
 criteria = "safe-to-deploy"
@@ -55,6 +59,14 @@ criteria = "safe-to-deploy"
 version = "0.20.11"
 criteria = "safe-to-deploy"
 
+[[exemptions.defmt]]
+version = "1.1.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.defmt-macros]]
+version = "1.1.0"
+criteria = "safe-to-deploy"
+
 [[exemptions.defmt-rtt]]
 version = "0.4.2"
 criteria = "safe-to-deploy"
@@ -63,8 +75,16 @@ criteria = "safe-to-deploy"
 version = "1.0.8"
 criteria = "safe-to-deploy"
 
+[[exemptions.device-driver]]
+version = "1.0.9"
+criteria = "safe-to-deploy"
+
 [[exemptions.document-features]]
 version = "0.2.12"
+criteria = "safe-to-deploy"
+
+[[exemptions.either]]
+version = "1.16.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-executor]]
@@ -73,6 +93,10 @@ criteria = "safe-to-deploy"
 
 [[exemptions.embassy-executor-macros]]
 version = "0.7.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-imxrt]]
+version = "0.1.0@git:6524cbabcc12016f1aea4c0ffa2f1354c3f8c6d1"
 criteria = "safe-to-deploy"
 
 [[exemptions.embedded-sensors-hal]]
@@ -103,12 +127,20 @@ criteria = "safe-to-deploy"
 version = "2.7.1"
 criteria = "safe-to-deploy"
 
+[[exemptions.heapless]]
+version = "0.9.3"
+criteria = "safe-to-deploy"
+
 [[exemptions.ident_case]]
 version = "1.0.1"
 criteria = "safe-to-deploy"
 
 [[exemptions.libc]]
 version = "0.2.184"
+criteria = "safe-to-deploy"
+
+[[exemptions.libc]]
+version = "0.2.186"
 criteria = "safe-to-deploy"
 
 [[exemptions.litrs]]
@@ -163,6 +195,10 @@ criteria = "safe-to-deploy"
 version = "1.1.3"
 criteria = "safe-to-deploy"
 
+[[exemptions.subenum]]
+version = "1.2.0"
+criteria = "safe-to-deploy"
+
 [[exemptions.syn]]
 version = "2.0.117"
 criteria = "safe-to-deploy"
@@ -193,6 +229,10 @@ criteria = "safe-to-deploy"
 
 [[exemptions.typenum]]
 version = "1.19.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.typenum]]
+version = "1.20.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.unicode-ident]]

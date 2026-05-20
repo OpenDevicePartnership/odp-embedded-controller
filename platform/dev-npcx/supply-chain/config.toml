@@ -19,7 +19,7 @@ url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
 [policy.embassy-hal-internal]
 audit-as-crates-io = true
 
-[policy."embassy-sync:0.8.0@git:c8715fc1026a58f74df0b41483274e439d82aa4c"]
+[policy.embassy-sync]
 audit-as-crates-io = true
 
 [[exemptions.aho-corasick]]
@@ -92,6 +92,10 @@ criteria = "safe-to-deploy"
 
 [[exemptions.embassy-hal-internal]]
 version = "0.5.0@git:e9c32931b906649d65fc502fe8e8f2c70ef1e6ab"
+criteria = "safe-to-deploy"
+
+[[exemptions.embassy-sync]]
+version = "0.8.0@git:e9c32931b906649d65fc502fe8e8f2c70ef1e6ab"
 criteria = "safe-to-deploy"
 
 [[exemptions.embassy-time]]

@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1779334591513,
+  "lastUpdate": 1779334597140,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -360,6 +360,36 @@ window.BENCHMARK_DATA = {
             "value": 71.34,
             "unit": "KiB",
             "extra": "RAM Size: 6.08 KiB\nDependency Count: 312\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d3ae374f519792cd24f68127bd9eedae2e688483",
+          "message": "Bump embedded-services, EC_TEST_CLI_REV, and embassy-time pins (#19)\n\n* Bump embedded-services, EC_TEST_CLI_REV, and embassy-time pins\n\nUpdate the embedded-services lockfile pins across all platforms to\npick up the v0.2.0 branch HEAD (f1f1e087), which includes:\n- PR #852: uart-service Service<R, M> generic over MctpMedium\n- PR #854: v0.2.0 mergeback (heapless 0.9.2, embassy-time 0.5.1)\n\nMigrate all platforms from the removed Service::new(relay) API to\nDefaultService::default_smbusespi(relay), which preserves the\nSmbusEspi wire format used by existing hardware platforms.\n\nBump EC_TEST_CLI_REV from e674ca93 to d705cd4f to pick up\nodp-platform-common PR #92, which adds SMBus PEC byte support to\nec-test-cli's serial transport — required by the post-#852\nSmbusEspiMedium.\n\nBump dev-npcx embassy-time pins from 0.5.0 to 0.5.1 and\nembassy-time-driver from 0.2.1 to 0.2.2, matching the transitive\nrequirements from the updated embedded-services.\n\nAssisted-by: GitHub Copilot CLI:claude-opus-4.6-1m-internal\n\n* Add cargo-vet exemptions for bumped dependencies\n\nAdd safe-to-deploy exemptions for crate versions pulled in by the\nembedded-services v0.2.0 pin advancement. All are minor/patch version\nbumps of existing dependencies, except hashbrown 0.17.1 (new transitive\nfrom heapless 0.9).\n\nAssisted-by: GitHub Copilot CLI:claude-opus-4.6-1m-internal\n\n* Fix stale embassy-sync policy rev in dev-npcx cargo-vet config\n\nReplace the rev-pinned policy key for embassy-sync with a generic\n[policy.embassy-sync] entry (matching dev-imxrt's approach), and add\nan exemption for the new git rev. The old rev (c8715fc1) no longer\nmatches the lockfile (e9c32931) after the embedded-services bump.\n\nAssisted-by: GitHub Copilot CLI:claude-opus-4.6-1m-internal",
+          "timestamp": "2026-05-20T22:34:59-05:00",
+          "tree_id": "e1eaae3fb4dddfd9383ef1aba28f8c85eff9a65b",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/d3ae374f519792cd24f68127bd9eedae2e688483"
+        },
+        "date": 1779334596323,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 64.29,
+            "unit": "KiB",
+            "extra": "RAM Size: 6.09 KiB\nDependency Count: 312\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
           }
         ]
       }

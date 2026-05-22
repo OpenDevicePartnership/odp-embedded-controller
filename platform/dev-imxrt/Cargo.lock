@@ -35,7 +35,7 @@ dependencies = [
 [[package]]
 name = "battery-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "battery-service-interface",
  "defmt 0.3.100",
@@ -51,7 +51,7 @@ dependencies = [
 [[package]]
 name = "battery-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embedded-batteries-async",
@@ -60,12 +60,20 @@ dependencies = [
 [[package]]
 name = "battery-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "battery-service-interface",
  "defmt 0.3.100",
  "embedded-services",
  "num_enum",
+]
+
+[[package]]
+name = "bit-register"
+version = "0.1.0"
+source = "git+https://github.com/OpenDevicePartnership/odp-utilities?tag=v0.1.0#583015c08ad9855f310bdb25d5cf9abff77b5e08"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -658,7 +666,7 @@ dependencies = [
 [[package]]
 name = "embedded-services"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "bitfield 0.17.0",
  "cortex-m",
@@ -690,9 +698,9 @@ dependencies = [
 [[package]]
 name = "espi-device"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/haf-ec-service#54439c76d567fe8c65337cc4461c93a8a4fd434c"
+source = "git+https://github.com/OpenDevicePartnership/haf-ec-service#290aa80a4c281857f3bed94581200b330119286c"
 dependencies = [
- "bit-register",
+ "bit-register 0.1.0 (git+https://github.com/OpenDevicePartnership/odp-utilities?tag=v0.1.0)",
  "bitflags 2.11.1",
  "num-traits",
  "num_enum",
@@ -851,9 +859,9 @@ dependencies = [
 [[package]]
 name = "mctp-rs"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
- "bit-register",
+ "bit-register 0.1.0 (git+https://github.com/OpenDevicePartnership/odp-utilities)",
  "defmt 0.3.100",
  "embedded-batteries",
  "espi-device",
@@ -960,7 +968,7 @@ dependencies = [
 [[package]]
 name = "odp-service-common"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "embedded-services",
  "static_cell",
@@ -1035,7 +1043,7 @@ checksum = "c33a9471896f1c69cecef8d20cbe2f7accd12527ce60845ff44c153bb2a21b49"
 [[package]]
 name = "power-policy-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "bitfield 0.17.0",
  "defmt 0.3.100",
@@ -1262,7 +1270,7 @@ dependencies = [
 [[package]]
 name = "thermal-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embassy-futures",
@@ -1279,7 +1287,7 @@ dependencies = [
 [[package]]
 name = "thermal-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embassy-time",
@@ -1290,7 +1298,7 @@ dependencies = [
 [[package]]
 name = "thermal-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embedded-services",
@@ -1331,7 +1339,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embassy-futures",
@@ -1347,7 +1355,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "bitfield 0.17.0",
  "defmt 0.3.100",
@@ -1359,7 +1367,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embedded-mcu-hal",
@@ -1438,7 +1446,7 @@ checksum = "40ce102ab67701b8526c123c1bab5cbe42d7040ccfd0f64af1a385808d2f43de"
 [[package]]
 name = "uart-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=v0.2.0#f1f1e087563085f853215ae24e7bc1290aa07168"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
  "embassy-sync",

@@ -59,7 +59,7 @@ embassy-executor = { version = "0.10.0", features = [
 ] }
 panic-probe = { version = "1.0", features = ["print-defmt"] }
 static_cell = "2.1.0"
-uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
 platform-common = { path = "../platform-common", features = ["mock"] }

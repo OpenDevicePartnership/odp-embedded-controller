@@ -20,12 +20,12 @@ url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
 version = "1.1.4"
 criteria = "safe-to-deploy"
 
-[[exemptions.bq40z50-rx]]
-version = "0.8.1"
+[[exemptions.autocfg]]
+version = "1.5.1"
 criteria = "safe-to-deploy"
 
-[[exemptions.cc]]
-version = "1.2.59"
+[[exemptions.bq40z50-rx]]
+version = "0.8.1"
 criteria = "safe-to-deploy"
 
 [[exemptions.cc]]
@@ -60,14 +60,6 @@ criteria = "safe-to-deploy"
 version = "0.3.0"
 criteria = "safe-to-deploy"
 
-[[exemptions.device-driver]]
-version = "1.0.8"
-criteria = "safe-to-deploy"
-
-[[exemptions.device-driver]]
-version = "1.0.9"
-criteria = "safe-to-deploy"
-
 [[exemptions.document-features]]
 version = "0.2.12"
 criteria = "safe-to-deploy"
@@ -82,10 +74,6 @@ criteria = "safe-to-deploy"
 
 [[exemptions.embassy-sync]]
 version = "0.7.2"
-criteria = "safe-to-deploy"
-
-[[exemptions.embassy-time-queue-utils]]
-version = "0.3.2"
 criteria = "safe-to-deploy"
 
 [[exemptions.embedded-sensors-hal]]
@@ -114,10 +102,6 @@ criteria = "safe-to-deploy"
 
 [[exemptions.ident_case]]
 version = "1.0.1"
-criteria = "safe-to-deploy"
-
-[[exemptions.libc]]
-version = "0.2.184"
 criteria = "safe-to-deploy"
 
 [[exemptions.libc]]
@@ -198,10 +182,6 @@ criteria = "safe-to-deploy"
 
 [[exemptions.stable_deref_trait]]
 version = "1.2.1"
-criteria = "safe-to-deploy"
-
-[[exemptions.subenum]]
-version = "1.1.3"
 criteria = "safe-to-deploy"
 
 [[exemptions.subenum]]

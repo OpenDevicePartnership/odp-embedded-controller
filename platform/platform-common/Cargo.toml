@@ -15,37 +15,37 @@ suspicious = "deny"
 style = "deny"
 
 [dependencies]
-embedded-services = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0" }
-battery-service = { package = "battery-service", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+embedded-services = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main" }
+battery-service = { package = "battery-service", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-battery-service-interface = { package = "battery-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+battery-service-interface = { package = "battery-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-battery-service-relay = { package = "battery-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
-    "defmt",
-] }
-
-thermal-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
-    "defmt",
-] }
-thermal-service-interface = { package = "thermal-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
-    "defmt",
-] }
-thermal-service-relay = { package = "thermal-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+battery-service-relay = { package = "battery-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
 
-time-alarm-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+thermal-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-time-alarm-service-interface = { package = "time-alarm-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+thermal-service-interface = { package = "thermal-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-time-alarm-service-relay = { package = "time-alarm-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+thermal-service-relay = { package = "thermal-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0" }
+
+time-alarm-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
+time-alarm-service-interface = { package = "time-alarm-service-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
+time-alarm-service-relay = { package = "time-alarm-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
+odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main" }
 
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"

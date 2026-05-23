@@ -54,7 +54,7 @@ embassy-mcxa = { git = "https://github.com/embassy-rs/embassy", rev = "bef411873
     "unstable-pac",
     "mcxa2xx",
 ] }
-uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "v0.2.0", features = [
+uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
 static_cell = "2.1.0"

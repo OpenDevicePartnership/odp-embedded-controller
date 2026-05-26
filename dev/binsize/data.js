@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1779820514965,
+  "lastUpdate": 1779820546297,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -812,6 +812,36 @@ window.BENCHMARK_DATA = {
             "value": 67.87,
             "unit": "KiB",
             "extra": "RAM Size: 9.53 KiB\nDependency Count: 328\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9f79d638da50f8b83ae030c3764aebd38c7004d",
+          "message": "chore: migrate embedded-services pins from v0.2.0 to main (#23)\n\nUpdate all platform Cargo.toml files to reference the main branch\nof embedded-services instead of v0.2.0. The APIs are identical since\nPR #852 was merged to both branches, so no code changes are needed.\n\nThis ensures consistent trait resolution across all platforms and\nprepares for upcoming features that target the main branch.",
+          "timestamp": "2026-05-26T11:33:34-07:00",
+          "tree_id": "0c49c2f3cd3e8ab1dc26c62e7108505bc1be9b77",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f9f79d638da50f8b83ae030c3764aebd38c7004d"
+        },
+        "date": 1779820545920,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 67.87,
+            "unit": "KiB",
+            "extra": "RAM Size: 9.53 KiB\nDependency Count: 329\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
           }
         ]
       }

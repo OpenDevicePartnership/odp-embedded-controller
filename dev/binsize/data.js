@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1779901877801,
+  "lastUpdate": 1779901891093,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1047,6 +1047,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f9f79d638da50f8b83ae030c3764aebd38c7004d"
         },
         "date": 1779820514445,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.93,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.99 KiB\nDependency Count: 328\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "blakejackson312006@gmail.com",
+            "name": "Blake Jackson",
+            "username": "bjackson312006"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "95d998c2b5f563f5b1899870ac93517c83ff1a9a",
+          "message": "Dev Platform for MEC1723 (#25)\n\n* basic setup\n\n* board.rs updated\n\n* compiled successfully\n\n* fixed comments in memory.x\n\n* updated config.toml\n\n* j-link issue\n\n* rtt works\n\n* no more uart error\n\n* buffered uart\n\n* rebase\n\n* update embassy-microchip fork and turn off [TRACE] logs\n\n* removed custom yaml, adjusted memory.x and link_ram.x to be consistent with the embassy example\n\n* renamed to dev-mec, changed Cargo.toml dependency branches\n\n* update deleted files on gh?\n\n* updated embedded-services to main",
+          "timestamp": "2026-05-27T10:09:56-07:00",
+          "tree_id": "d184055b8f2b4821faedef36f3e6c2385e9bf5e8",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/95d998c2b5f563f5b1899870ac93517c83ff1a9a"
+        },
+        "date": 1779901890644,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

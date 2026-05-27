@@ -1,0 +1,81 @@
+[package]
+edition = "2024"
+license = "MIT"
+publish = false
+name = "dev-mec"
+version = "0.1.0"
+
+[[bin]]
+bench = false
+name = "dev-mec"
+test = false
+
+[profile.release]
+lto = true          # better optimizations
+codegen-units = 1
+debug = true
+opt-level = "z"
+panic = "abort"
+incremental = false
+
+# Optimize dependencies for size but keep root crate unoptimized for better debuggability
+[profile.dev.package."*"]
+opt-level = "z"
+
+# Uncomment to turn off optimization for specific dependency (such as when debugging a service)
+# [profile.dev.package.dependency-name]
+# opt-level = 0
+
+[lints.rust]
+warnings = "deny"
+
+[lints.clippy]
+correctness = "deny"
+perf = "deny"
+suspicious = "deny"
+style = "deny"
+
+[dependencies]
+cortex-m = { version = "0.7.7", features = [
+    "inline-asm",
+    "critical-section-single-core",
+] }
+cortex-m-rt = { version = "0.7.3", features = ["device"] }
+defmt = "1.0"
+defmt-rtt = "1.0"
+embassy-executor = { version = "0.10.0", default-features = false, features = [
+    "platform-cortex-m",
+    "executor-thread",
+    "executor-interrupt",
+    "defmt",
+] }
+embassy-microchip = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy", features = [
+    "defmt",
+    "mec1723n_b0_sz",
+    "rt",
+] }
+uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
+static_cell = "2.1.0"
+embassy-time = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embedded-hal = "0.2"
+platform-common = { path = "../platform-common", features = ["mock"] }
+panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+
+[package.metadata.cargo-machete]
+ignored = ["cortex-m", "cortex-m-rt"]
+
+# embassy-microchip pulls embassy-time-driver from the embassy-rs git repo, which
+# uses `links = "embassy-time"`. Other crates in the dependency graph pull
+# embassy-time/embassy-time-driver from crates.io, which would cause a duplicate
+# `links` conflict. Force everyone to use the git versions.
+[patch.crates-io]
+embassy-time = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-time-driver = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-time-queue-utils = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-sync = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-executor = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-futures = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-embedded-hal = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }
+embassy-hal-internal = { git = "https://github.com/bjackson312006/embassy", branch = "microchip-uart-buffer-hack.update-embassy" }

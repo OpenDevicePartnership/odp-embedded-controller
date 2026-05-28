@@ -93,23 +93,17 @@ version = "0.3.100"
 notes = "Compatibility shim: no_std crate that re-exports defmt 1.x items for 0.3 API compatibility. No unsafe code, no build script, no powerful imports, no logic - pure pub-use re-exports. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
 aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
 
-[[audits.OpenDevicePartnership.audits.defmt]]
-who = "Felipe Balbi <felipe.balbi@microsoft.com>"
-criteria = "safe-to-deploy"
-version = "1.0.1"
-aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
-
-[[audits.OpenDevicePartnership.audits.defmt-macros]]
-who = "Felipe Balbi <felipe.balbi@microsoft.com>"
-criteria = "safe-to-deploy"
-version = "1.0.1"
-aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
-
 [[audits.OpenDevicePartnership.audits.defmt-parser]]
 who = "Felipe Balbi <felipe.balbi@microsoft.com>"
 criteria = "safe-to-deploy"
 version = "1.0.0"
 aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/mcxa-pac/refs/heads/main/supply-chain/audits.toml"
+
+[[audits.OpenDevicePartnership.audits.device-driver]]
+who = "Felipe Balbi <febalbi@microsoft.com>"
+criteria = "safe-to-deploy"
+version = "1.0.9"
+aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/tps6699x/refs/heads/main/supply-chain/audits.toml"
 
 [[audits.OpenDevicePartnership.audits.embassy-embedded-hal]]
 who = "Jerry Xie <jerryxie@microsoft.com>"
@@ -313,20 +307,6 @@ who = "Jerry Xie <jerryxie@microsoft.com>"
 criteria = "safe-to-deploy"
 version = "0.3.1"
 notes = "no_std 32-bit hashing (FNV, MurmurHash3). ~10 unsafe blocks in murmur3.rs for MaybeUninit buffer handling - all sound. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
-aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
-
-[[audits.OpenDevicePartnership.audits.heapless]]
-who = "Jerry Xie <jerryxie@microsoft.com>"
-criteria = "safe-to-deploy"
-version = "0.8.0"
-notes = "no_std fixed-capacity data structures. Extensive unsafe for MaybeUninit buffer management, lock-free queues (Vyukov MPMC, SPSC), and Treiber stack memory pools with ABA prevention. Patterns mirror std or published algorithms. Build script probes for atomic/LLSC support. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
-aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
-
-[[audits.OpenDevicePartnership.audits.heapless]]
-who = "Jerry Xie <jerryxie@microsoft.com>"
-criteria = "safe-to-deploy"
-version = "0.9.2"
-notes = "no_std fixed-capacity data structures. Extensive unsafe for MaybeUninit buffers, lock-free queues (Vyukov MPMC, SPSC), Treiber stack pools with ABA prevention (CAS tagged pointers + ARM LLSC). All Send/Sync bounds verified correct. Build script probes for ARM LLSC. Assisted-by: copilot-cli:claude-opus-4.6 cargo-vet"
 aggregated-from = "https://raw.githubusercontent.com/OpenDevicePartnership/embedded-services/refs/heads/main/supply-chain/audits.toml"
 
 [[audits.OpenDevicePartnership.audits.heck]]
@@ -665,34 +645,6 @@ who = "danakj <danakj@chromium.org>"
 criteria = "safe-to-deploy"
 version = "1.5.0"
 notes = "Unsafe review in https://crrev.com/c/5838022"
-aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
-
-[[audits.google.audits.either]]
-who = "Manish Goregaokar <manishearth@google.com>"
-criteria = "safe-to-deploy"
-version = "1.13.0"
-notes = "Unsafe code pertaining to wrapping Pin APIs. Mostly passes invariants down."
-aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
-
-[[audits.google.audits.either]]
-who = "Daniel Cheng <dcheng@chromium.org>"
-criteria = "safe-to-deploy"
-delta = "1.13.0 -> 1.14.0"
-notes = """
-Inheriting ub-risk-1 from the baseline review of 1.13.0. While the delta has some diffs in unsafe code, they are either:
-- migrating code to use helper macros
-- migrating match patterns to take advantage of default bindings mode from RFC 2005
-Either way, the result is code that does exactly the same thing and does not change the risk of UB.
-
-See https://crrev.com/c/6323164 for more audit details.
-"""
-aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
-
-[[audits.google.audits.either]]
-who = "Lukasz Anforowicz <lukasza@chromium.org>"
-criteria = "safe-to-deploy"
-delta = "1.14.0 -> 1.15.0"
-notes = 'The delta in `lib.rs` only tweaks doc comments and `#[cfg(feature = "std")]`.'
 aggregated-from = "https://chromium.googlesource.com/chromium/src/+/main/third_party/rust/chromium_crates_io/supply-chain/audits.toml?format=TEXT"
 
 [[audits.google.audits.lazy_static]]

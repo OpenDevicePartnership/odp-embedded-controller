@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1780003040413,
+  "lastUpdate": 1780003047805,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1144,6 +1144,36 @@ window.BENCHMARK_DATA = {
             "value": 78.93,
             "unit": "KiB",
             "extra": "RAM Size: 14.99 KiB\nDependency Count: 328\nVersion: rustc 1.95.0 (59807616e 2026-04-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "felipe.balbi@microsoft.com",
+            "name": "Felipe Balbi",
+            "username": "felipebalbi"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d6fb3ce5d9ae52ca51d6ef7b87518c6c4cb3c809",
+          "message": "docs: add AGENTS.md and model-selection guidance (#26)\n\n* Add AGENTS.md for AI coding agents\n\nDocument the operational workflow autonomous coding agents need to\n\nbe productive in this repository: per-platform build/lint/test\n\ncommands, the no-workspace-root layout, required tooling\n\n(flip-link, cargo-deny), CI mirror script, code conventions\n\n(static allocation, Embassy async, defmt, lint strictness), and the\n\ncommit/AI-attribution/push policy.\n\nComplements .github/copilot-instructions.md, which remains the deep\n\nreference for architecture and conventions.\n\nAssisted-by: GitHub Copilot:claude-opus-4.7\n\n* docs(AGENTS.md): add model selection & cost discipline section\n\nAdds guidance on choosing between premium and cheap models for code-assistant work, including escalation/de-escalation triggers, sub-agent routing defaults, /fleet rules, and session-hygiene tips. Keeps premium reasoning for genuinely hard problems and routes mechanical work to cheaper models.\n\nAssisted-by: GitHub Copilot:claude-opus-4.7\n\n---------\n\nCo-authored-by: Kurtis Dinelle <kdinelle@microsoft.com>",
+          "timestamp": "2026-05-28T14:15:50-07:00",
+          "tree_id": "3706678d5b083a2b96f703e53cc322fda2233fb9",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/d6fb3ce5d9ae52ca51d6ef7b87518c6c4cb3c809"
+        },
+        "date": 1780003047464,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.81,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.99 KiB\nDependency Count: 328\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
           }
         ]
       }

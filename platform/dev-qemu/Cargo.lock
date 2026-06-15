@@ -372,7 +372,7 @@ dependencies = [
 [[package]]
 name = "embassy-qemu-riscv"
 version = "0.2.1"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#702ab97339894ac996da80c88f70b2f6d4ae8f94"
+source = "git+https://github.com/kurtjd/qemu-riscv-rs#7e6200200acb8a0156eb09a9d57694f3d50a136b"
 dependencies = [
  "critical-section",
  "defmt 1.1.0",
@@ -386,6 +386,7 @@ dependencies = [
  "embedded-hal-async",
  "embedded-io 0.7.1",
  "embedded-io-async 0.7.0",
+ "embedded-mcu-hal 0.3.0",
  "qemu-riscv-pac",
  "riscv",
  "riscv-rt",
@@ -521,6 +522,9 @@ name = "embedded-hal"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "361a90feb7004eca4019fb28352a9465666b24f840f5c3cddf0ff13920590b89"
+dependencies = [
+ "defmt 0.3.100",
+]
 
 [[package]]
 name = "embedded-hal-async"
@@ -528,6 +532,7 @@ version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c4c685bbef7fe13c3c6dd4da26841ed3980ef33e841cddfa15ce8a8fb3f1884"
 dependencies = [
+ "defmt 0.3.100",
  "embedded-hal 1.0.0",
 ]
 
@@ -569,6 +574,18 @@ checksum = "f02b992c2b871b7fc616e4539258d92ea8b085e2f09cc0ad2862aa4d0e185ad1"
 dependencies = [
  "defmt 1.1.0",
  "num_enum",
+]
+
+[[package]]
+name = "embedded-mcu-hal"
+version = "0.3.0"
+source = "git+https://github.com/OpenDevicePartnership/embedded-mcu#38acdc22911dc3c4e8278c315b6e458b6007fbbb"
+dependencies = [
+ "defmt 1.1.0",
+ "embedded-hal 1.0.0",
+ "embedded-hal-async",
+ "num_enum",
+ "smbus-pec",
 ]
 
 [[package]]
@@ -868,7 +885,7 @@ dependencies = [
  "embedded-hal-async",
  "embedded-io 0.7.1",
  "embedded-io-async 0.7.0",
- "embedded-mcu-hal",
+ "embedded-mcu-hal 0.2.0",
  "embedded-sensors-hal-async",
  "embedded-services",
  "odp-service-common",
@@ -934,7 +951,7 @@ dependencies = [
 [[package]]
 name = "qemu-riscv-pac"
 version = "0.1.0"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#702ab97339894ac996da80c88f70b2f6d4ae8f94"
+source = "git+https://github.com/kurtjd/qemu-riscv-rs#7e6200200acb8a0156eb09a9d57694f3d50a136b"
 dependencies = [
  "critical-section",
  "riscv",
@@ -1269,7 +1286,7 @@ dependencies = [
  "embassy-futures",
  "embassy-sync 0.8.0",
  "embassy-time",
- "embedded-mcu-hal",
+ "embedded-mcu-hal 0.2.0",
  "embedded-services",
  "odp-service-common",
  "time-alarm-service-interface",
@@ -1283,7 +1300,7 @@ source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=
 dependencies = [
  "bitfield 0.17.0",
  "defmt 0.3.100",
- "embedded-mcu-hal",
+ "embedded-mcu-hal 0.2.0",
  "num_enum",
  "zerocopy",
 ]
@@ -1294,7 +1311,7 @@ version = "0.1.0"
 source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
 dependencies = [
  "defmt 0.3.100",
- "embedded-mcu-hal",
+ "embedded-mcu-hal 0.2.0",
  "embedded-services",
  "num_enum",
  "time-alarm-service-interface",

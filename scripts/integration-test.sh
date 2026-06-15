@@ -40,6 +40,11 @@ cd "$REPO_ROOT/platform/dev-qemu"
 echo "Building dev-qemu..."
 cargo build --locked --release --config 'env.DEFMT_LOG="off"'
 
+# Warm the QEMU cache up front (pulls `qemu-system-riscv32` from the GHCR image
+# on first use) so a cold `docker pull` doesn't count against the PTY poll below.
+echo "Preparing QEMU..."
+./qemu-ec.sh --prepare
+
 # Then launch it in "headless mode" (again, DEFMT disabled),
 # and poll until serial comms are ready
 echo "Starting dev-qemu..."

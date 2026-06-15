@@ -335,6 +335,9 @@ jobs:
       # We can update this commit when we want to pull in a new `ec-test-cli`
       EC_TEST_CLI_REV: d705cd4f
 
+      # Tag of the prebuilt QEMU image pulled from the odp-qemu-builder GHCR package
+      ODP_QEMU_TAG: sha-7e461b3
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -346,10 +349,16 @@ jobs:
       - name: rustup target add riscv32imac-unknown-none-elf
         run: rustup target add riscv32imac-unknown-none-elf
 
-      # Note: qemu-system-misc contains the `qemu-system-riscv32` binary which is needed to run `dev-qemu`
-      # libudev-dev is needed by `ec-test-cli` (via libudev-sys)
+      # libudev-dev is needed by `ec-test-cli` (via libudev-sys).
+      #
+      # The remaining libs are the runtime shared libraries the prebuilt
+      # `qemu-system-riscv32` (copied out of the odp-qemu-builder image) is
+      # dynamically linked against.
       - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y qemu-system-misc libudev-dev
+        run: >
+          sudo apt-get update && sudo apt-get install -y
+          libudev-dev
+          libfdt1
 
       - name: Install ec-test-cli
         run: cargo install --git https://github.com/OpenDevicePartnership/odp-platform-common --locked --rev ${{ env.EC_TEST_CLI_REV }} ec-test-cli

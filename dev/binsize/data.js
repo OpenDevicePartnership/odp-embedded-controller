@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1780003074623,
+  "lastUpdate": 1781562003331,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1197,6 +1197,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/d6fb3ce5d9ae52ca51d6ef7b87518c6c4cb3c809"
         },
         "date": 1780003047464,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.81,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.99 KiB\nDependency Count: 328\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f311134a10c578cde1424906328b5b77ffd557e5",
+          "message": "Add deny exception for proc-macro-error2 (#29)",
+          "timestamp": "2026-06-15T15:18:20-07:00",
+          "tree_id": "221aa1d6a7aeb6c1b09c52fc712bb25120a18f84",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f311134a10c578cde1424906328b5b77ffd557e5"
+        },
+        "date": 1781562002958,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

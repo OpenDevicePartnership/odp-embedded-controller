@@ -19,7 +19,7 @@ platforms are maintained separately and are not in scope here.
 | `dev-imxrt` | Development target on NXP i.MXRT685S (Cortex-M33) | `thumbv8m.main-none-eabihf` |
 | `dev-mcxa` | Development target on NXP MCXA266 (Cortex-M33) | `thumbv8m.main-none-eabihf` |
 | `dev-npcx` | Development target on Nuvoton NPCX498M (Cortex-M4F) | `thumbv7em-none-eabihf` |
-| `dev-qemu` | Development target under QEMU `virt` machine (RISC-V 32-bit) | `riscv32imac-unknown-none-elf` |
+| `dev-qemu` | Development target under QEMU `ec` machine (RISC-V 32-bit) | `riscv32imac-unknown-none-elf` |
 
 `platform-common` is consumed by each `dev-*` crate and contains no platform-specific code.
 

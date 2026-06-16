@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-            # dev-qemu is intentionally excluded from binsize benchmarks: it targets QEMU virt
+            # dev-qemu is intentionally excluded from binsize benchmarks: it targets QEMU ec
             # and uses semihosting, so its ELF section layout doesn't represent real flash/RAM
             # footprint the way the SoC-backed platforms do.
             platform: ["dev-imxrt", "dev-npcx", "dev-mcxa"]

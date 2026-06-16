@@ -27,7 +27,7 @@ essentials so an autonomous agent has a single entry point.
     (requires `flip-link`).
   - `platform/dev-npcx` — Nuvoton NPCX498M, `thumbv7em-none-eabihf`
     (requires `flip-link`).
-  - `platform/dev-qemu` — QEMU `virt`, `riscv32imac-unknown-none-elf`
+  - `platform/dev-qemu` — QEMU `ec`, `riscv32imac-unknown-none-elf`
     (no `flip-link`).
 - Toolchain pinned in `rust-toolchain.toml` (stable + all three
   targets + `rust-src`, `rustfmt`, `clippy`, `llvm-tools-preview`).

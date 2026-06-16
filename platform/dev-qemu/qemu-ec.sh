@@ -83,8 +83,12 @@ resolve_qemu() {
     mkdir -p "$QEMU_CACHE_DIR"
     local cid
     cid="$(docker create "$QEMU_IMAGE")"
+    # `resolve_qemu` runs in a command-substitution subshell, so an EXIT trap is
+    # scoped to that subshell and fires on both success and an errexit abort
+    # (e.g. a failing `docker cp`). RETURN would be skipped on errexit, leaking
+    # the temporary container.
     # shellcheck disable=SC2064
-    trap "docker rm -f '$cid' >/dev/null 2>&1 || true" RETURN
+    trap "docker rm -f '$cid' >/dev/null 2>&1 || true" EXIT
     docker cp "${cid}:${QEMU_IMAGE_BIN}" "$QEMU_CACHE_BIN" >&2
     chmod +x "$QEMU_CACHE_BIN"
 
@@ -106,25 +110,27 @@ fi
 # - `-serial pty`            UART0 is bridged to a PTY for terminal/ec-test-cli.
 # - `-chardev socket,...`    The I2C-target and GPIO lines as UNIX sockets that
 #                            external programs can connect to (server=on).
-# - `-semihosting-config`    Routes defmt over semihosting to QEMU's own stdout
-#                            (`target=native`) so it stays separate from UART0.
 QEMU_ARGS=(
     -machine ec
     -bios none
     -nographic
     -monitor none
-    -semihosting-config enable=on,target=native
     -serial pty
     -chardev "socket,id=ec-i2c-target,path=${EC_I2C_SOCK},server=on,wait=off"
     -chardev "socket,id=ec-gpio0,path=${EC_GPIO_SOCK},server=on,wait=off"
     -kernel "$ELF"
 )
 
-# Headless path: no defmt logging, run QEMU raw. The "char device redirected to
-# /dev/pts/N" line goes to stdout where callers (integration-test.sh) grep it.
+# Headless path: no defmt logging, so semihosting is left disabled and QEMU runs
+# raw. The "char device redirected to /dev/pts/N" line goes to stdout where
+# callers (integration-test.sh) grep it.
 if [[ "${DEFMT_LOG:-}" == "off" ]]; then
     exec "$QEMU_BIN" "${QEMU_ARGS[@]}"
 fi
+
+# Interactive path enables semihosting so defmt can route its log stream to
+# QEMU's own stdout (`target=native`), keeping it separate from UART0.
+QEMU_ARGS+=(-semihosting-config enable=on,target=native)
 
 # Interactive path: defmt-print decodes the semihosting log stream.
 if ! command -v defmt-print >/dev/null 2>&1; then

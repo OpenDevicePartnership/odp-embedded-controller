@@ -38,6 +38,6 @@ programs (such as another QEMU instance) can connect to:
 | Variable       | Default                  | Description                                     |
 |----------------|--------------------------|-------------------------------------------------|
 | `QEMU`         | (pulled from GHCR)       | Override the `qemu-system-riscv32` binary.      |
-| `ODP_QEMU_TAG` | \<pinned to latest\>            | Tag of the odp-qemu-builder GHCR image to pull. |
+| `ODP_QEMU_TAG` | (pinned in `qemu-ec.sh`) | Tag of the odp-qemu-builder GHCR image to pull. |
 | `EC_I2C_SOCK`  | `/tmp/qemu-ec-i2c.sock`  | Path for the I2C-target socket.                 |
 | `EC_GPIO_SOCK` | `/tmp/qemu-ec-gpio.sock` | Path for the GPIO socket.                       |

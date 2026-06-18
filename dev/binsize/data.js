@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1781819502928,
+  "lastUpdate": 1781819518712,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1257,6 +1257,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f311134a10c578cde1424906328b5b77ffd557e5"
         },
         "date": 1781562002958,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 78.81,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.99 KiB\nDependency Count: 328\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8705e326ecb29e4074feaa73542245b2df716c99",
+          "message": "dev-qemu: Update HAL and use custom QEMU (#28)\n\n* dev-qemu: Update HAL and use custom QEMU\n\n* Replace 'virt' with 'ec'",
+          "timestamp": "2026-06-18T14:50:24-07:00",
+          "tree_id": "76cad2ba1ca1e9b1c062a1eef1466a28d6cf86d2",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/8705e326ecb29e4074feaa73542245b2df716c99"
+        },
+        "date": 1781819518325,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

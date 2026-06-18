@@ -1,5 +1,5 @@
 [target.riscv32imac-unknown-none-elf]
-runner = "qemu-run --arch riscv32 --machine virt --uart-pty --bios none"
+runner = "./qemu-ec.sh"
 
 rustflags = ["-C", "link-arg=-Tlink.x", "-C", "link-arg=-Tdefmt.x"]
 
@@ -15,11 +15,4 @@ DEFMT_LOG = "trace"
 #
 # Main use-case for this is running `dev-qemu` in CI where we don't care about logging
 # and don't want to have to install `defmt-print` for it to run
-run-headless = [
-    "run",
-    "--release",
-    "--config",
-    'env.DEFMT_LOG="off"',
-    "--config",
-    'target.riscv32imac-unknown-none-elf.runner="qemu-system-riscv32 -machine virt -bios none -serial pty -nographic -monitor none -kernel"',
-]
+run-headless = ["run", "--release", "--config", 'env.DEFMT_LOG="off"']

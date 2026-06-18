@@ -29,7 +29,7 @@ There are no unit tests or integration tests in this repository — it is a `no_
 |---|---|---|---|---|
 | `dev-imxrt` | i.MXRT685S | M33 | `thumbv8m.main-none-eabihf` | Minimal dev board |
 | `dev-npcx` | NPCX498M | M4F | `thumbv7em-none-eabihf` | NPCX dev board |
-| `dev-qemu` | QEMU RISC-V virt | — | `riscv32imac-unknown-none-elf` | QEMU dev board |
+| `dev-qemu` | QEMU RISC-V ec | — | `riscv32imac-unknown-none-elf` | QEMU dev board |
 
 ### Crate dependency graph
 

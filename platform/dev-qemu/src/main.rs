@@ -14,12 +14,29 @@ use platform_common::mock::MockOdpRelayHandler;
 use semihosting as _; // Panic handler
 use static_cell::StaticCell;
 
+// MCTP medium for the uart-service, selected at build time: SmbusEspi
+// by default (the framing ec-test-cli speaks), MctpSerialMedium under
+// sp-serial (the framing the SP speaks over the two-QEMU link). Both
+// constructors live in uart-service; dev-qemu holds no wire addressing.
+#[cfg(not(feature = "sp-serial"))]
+type EcUartService = uart_service::DefaultService<MockOdpRelayHandler>;
+#[cfg(feature = "sp-serial")]
+type EcUartService = uart_service::MctpSerialService<MockOdpRelayHandler>;
+
+#[cfg(not(feature = "sp-serial"))]
+fn new_uart_service(relay: MockOdpRelayHandler) -> EcUartService {
+    uart_service::DefaultService::default_smbusespi(relay).unwrap()
+}
+#[cfg(feature = "sp-serial")]
+fn new_uart_service(relay: MockOdpRelayHandler) -> EcUartService {
+    uart_service::MctpSerialService::default_mctp_serial(relay).unwrap()
+}
+
 #[embassy_executor::task]
 async fn uart_service(uart: buffered::Uart<'static, Async>, relay: MockOdpRelayHandler) {
     info!("Starting uart service");
-    static UART_SERVICE: StaticCell<uart_service::DefaultService<MockOdpRelayHandler>> = StaticCell::new();
-    let uart_service = uart_service::DefaultService::default_smbusespi(relay).unwrap();
-    let uart_service = UART_SERVICE.init(uart_service);
+    static UART_SERVICE: StaticCell<EcUartService> = StaticCell::new();
+    let uart_service = UART_SERVICE.init(new_uart_service(relay));
     let Err(e) = uart_service::task::uart_service(uart_service, uart).await;
     panic!("uart-service error: {:?}", e);
 }

@@ -10,6 +10,14 @@ bench = false
 name = "dev-qemu"
 test = false
 
+[features]
+default = []
+# sp-serial off (default): SmbusEspiMedium (the framing ec-test-cli
+# speaks). On: MctpSerialMedium / DSP0253 (the framing the SP speaks
+# over the two-QEMU link). Pure compile-time selector — both medium
+# constructors already exist in uart-service.
+sp-serial = []
+
 [profile.release]
 lto = true          # better optimizations
 codegen-units = 1

@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1782506327002,
+  "lastUpdate": 1782506347874,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1045,6 +1045,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/8705e326ecb29e4074feaa73542245b2df716c99"
         },
         "date": 1781819545115,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 67.87,
+            "unit": "KiB",
+            "extra": "RAM Size: 9.53 KiB\nDependency Count: 329\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "41ef81a0248408ea7aaa8b1fb8de97c2074df7a6",
+          "message": "dev-qemu: Add minimal tasks for completing HID handshake (#31)",
+          "timestamp": "2026-06-26T13:37:08-07:00",
+          "tree_id": "15f86488a49922cfd5f0838bbffe7f3b184957c5",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/41ef81a0248408ea7aaa8b1fb8de97c2074df7a6"
+        },
+        "date": 1782506347479,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

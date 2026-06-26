@@ -19,28 +19,27 @@ pub async fn init(spawner: embassy_executor::Spawner) -> ThermalService {
     info!("Initializing thermal service...");
 
     // Create and spawn mock sensor service
-    let sensor_service = odp_service_common::spawn_service!(
-        spawner,
-        SensorService,
-        ts::sensor::InitParams {
-            driver: MockSensor::new(),
-            config: MockSensor::config(),
-            event_senders: &mut [],
-        }
-    )
-    .expect("Failed to spawn mock sensor service");
+    let sensor_service =
+        odp_service_common::spawn_service!(spawner, SensorService, |resources| ts::sensor::Service::new(
+            resources,
+            ts::sensor::InitParams {
+                driver: MockSensor::new(),
+                config: MockSensor::config(),
+                event_senders: &mut [],
+            },
+        ))
+        .expect("Failed to spawn mock sensor service");
 
     // Create and spawn mock fan service
-    let fan_service = odp_service_common::spawn_service!(
-        spawner,
-        FanService,
+    let fan_service = odp_service_common::spawn_service!(spawner, FanService, |resources| ts::fan::Service::new(
+        resources,
         ts::fan::InitParams {
             driver: MockFan::new(),
             config: MockFan::config(),
             sensor_service,
             event_senders: &mut [],
-        }
-    )
+        },
+    ))
     .expect("Failed to spawn mock fan service");
 
     // Create the thermal service

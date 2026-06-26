@@ -2,6 +2,7 @@
 #![no_std]
 
 mod board;
+mod hid;
 
 use board::Board;
 use defmt::info;
@@ -30,4 +31,9 @@ async fn main(spawner: Spawner) {
 
     let relay = platform_common::mock::init(spawner).await;
     spawner.spawn(uart_service(board.uart, relay).expect("Failed to spawn UART service task"));
+
+    // Bring up a minimal HID-over-I2C device so a host (e.g. Windows) can
+    // complete its initial HID handshake against the EC
+    spawner.spawn(hid::host_task(board.i2c).expect("Failed to spawn HID host task"));
+    spawner.spawn(hid::device_task(board.gpio).expect("Failed to spawn HID device task"));
 }

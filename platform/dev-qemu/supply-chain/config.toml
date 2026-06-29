@@ -36,6 +36,14 @@ criteria = "safe-to-deploy"
 version = "1.0.4"
 criteria = "safe-to-deploy"
 
+[[exemptions.crc]]
+version = "3.4.0"
+criteria = "safe-to-deploy"
+
+[[exemptions.crc-catalog]]
+version = "2.5.0"
+criteria = "safe-to-deploy"
+
 [[exemptions.darling]]
 version = "0.20.11"
 criteria = "safe-to-deploy"
@@ -74,6 +82,10 @@ criteria = "safe-to-deploy"
 
 [[exemptions.embassy-sync]]
 version = "0.7.2"
+criteria = "safe-to-deploy"
+
+[[exemptions.embedded-mcu-hal]]
+version = "0.3.0"
 criteria = "safe-to-deploy"
 
 [[exemptions.embedded-sensors-hal]]

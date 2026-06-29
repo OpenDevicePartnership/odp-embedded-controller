@@ -8,7 +8,7 @@ pub mod time_alarm;
 
 crate::impl_relay_handler!(
     MockOdpRelayHandler,
-    battery_service::Service<'static, 1>,
+    crate::mock::battery::BatteryService,
     crate::mock::thermal::ThermalService
 );
 

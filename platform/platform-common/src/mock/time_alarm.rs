@@ -25,18 +25,15 @@ pub async fn init(spawner: embassy_executor::Spawner) -> TimeAlarmService {
     static CLOCK: StaticCell<tas::mock::MockDatetimeClock> = StaticCell::new();
     let clock = CLOCK.init(tas::mock::MockDatetimeClock::new_running());
 
-    let service = odp_service_common::spawn_service!(
-        spawner,
-        TimeAlarmService,
-        tas::InitParams {
-            backing_clock: clock,
-            tz_storage,
-            ac_expiration_storage: ac_exp_storage,
-            ac_policy_storage: ac_pol_storage,
-            dc_expiration_storage: dc_exp_storage,
-            dc_policy_storage: dc_pol_storage,
-        }
-    )
+    let service = odp_service_common::spawn_service!(spawner, TimeAlarmService, |resources| tas::Service::new(
+        resources,
+        clock,
+        tz_storage,
+        ac_exp_storage,
+        ac_pol_storage,
+        dc_exp_storage,
+        dc_pol_storage,
+    ))
     .expect("Failed to initialize time-alarm service");
 
     service

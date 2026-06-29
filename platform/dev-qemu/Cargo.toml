@@ -64,7 +64,7 @@ hid-service = { git = "https://github.com/OpenDevicePartnership/embedded-service
     "defmt",
 ] }
 platform-common = { path = "../platform-common", features = ["mock"] }
-embedded-mcu-hal = { git = "https://github.com/OpenDevicePartnership/embedded-mcu" }
+embedded-mcu-hal = "0.3.0"
 
 static_cell = "2.1.0"
 embassy-sync = "0.8.0"

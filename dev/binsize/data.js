@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1782759999633,
+  "lastUpdate": 1782760021258,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1112,6 +1112,36 @@ window.BENCHMARK_DATA = {
             "value": 67.87,
             "unit": "KiB",
             "extra": "RAM Size: 9.53 KiB\nDependency Count: 329\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73b0db1a017cc9148666a4ef536f179794da6f9d",
+          "message": "Modernize EC to embedded-services main (#33)\n\nBump the embedded-services git pin off the stale 62d4ea9 onto current\nmain (6d7dbbf, which carries the new default_mctp_serial constructor),\nporting the shared mock to the new battery Registration model and the\nnew spawn_service! init-closure form.\n\nplatform-common/src/mock:\n- battery.rs: rewrite to the fuel-gauge Registration model. The OEM\n  owns a Mutex<GlobalRawMutex, MockFuelGauge> and drives it directly;\n  the service is bs::Service::new(ArrayRegistration{..}). Replaces the\n  removed Device / MockBattery / execute_event API.\n- thermal.rs: wrap the sensor and fan spawn_service! args in the new\n  |resources| Service::new(resources, InitParams{..}) closures.\n- time_alarm.rs: switch to the positional tas::Service::new closure.\n- mod.rs: update the relay-handler battery type argument.\n\nBump all five platform locks (dev-mec was at 5cc395f1) and add\ncrc / crc-catalog / embedded-mcu-hal 0.3.0 cargo-vet exemptions to the\nfour CI platforms (dev-mec has no supply-chain store). No per-platform\ncode changes: every platform consumes platform_common::mock only.\n\ndev-qemu unifies embedded-mcu-hal on crates.io: time-alarm-service\n(from embedded-services main), embassy-qemu-riscv, and dev-qemu's own\nHID dep all use the crates.io 0.3.0 rather than mixing crates.io and\ngit sources of the identical crate, which collide on defmt's derive\nsymbols under LTO (surfaces only in the release build, not cargo check).\n\nUnblocks dropping the F1.1 fork [patch] override.\n\nAssisted-by: GitHub Copilot:claude-opus-4.8",
+          "timestamp": "2026-06-29T12:04:54-07:00",
+          "tree_id": "faa8eac9b7845c050e64a55529048dbc047da0db",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/73b0db1a017cc9148666a4ef536f179794da6f9d"
+        },
+        "date": 1782760020246,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 57.25,
+            "unit": "KiB",
+            "extra": "RAM Size: 8.24 KiB\nDependency Count: 335\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
           }
         ]
       }

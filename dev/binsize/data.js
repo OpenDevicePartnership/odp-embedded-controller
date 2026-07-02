@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1782760021258,
+  "lastUpdate": 1783024746125,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -570,6 +570,36 @@ window.BENCHMARK_DATA = {
             "value": 53.61,
             "unit": "KiB",
             "extra": "RAM Size: 4.69 KiB\nDependency Count: 319\nVersion: rustc 1.96.0 (ac68faa20 2026-05-25)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed17ddeb3c3150ce87ad8e3b8a2d96a12b414352",
+          "message": "Switch all platforms to the MctpSerial uart-service (#36)\n\nEvery platform drove its uart-service through\n`DefaultService::default_smbusespi` (SMBus/eSPI framing). Switch all\nfive to `MctpSerialService::default_mctp_serial` so the EC link speaks\nDSP0253 serial (`MctpSerialMedium`) — the same framing the rest of the\nstack now uses — and retire the SMBus/eSPI path.\n\n`ec-test-cli` was updated to speak DSP0253 in odp-platform-common; bump\n`EC_TEST_CLI_REV` to that revision so the dev-qemu integration test\nexercises the unified wire format end to end.\n\nAssisted-by: GitHub Copilot:claude-opus-4.8",
+          "timestamp": "2026-07-02T13:37:35-07:00",
+          "tree_id": "b3ac045ad9b9b39b4e27e1b0746a4d2309b54a57",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/ed17ddeb3c3150ce87ad8e3b8a2d96a12b414352"
+        },
+        "date": 1783024745287,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 54.97,
+            "unit": "KiB",
+            "extra": "RAM Size: 4.69 KiB\nDependency Count: 319\nVersion: rustc 1.96.1 (31fca3adb 2026-06-26)"
           }
         ]
       }

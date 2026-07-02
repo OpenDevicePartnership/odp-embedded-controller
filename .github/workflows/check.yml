@@ -333,7 +333,7 @@ jobs:
       # if there are breaking changes in `ec-test-cli`
       #
       # We can update this commit when we want to pull in a new `ec-test-cli`
-      EC_TEST_CLI_REV: d705cd4f
+      EC_TEST_CLI_REV: 20347787
 
       # Tag of the prebuilt QEMU image pulled from the odp-qemu-builder GHCR package
       ODP_QEMU_TAG: sha-7e461b3

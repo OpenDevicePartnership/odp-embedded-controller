@@ -25,18 +25,18 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
         fuel_gauges: [fuel_gauge_0, fuel_gauge_1],
     });
 
-    for fuel_gauge in [fuel_gauge_0, fuel_gauge_1] {
+    for (battery_id, fuel_gauge) in [fuel_gauge_0, fuel_gauge_1].into_iter().enumerate() {
         bs::mock::init_state_machine(fuel_gauge)
             .await
             .expect("Failed to initialize battery state machine");
-        spawner.spawn(update_data_task(fuel_gauge).expect("Failed to spawn battery update data task"));
+        spawner.spawn(update_data_task(battery_id as u8, fuel_gauge).expect("Failed to spawn battery update data task"));
     }
 
     service
 }
 
 #[embassy_executor::task(pool_size = 2)]
-pub async fn update_data_task(fuel_gauge: &'static FuelGauge) -> ! {
+pub async fn update_data_task(battery_id: u8, fuel_gauge: &'static FuelGauge) -> ! {
     let mut failures: u32 = 0;
     let mut count: usize = 0;
     loop {
@@ -44,20 +44,20 @@ pub async fn update_data_task(fuel_gauge: &'static FuelGauge) -> ! {
         if count.is_multiple_of(const { 60 * 60 * 60 }) {
             if let Err(e) = fuel_gauge.lock().await.update_static_data().await {
                 failures += 1;
-                error!("FG: Static data error: {:?}", defmt::Debug2Format(&e));
+                error!("FG {}: Static data error: {:?}", battery_id, defmt::Debug2Format(&e));
             }
         }
         if let Err(e) = fuel_gauge.lock().await.update_dynamic_data().await {
             failures += 1;
-            error!("FG: Dynamic data error: {:?}", defmt::Debug2Format(&e));
+            error!("FG {}: Dynamic data error: {:?}", battery_id, defmt::Debug2Format(&e));
         }
 
         if failures > 10 {
             failures = 0;
             count = 0;
-            error!("FG: Too many errors, timing out and starting recovery...");
+            error!("FG {}: Too many errors, timing out and starting recovery...", battery_id);
             if bs::mock::recover_state_machine(fuel_gauge).await.is_err() {
-                error!("FG: Failed to recover state machine!");
+                error!("FG {}: Failed to recover state machine!", battery_id);
             }
         }
 

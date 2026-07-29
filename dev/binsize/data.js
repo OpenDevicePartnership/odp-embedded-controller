@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1783024777344,
+  "lastUpdate": 1785349377721,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1594,6 +1594,36 @@ window.BENCHMARK_DATA = {
             "value": 70.39,
             "unit": "KiB",
             "extra": "RAM Size: 13.59 KiB\nDependency Count: 334\nVersion: rustc 1.96.1 (31fca3adb 2026-06-26)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f8c4f3bb014359991d93ec902c2c1359ab1aada2",
+          "message": "Add second mock battery (#37)\n\n* Add second mock battery\n\nRegister a distinct 2S fuel gauge as battery 1 so integration tests can verify that callers select a battery by ID.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: a3539bc8-3a1f-44b3-ba4a-c171a7822595\n\n* Identify mock battery logs\n\nInclude each registered battery ID in update and recovery errors so failures from the two mock gauges are distinguishable.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: a3539bc8-3a1f-44b3-ba4a-c171a7822595\n\n* Format mock battery logging\n\nApply the platform-common rustfmt layout required by its standalone CI formatting job.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\nCopilot-Session: a3539bc8-3a1f-44b3-ba4a-c171a7822595\n\n---------\n\nCopilot-Session: a3539bc8-3a1f-44b3-ba4a-c171a7822595",
+          "timestamp": "2026-07-29T11:21:02-07:00",
+          "tree_id": "f23ba6b2e9040233ad2bbe2d6103c417e8552ba8",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f8c4f3bb014359991d93ec902c2c1359ab1aada2"
+        },
+        "date": 1785349376867,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 70.18,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.00 KiB\nDependency Count: 334\nVersion: rustc 1.97.1 (8bab26f4f 2026-07-14)"
           }
         ]
       }

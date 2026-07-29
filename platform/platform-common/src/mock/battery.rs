@@ -29,7 +29,8 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
         bs::mock::init_state_machine(fuel_gauge)
             .await
             .expect("Failed to initialize battery state machine");
-        spawner.spawn(update_data_task(battery_id as u8, fuel_gauge).expect("Failed to spawn battery update data task"));
+        spawner
+            .spawn(update_data_task(battery_id as u8, fuel_gauge).expect("Failed to spawn battery update data task"));
     }
 
     service
@@ -55,7 +56,10 @@ pub async fn update_data_task(battery_id: u8, fuel_gauge: &'static FuelGauge) ->
         if failures > 10 {
             failures = 0;
             count = 0;
-            error!("FG {}: Too many errors, timing out and starting recovery...", battery_id);
+            error!(
+                "FG {}: Too many errors, timing out and starting recovery...",
+                battery_id
+            );
             if bs::mock::recover_state_machine(fuel_gauge).await.is_err() {
                 error!("FG {}: Failed to recover state machine!", battery_id);
             }

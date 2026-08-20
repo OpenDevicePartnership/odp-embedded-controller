@@ -423,7 +423,7 @@ typedef struct _FFA_INTERFACE {
     ULONG Version;
     PFFA_MSG_SEND_DIRECT_REQ2 SendDirectReq2;
 } FFA_INTERFACE, PFFA_INTERFACE;
-````
+```
 
 ### FFA Parsing
 
@@ -512,7 +512,7 @@ The Secure Partition uses embassy as the scheduler for secure partition. This
 allows us to use await and do useful work while waiting for events even when
 we only are single threaded. 
 
-Embassy depeneds on timers and interrupts for signalling events. When we don't
+Embassy depends on timers and interrupts for signalling events. When we don't
 have any work to do we still in the poll loop today. Optimizations can be made
 to yield control back to non-secure world in these situations.
 
@@ -851,4 +851,3 @@ for monitoring that the system is running within safe parameters. The
 thermal requests and queries are meant to be advisory in nature and EC
 should be able to run independently and safely without any intervention
 from the OS.
-

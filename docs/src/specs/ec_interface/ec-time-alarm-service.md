@@ -54,7 +54,7 @@ Method (_GCP) {
 
     If(LEqual(STAT,0x0) ) // Check FF-A successful?
     {
-      Return (GCDD)
+      Return (GCPD)
     }
   }
   Return(Zero)

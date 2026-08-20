@@ -155,7 +155,7 @@ thresholds for
 
 ### Output Parameters
 
-Arg0 – Status // 0 on success or neagtive error code
+Arg0 – Status // 0 on success or negative error code
 
 Arg1 – Timeout // Integer (DWORD) in mS
 

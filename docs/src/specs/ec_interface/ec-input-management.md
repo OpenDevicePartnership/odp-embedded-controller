@@ -15,7 +15,7 @@ the system.
 | -------- | --------------------------------------------- |
 | _LID    | Get state of LID device for clamshell designs |
 
-### ACPI Example for LID notificiation
+### ACPI Example for LID notification
 
 Assuming that LID is managed by the EC during registration we register
 for Input Management service for a Virtual ID = 1

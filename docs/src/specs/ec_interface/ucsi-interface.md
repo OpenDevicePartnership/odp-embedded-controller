@@ -70,7 +70,7 @@ Device(USBC) {
   {
     // USB C Mailbox Interface
     VERS,16, // PPM-\>OPM Version
-    RES, 16, // Reservied
+    RES, 16, // Reserved
     CCI, 32, // PPM-\>OPM CCI Indicator
     CTRL,64, // OPM-\>PPM Control Messages
     MSGI,128, // OPM-\>PPM Message In

@@ -1,0 +1,15 @@
+[book]
+authors = ["Open Device Partnership"]
+language = "en"
+src = "src"
+title = "ODP Embedded Controller"
+
+[build]
+build-dir = "book"
+
+[output.html]
+git-repository-url = "https://github.com/OpenDevicePartnership/odp-embedded-controller"
+edit-url-template = "https://github.com/OpenDevicePartnership/odp-embedded-controller/edit/main/docs/{path}"
+
+[output.html.fold]
+enable = true

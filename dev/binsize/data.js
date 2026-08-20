@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1787257410589,
+  "lastUpdate": 1787257423829,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1684,6 +1684,36 @@ window.BENCHMARK_DATA = {
             "value": 70.18,
             "unit": "KiB",
             "extra": "RAM Size: 14.00 KiB\nDependency Count: 334\nVersion: rustc 1.97.1 (8bab26f4f 2026-07-14)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "philweber@microsoft.com",
+            "name": "philgweber",
+            "username": "philgweber"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a018ff0ca21ac95c84b3d3559bda0d11962a0344",
+          "message": "Add project documentation mdBook (#39)\n\n* Add project documentation mdBook\n\nCreate a project-owned mdBook per RFC 0044 and migrate the EC\ninterface specification from the centralized documentation repository.\nAdd local build guidance and GitHub Pages publishing.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n* Fix documentation review typos\n\nCorrect the spelling, code identifier, and Markdown fence issues found during review so the imported documentation renders and reads correctly.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n---------\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
+          "timestamp": "2026-08-20T13:22:01-07:00",
+          "tree_id": "b1f370cb03268dec78b94d87a580f6abed52f8e8",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/a018ff0ca21ac95c84b3d3559bda0d11962a0344"
+        },
+        "date": 1787257423010,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.03,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.00 KiB\nDependency Count: 334\nVersion: rustc 1.98.0 (88d9e12ae 2026-08-18)"
           }
         ]
       }

@@ -107,6 +107,18 @@ CI lives under `.github/workflows/`:
 - `nostd.yml` — verifies `platform-common` and `dev-*` remain `no_std`-clean.
 - `benchmark.yml`, `rolling.yml` — secondary lanes (binsize tracking on
   `dev-imxrt`/`dev-npcx`; nightly dep update verification).
+- `docs.yml` — builds the project mdBook and publishes it to GitHub Pages
+  after documentation changes land on `main`.
+
+## Documentation
+
+Project documentation, including the Embedded Controller Interface
+specification, is maintained as an [mdBook](./docs/README.md). Build it
+locally with:
+
+```
+mdbook serve docs --open
+```
 
 ## Contributing
 

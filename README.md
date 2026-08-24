@@ -5,6 +5,13 @@ Public reference and demo firmware for Embedded Controllers (EC) built on
 This repository contains development targets suitable for experimentation,
 integration testing, and as a starting point for downstream EC projects.
 
+The ODP Secure Embedded Controller (Secure EC) project is building an
+open-source, microcontroller-agnostic EC platform with reusable Rust firmware,
+standardized host interfaces, and security capabilities including secure boot,
+device identity, and attestation. See the
+[Secure EC overview](./docs/src/secure-ec-overview.md) for the project goals,
+architecture, current areas of investment, and key repositories.
+
 ## Scope
 
 This repository hosts the four public `dev-*` development targets and their
@@ -14,7 +21,7 @@ platforms are maintained separately and are not in scope here.
 ## Platforms
 
 | Crate | Role | Target |
-|-------|------|--------|
+| ----- | ---- | ------ |
 | `platform-common` | Shared `no_std` library crate — HAL traits, board abstractions, common services | (library, no build target) |
 | `dev-imxrt` | Development target on NXP i.MXRT685S (Cortex-M33) | `thumbv8m.main-none-eabihf` |
 | `dev-mcxa` | Development target on NXP MCXA266 (Cortex-M33) | `thumbv8m.main-none-eabihf` |
@@ -37,7 +44,7 @@ invoked inside this repo; no manual `rustup target add` is required.
 `dev-imxrt`, `dev-mcxa`, and `dev-npcx` link via [`flip-link`](https://github.com/knurling-rs/flip-link)
 for stack-overflow protection. Install it once:
 
-```
+```console
 cargo install flip-link --locked
 ```
 
@@ -45,7 +52,7 @@ cargo install flip-link --locked
 
 Build and lint a single platform:
 
-```
+```console
 cd platform/<name>
 cargo build --locked
 cargo clippy --locked -- -D warnings
@@ -53,14 +60,14 @@ cargo clippy --locked -- -D warnings
 
 For example, to build `dev-qemu`:
 
-```
+```console
 cd platform/dev-qemu
 cargo build --locked
 ```
 
 Format checks are run per crate:
 
-```
+```console
 cd platform/<name>
 cargo fmt --check
 ```
@@ -68,7 +75,7 @@ cargo fmt --check
 Dependency policy (licenses, sources, advisories) is enforced by
 [cargo-deny](https://github.com/EmbarkStudios/cargo-deny) using `deny.toml`:
 
-```
+```console
 cd platform/<name>
 cargo deny --locked check
 ```
@@ -78,7 +85,7 @@ cargo deny --locked check
 `scripts/check-all.sh` runs every gate (fmt + build + clippy -D warnings +
 cargo-deny) across all three dev-* platforms — the same checks CI runs:
 
-```
+```console
 bash scripts/check-all.sh
 ```
 
@@ -116,7 +123,7 @@ Project documentation, including the Embedded Controller Interface
 specification, is maintained as an [mdBook](./docs/README.md). Build it
 locally with:
 
-```
+```console
 mdbook serve docs --open
 ```
 

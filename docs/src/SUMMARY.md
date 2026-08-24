@@ -1,6 +1,7 @@
 # Summary
 
 [Introduction](introduction.md)
+[Secure EC Overview](secure-ec-overview.md)
 
 - [Development](development.md)
   - [Supply-chain auditing](supply-chain.md)

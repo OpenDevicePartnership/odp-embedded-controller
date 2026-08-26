@@ -4,7 +4,7 @@ The Open Device Partnership (ODP) Secure Embedded Controller (Secure EC)
 project strives to build an open-source, microcontroller-agnostic embedded controller
 platform for the PC ecosystem. It combines secure firmware, standardized host
 interfaces, and reusable Rust components so device makers can reduce effort by building
-on a standardized platform that is secure by design and focusing on their unique value added.
+on a standardized platform that is secure by design while focusing on their unique value added.
 
 ## Goals
 
@@ -25,7 +25,7 @@ support:
 
 1. **MCU HALs and board support** provide access to clocks, GPIO, I2C, eSPI,
    I3C, and other peripherals.
-2. **Subsystem abstractions** connect hardware implementations to subsystem abstractions for battery, thermal, power, USB-C, HID, and other common EC subsystems.
+2. **Subsystem interfaces** decouple portable service logic from hardware implementations for battery, thermal, power, USB-C, HID, and other common EC subsystems.
 3. **Embedded services** implement reference application logic for EC subsystems.
 4. **Host transports and protocols** expose those services to the host through standardized
    interfaces
@@ -48,11 +48,11 @@ Current areas of investment include:
 
 - Expanding portable Rust services and drivers.
 - Supporting reference MCU platforms from multiple silicon vendors.
-- Developing standardized HID communication protocol over eSPI and I3C transport with OS support.
+- Developing a standardized HID communication protocol over eSPI and I3C transports with OS support.
 - Starting with secure boot and working toward device identity + attestation.
 - Using QEMU-based virtualized platforms for development, integration testing, and ecosystem
   onboarding.
-- Exploring how Rust based Secure EC components and APIs can interoperate with Zephyr-based
+- Exploring how Rust-based Secure EC components and APIs can interoperate with Zephyr-based
   systems.
 
 ## Key Repositories
@@ -60,7 +60,7 @@ Current areas of investment include:
 | Repository | Purpose |
 | ---------- | ------- |
 | [`odp-embedded-controller`](https://github.com/OpenDevicePartnership/odp-embedded-controller) | Reference EC firmware including hardware platforms and virtualized platforms. Refer to its README to get started. Secure EC top-level documentation is also included. |
-| [`odp-platform-qemu-arm-virt`](https://github.com/OpenDevicePartnership/odp-platform-qemu-arm-virt) | End to End virtualized Secure EC testing platform using virtualized EC RISC-V platform <-> QEMU ARM virtual platform running Windows Validation OS. |
+| [`odp-platform-qemu-arm-virt`](https://github.com/OpenDevicePartnership/odp-platform-qemu-arm-virt) | End-to-end Secure EC test platform connecting a virtualized RISC-V EC to an Arm64 QEMU host running Windows Validation OS. |
 | [`embedded-services`](https://github.com/OpenDevicePartnership/embedded-services) | Reusable EC service implementations and interfaces, including battery, thermal, HID, time and alarms, and UART services. |
 
 The broader set of projects and community activity is available in the

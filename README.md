@@ -7,8 +7,8 @@ integration testing, and as a starting point for downstream EC projects.
 
 The ODP Secure Embedded Controller (Secure EC) project is building an
 open-source, microcontroller-agnostic EC platform with reusable Rust firmware,
-standardized host interfaces, and security capabilities including secure boot,
-device identity, and attestation. See the
+standardized host interfaces, and planned security capabilities including secure
+boot, device identity, and attestation. See the
 [Secure EC overview](./docs/src/secure-ec-overview.md) for the project goals,
 architecture, current areas of investment, and key repositories.
 

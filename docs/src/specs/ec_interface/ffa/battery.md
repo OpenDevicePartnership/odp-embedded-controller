@@ -5,7 +5,7 @@ Battery control is monitored through the Modern Power Thermal Framework
 firmware for these features. This section outlines the interface
 required in ACPI for this framework to function.
 
-<b>Note:</b> There is an issue with ACPI and embedded packages `return Package() {BST0,BST1,BST2,BST3}` returns "BST0","BST1","BST2","BST3" rather than the values pointed to by these variables. As such we need to create a global Name for BSTD and initialize default values and update these fields like the following.
+**Note:** There is an issue with ACPI and embedded packages `return Package() {BST0,BST1,BST2,BST3}` returns "BST0","BST1","BST2","BST3" rather than the values pointed to by these variables. As such we need to create a global Name for BSTD and initialize default values and update these fields like the following.
 
 ```
   Name (BSTD, Package (4) {

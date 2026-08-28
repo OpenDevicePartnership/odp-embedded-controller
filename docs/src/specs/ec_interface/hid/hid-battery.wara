@@ -1,0 +1,975 @@
+# Draft descriptor for the proposed Control Method Battery top-level collection.
+# Proposed usages are added to the existing Battery System Usage Page (0x85).
+# Multi-byte integers are little-endian. Fields declared with a signed 32-bit
+# logical range are interpreted as raw ACPI DWORD values by the protocol.
+
+[[usagePage]]
+id = 0x85
+name = "Battery System"
+
+    [[usagePage.usage]]
+    id = 0x100
+    name = "Control Method Battery"
+    types = ['CA']
+
+    [[usagePage.usage]]
+    id = 0x101
+    name = "Control Method Battery Information"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x102
+    name = "Control Method Battery Identity"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x103
+    name = "Control Method Battery Status"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x104
+    name = "Control Method Battery Notification"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x105
+    name = "Battery Measurement Configuration"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x106
+    name = "Battery Maintenance"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x107
+    name = "Battery Charge Time"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x108
+    name = "Battery Runtime"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x109
+    name = "Battery Power Characteristics"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10A
+    name = "Battery Power State"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10B
+    name = "Battery Power Threshold"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10C
+    name = "Battery Capacity Trip Point"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10D
+    name = "Battery Thermal Control"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10E
+    name = "Battery Capability Negotiation"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x10F
+    name = "Power Consumer List"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x120
+    name = "Protocol Revision"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x121
+    name = "Battery Tag"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x122
+    name = "Battery Information Revision"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x123
+    name = "Battery Power Unit"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x124
+    name = "Capacity in Milliwatt Hours"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x125
+    name = "Capacity in Milliampere Hours"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x126
+    name = "Battery Technology"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x127
+    name = "Primary Battery Technology"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x128
+    name = "Secondary Battery Technology"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x129
+    name = "Design Capacity Low"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12A
+    name = "Measurement Accuracy"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12B
+    name = "Maximum Sampling Time"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12C
+    name = "Minimum Sampling Time"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12D
+    name = "Maximum Averaging Interval"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12E
+    name = "Minimum Averaging Interval"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x12F
+    name = "Battery Swapping Capability"
+    types = ['CL']
+
+    [[usagePage.usage]]
+    id = 0x130
+    name = "Battery Not Swappable"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x131
+    name = "Battery Cold Swappable"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x132
+    name = "Battery Hot Swappable"
+    types = ['Sel']
+
+    [[usagePage.usage]]
+    id = 0x133
+    name = "Battery Model Number"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x134
+    name = "Battery Serial Number String"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x135
+    name = "Battery Type String"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x136
+    name = "Battery OEM Information"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x137
+    name = "Battery Manufacturer Name"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x138
+    name = "Battery Unique Identifier"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x139
+    name = "Power Consumer Identifiers"
+    types = ['BufferedBytes']
+
+    [[usagePage.usage]]
+    id = 0x140
+    name = "Battery Critical"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x141
+    name = "Battery Charge Limiting Active"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x142
+    name = "Battery Present Rate"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x143
+    name = "Battery Status Sequence"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x144
+    name = "Battery Information Changed"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x145
+    name = "Battery Maintenance Changed"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x146
+    name = "Battery Power State Changed"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x147
+    name = "Battery Power Threshold Crossed"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x148
+    name = "Sampling Time"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x149
+    name = "Averaging Interval"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x14A
+    name = "Operation Status"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x150
+    name = "Calibration Active"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x151
+    name = "Charging Disabled"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x152
+    name = "Discharge on AC Enabled"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x153
+    name = "Recalibration Requested"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x154
+    name = "Standby Recommended for Calibration"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x155
+    name = "Charge Limit Suspension Blocked by Thermal Condition"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x156
+    name = "Charge Limit Suspension Blocked by Battery Protection"
+    types = ['DF']
+
+    [[usagePage.usage]]
+    id = 0x157
+    name = "Calibration Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x158
+    name = "Charging Control Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x159
+    name = "Discharge on AC Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x15A
+    name = "Individual Battery Control Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x15B
+    name = "Charge Before Calibration Required"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x15C
+    name = "Charge Limit Suspension Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x15D
+    name = "Recalibrate Count"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x15E
+    name = "Quick Recalibrate Time"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x15F
+    name = "Slow Recalibrate Time"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x160
+    name = "Start Calibration"
+    types = ['OOC']
+
+    [[usagePage.usage]]
+    id = 0x161
+    name = "Disable Charging"
+    types = ['OOC']
+
+    [[usagePage.usage]]
+    id = 0x162
+    name = "Enable Discharge on AC"
+    types = ['OOC']
+
+    [[usagePage.usage]]
+    id = 0x163
+    name = "Suspend Charge Limiting"
+    types = ['OOC']
+
+    [[usagePage.usage]]
+    id = 0x168
+    name = "Target Charge Level"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x169
+    name = "Estimated Charge Time"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x16A
+    name = "Requested Discharge Rate"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x16B
+    name = "Estimated Runtime"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x170
+    name = "Power Characteristics Revision"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x171
+    name = "Instantaneous Peak Power Threshold Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x172
+    name = "Sustainable Peak Power Threshold Supported"
+    types = ['SF']
+
+    [[usagePage.usage]]
+    id = 0x173
+    name = "Maximum Instantaneous Peak Power Threshold"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x174
+    name = "Maximum Sustainable Peak Power Threshold"
+    types = ['SV']
+
+    [[usagePage.usage]]
+    id = 0x175
+    name = "Power State Revision"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x176
+    name = "Instantaneous Peak Power Level"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x177
+    name = "Instantaneous Peak Power Period"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x178
+    name = "Sustainable Peak Power Level"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x179
+    name = "Sustainable Peak Power Period"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x17A
+    name = "Power Threshold Revision"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x17B
+    name = "Power Threshold Identifier"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x17C
+    name = "Power Threshold Value"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x17D
+    name = "Capacity Trip Point"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x17E
+    name = "Thermal Throttle Limit"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x180
+    name = "Host Capability Flags"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x181
+    name = "Device Capability Flags"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x182
+    name = "Notification Power State Mask"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x183
+    name = "Notification Low Capacity"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x184
+    name = "Notification High Capacity"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x185
+    name = "Critical Bias"
+    types = ['DV']
+
+    [[usagePage.usage]]
+    id = 0x186
+    name = "System On Line"
+    types = ['DF']
+
+# One Control Method Battery TLC represents one independently managed battery.
+[[applicationCollection]]
+usage = ['Battery System', 'Control Method Battery']
+
+    # Protocol identity and ACPI _BIX-compatible static information.
+    [[applicationCollection.InputReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Control Method Battery Information']
+
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection]] *** Maybe this can be in Page Units, need to see if this can dynamically change
+            usage = ['Battery System', 'Battery Power Unit']
+
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]] *** Static
+            usageRange = ['Battery System', 'Capacity in Milliwatt Hours', 'Capacity in Milliampere Hours']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] *** Static
+            usage = [0x85, 0x83] # Design Capacity
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]  *** Static
+            usage = [0x85, 0x67] # Full Charge Capacity
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection]] ** Static
+            usage = ['Battery System', 'Battery Technology']
+
+              [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]] ** Static
+              usageRange = ['Battery System', 'Primary Battery Technology', 'Secondary Battery Technology']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            usage = [0x84, 0x40] # Config Voltage / ACPI Design Voltage
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            usage = [0x85, 0x8C] # Warning Capacity Limit
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]  ** Static
+            usage = ['Battery System', 'Design Capacity Low']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]  ****** Dynamic maybe move to Status
+            usage = [0x85, 0x6B] # Cycle Count
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            usage = ['Battery System', 'Measurement Accuracy']
+            logicalValueRange = [0, 100000]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            usage = ['Battery System', 'Maximum Sampling Time']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            usage = ['Battery System', 'Minimum Sampling Time']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            usage = ['Battery System', 'Maximum Averaging Interval']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            usage = ['Battery System', 'Minimum Averaging Interval']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x8D] # Capacity Granularity 1 ** Static Low to Warning
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x8E] # Capacity Granularity 2 ** Static Warning to Full
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection]]
+            usage = ['Battery System', 'Battery Swapping Capability'] ** Static 
+
+                [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]]
+                usageRange = ['Battery System', 'Battery Not Swappable', 'Battery Hot Swappable']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x85] # Manufacture Date
+            logicalValueRange = [0, 0xFFFF]
+
+    # UTF-8, NUL-terminated strings. Unused bytes are zero.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Control Method Battery Identity']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Model Number']
+            count = 64
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Serial Number String']
+            count = 64
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Type String']
+            count = 32
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery OEM Information']
+            count = 64
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Manufacturer Name']
+            count = 64
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Unique Identifier']
+            count = 64
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']
+
+    # ACPI _BST-compatible dynamic state. Sent on any state change.
+    [[applicationCollection.inputReport]]
+
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Battery System', 'Control Method Battery Status']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Tag']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x45] # Discharging
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x44] # Charging
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Critical']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Charge Limiting Active']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x85, 0xD0] # AC Present
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'System On Line']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x85, 0xD1] # Battery Present
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Present Rate']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x85, 0x66] # Remaining Capacity
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x84, 0x30] # Voltage
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = [0x84, 0x36] # Temperature
+            logicalValueRange = [-1, 0x7FFFFFFF]
+            usageUnitMultiplier = 0.1
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Status Sequence']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Information Changed']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Maintenance Changed']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Power State Changed']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Battery Power Threshold Crossed']
+            logicalValueRange = [0, 1]
+
+    # Windows battery-class notification band and critical-bias configuration.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Control Method Battery Notification']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Notification Power State Mask']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Notification Low Capacity']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Notification High Capacity']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Critical Bias']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+    # ACPI _BMS and _BMA. Set then Get the report to obtain Operation Status.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Measurement Configuration']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Sampling Time']
+            logicalValueRange = [1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Averaging Interval']
+            logicalValueRange = [1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Operation Status']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+    # ACPI _BMD state/capabilities and _BMC controls.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Maintenance']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Calibration Active']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charging Disabled']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Discharge on AC Enabled']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Recalibration Requested']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Standby Recommended for Calibration']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charge Limit Suspension Blocked by Thermal Condition']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charge Limit Suspension Blocked by Battery Protection']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Calibration Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charging Control Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Discharge on AC Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Individual Battery Control Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charge Before Calibration Required']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Charge Limit Suspension Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Recalibrate Count']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Quick Recalibrate Time']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Slow Recalibrate Time']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Start Calibration']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Disable Charging']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Enable Discharge on AC']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Suspend Charge Limiting']
+            logicalValueRange = [0, 1]
+
+    # ACPI _BCT. Target Charge Level is written; Estimated Charge Time is read.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Charge Time']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Target Charge Level']
+            logicalValueRange = [1, 100]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Estimated Charge Time']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+    # ACPI _BTM. Requested rate is written; Estimated Runtime is read.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Runtime']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Requested Discharge Rate']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Estimated Runtime']
+            logicalValueRange = [-1, 0x7FFFFFFF]
+
+    # ACPI _BPC.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Power Characteristics']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power Characteristics Revision']
+            logicalValueRange = [1, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Instantaneous Peak Power Threshold Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Sustainable Peak Power Threshold Supported']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Maximum Instantaneous Peak Power Threshold']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Maximum Sustainable Peak Power Threshold']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+    # ACPI _BPS. Sent when peak power capability changes.
+    [[applicationCollection.inputReport]]
+
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Power State']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power State Revision']
+            logicalValueRange = [1, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Instantaneous Peak Power Level']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Instantaneous Peak Power Period']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Sustainable Peak Power Level']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Sustainable Peak Power Period']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+    # ACPI _BPT. Set then Get the report to obtain Operation Status.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Power Threshold']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power Threshold Revision']
+            logicalValueRange = [1, 1]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power Threshold Identifier']
+            logicalValueRange = [0, 2]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power Threshold Value']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Operation Status']
+            logicalValueRange = [0, 5]
+
+    # ACPI _BTP and _BTH.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Capacity Trip Point']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Capacity Trip Point']
+            logicalValueRange = [0, 0x7FFFFFFF]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Thermal Control']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Thermal Throttle Limit']
+            logicalValueRange = [0, 100]
+
+    # ACPI Control Method Battery _OSC capability exchange.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Battery Capability Negotiation']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Host Capability Flags']
+            logicalValueRange = [0, 7]
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Device Capability Flags']
+            logicalValueRange = [0, 7]
+
+    # ACPI _PCL represented as a NUL-separated UTF-8 list of stable identifiers.
+    [[applicationCollection.featureReport]]
+
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Battery System', 'Power Consumer List']
+
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
+            usage = ['Battery System', 'Power Consumer Identifiers']
+            count = 256
+            logicalValueRange = [0, 255]
+            reportFlags = ['bufferedBytes']

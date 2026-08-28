@@ -496,5 +496,4 @@ ID.
   }
 ```
 
-![A diagram of a event AI-generated content may be
-incorrect.](media/image15.png)
+![Notification Flow](../media/image15.png)

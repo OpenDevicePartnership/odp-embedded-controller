@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1787939073460,
+  "lastUpdate": 1787939093233,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1767,6 +1767,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/a018ff0ca21ac95c84b3d3559bda0d11962a0344"
         },
         "date": 1787257423010,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.03,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.00 KiB\nDependency Count: 334\nVersion: rustc 1.98.0 (88d9e12ae 2026-08-18)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "139205137+jerrysxie@users.noreply.github.com",
+            "name": "Jerry Xie",
+            "username": "jerrysxie"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "49bce1239bd736e4af4858259ab6f776a9619a75",
+          "message": "docs: add Secure EC overview (#40)\n\n* docs: add Secure EC overview\n\nDocument the project's goals, architecture, security direction, and\nkey repositories in the mdBook. Link the overview from the README and\nfix existing Markdown lint issues.\n\nAssisted-by: GitHub Copilot:gpt-5.3-codex\n\n* docs: address Secure EC review feedback\n\nClarify that security features are planned and improve the overview's\narchitecture, virtual platform, and grammar descriptions.\n\nAssisted-by: GitHub Copilot:gpt-5.3-codex",
+          "timestamp": "2026-08-28T12:43:07-05:00",
+          "tree_id": "654f9045ce595a83833b5f0afa9952d9f978f78a",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/49bce1239bd736e4af4858259ab6f776a9619a75"
+        },
+        "date": 1787939092103,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

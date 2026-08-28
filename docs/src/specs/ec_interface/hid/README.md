@@ -16,7 +16,8 @@ For eSPI we first need to standardize and have a more efficient eSPI interface. 
 
 For each top level collection there is a corresponding HID Class driver that gets loaded for that TLC. The HID Class driver implements the miniport driver interface from the OS based on the HID specification for that class.
 
-Below you can find links to the HUTRR documents for HID Class drivers as they are created an draft specifications to cover all the EC services:
+Below are links to HUTRR documents for HID Class drivers as they are created as draft specifications to cover all the EC
+services:
 
 - [HID Time and Alarm](HUTRR120-SystemWakeTimerAndRTC.md)
 - [HID Battery](HUTRR-DRAFT-Battery.md)

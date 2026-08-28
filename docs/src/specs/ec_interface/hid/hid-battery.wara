@@ -507,64 +507,79 @@ name = "Battery System"
 usage = ['Battery System', 'Control Method Battery']
 
     # Protocol identity and ACPI _BIX-compatible static information.
-    [[applicationCollection.InputReport]]
+    [[applicationCollection.featureReport]]
 
         [[applicationCollection.featureReport.logicalCollection]]
         usage = ['Battery System', 'Control Method Battery Information']
 
-            [[applicationCollection.featureReport.logicalCollection.logicalCollection]] *** Maybe this can be in Page Units, need to see if this can dynamically change
+            # Maybe this can be in Page Units; determine whether it can change dynamically.
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection]]
             usage = ['Battery System', 'Battery Power Unit']
 
-            [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]] *** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]]
             usageRange = ['Battery System', 'Capacity in Milliwatt Hours', 'Capacity in Milliampere Hours']
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] *** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = [0x85, 0x83] # Design Capacity
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]]  *** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = [0x85, 0x67] # Full Charge Capacity
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.logicalCollection]] ** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.logicalCollection]]
             usage = ['Battery System', 'Battery Technology']
 
-              [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]] ** Static
+              # Static
+              [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]]
               usageRange = ['Battery System', 'Primary Battery Technology', 'Secondary Battery Technology']
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = [0x84, 0x40] # Config Voltage / ACPI Design Voltage
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = [0x85, 0x8C] # Warning Capacity Limit
             logicalValueRange = [0, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]]  ** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Design Capacity Low']
             logicalValueRange = [0, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]]  ****** Dynamic maybe move to Status
+            # Dynamic; consider moving to Status.
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = [0x85, 0x6B] # Cycle Count
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static
+            # Static
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Measurement Accuracy']
             logicalValueRange = [0, 100000]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            # Static; should go into the report descriptor for range.
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Maximum Sampling Time']
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            # Static; should go into the report descriptor for range.
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Minimum Sampling Time']
             logicalValueRange = [-1, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            # Static; should go into the report descriptor for range.
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Maximum Averaging Interval']
             logicalValueRange = [0, 0x7FFFFFFF]
 
-            [[applicationCollection.featureReport.logicalCollection.variableItem]] ** Static --> Should go into the report descriptor for range
+            # Static; should go into the report descriptor for range.
+            [[applicationCollection.featureReport.logicalCollection.variableItem]]
             usage = ['Battery System', 'Minimum Averaging Interval']
             logicalValueRange = [0, 0x7FFFFFFF]
 
@@ -576,8 +591,9 @@ usage = ['Battery System', 'Control Method Battery']
             usage = [0x85, 0x8E] # Capacity Granularity 2 ** Static Warning to Full
             logicalValueRange = [0, 0x7FFFFFFF]
 
+            # Static
             [[applicationCollection.featureReport.logicalCollection.logicalCollection]]
-            usage = ['Battery System', 'Battery Swapping Capability'] ** Static 
+            usage = ['Battery System', 'Battery Swapping Capability']
 
                 [[applicationCollection.featureReport.logicalCollection.logicalCollection.arrayItem]]
                 usageRange = ['Battery System', 'Battery Not Swappable', 'Battery Hot Swappable']

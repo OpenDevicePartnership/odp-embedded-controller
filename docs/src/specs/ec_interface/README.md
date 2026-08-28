@@ -1,6 +1,7 @@
 # Embedded Controller Interface Specification
 
-Embedded Controller(EC) Interface Specification describes base set of requirements to interface to core Windows features.
+The Embedded Controller (EC) Interface Specification describes a base set of requirements for interfacing with core
+Windows features.
 
 It covers the following areas:
 - Firmware Management
@@ -35,9 +36,9 @@ While other transports can be wired up to work with OEM or SV drivers we are foc
 
 Today there is partial support for I2C and eSPI in ACPI and support for I2C and I3C on HID. To support eSPI natively work is being done to better standardize eSPI based on PCC specification.
 
-The following is a visual of the driver stacks planed to interface with the EC from the OS.
+The following is a visual of the driver stacks planned to interface with the EC from the OS.
 
-# CPU-to-Embedded-Controller Architecture
+## CPU-to-Embedded-Controller Architecture
 
 ```mermaid
 flowchart TB

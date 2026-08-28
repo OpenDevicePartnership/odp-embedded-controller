@@ -385,7 +385,7 @@ Device(EC0) {
 ```
 
 ![A diagram of a communication system AI-generated content may be
-incorrect.](media/image12.png)
+incorrect.](../media/image12.png)
 
 #### Non-Secure eSPI Notifications
 
@@ -404,7 +404,7 @@ Method (_Q07) {
 ```
 
 ![A diagram of a non-secure notification AI-generated content may be
-incorrect.](media/image13.png)
+incorrect.](../media/image13.png)
 
 ### Secure eSPI Access
 
@@ -441,7 +441,7 @@ non-secure definition.
 ```
 
 ![A diagram of a communication system AI-generated content may be
-incorrect.](media/image14.png)
+incorrect.](../media/image14.png)
 
 #### Secure eSPI Notification
 

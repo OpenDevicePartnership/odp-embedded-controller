@@ -78,7 +78,7 @@ The current ACPI design is implemented with 3 I/O ports and two interrupt signal
 
 The following is a list of issues with the current ACPI eSPI EC definition that we are seeking to address:
 
-1.  Based on I/O port definition only works on x86 need ARM support as well
+1.  Based on I/O port definition only works on x86
 2.  Only works for flat memory mapped layout, does not work well with packet-based transactions
 3.  Very inefficient throughput for larger transfers of data that doesn’t take advantage of the actual eSPI protocol
 4.  Does not expose VWire and GPIO extension ability to OS
@@ -95,7 +95,7 @@ Recommendation is to define a hardware interface that is compatible with PCC Typ
 
 ## Hardware Resources
 
-For a given eSPI controller each controller has some global register and configuration data and then can have 1 or more PCC channels.
+For a given eSPI controller each controller has some global regi
 
 ### Channel Independent Config
 
@@ -124,13 +124,12 @@ Optionally specify MMIO region where the CONFIG registers as defined in the eSPI
 
 An MMIO or I/O port that can be read which returns the global status of the eSPI based on the definition of the eSPI controller.
 
-<img src="espi_media/media/image1.png" style="width:6.5in;height:1.75069in" />
+<img src="../media/espi_status.png" />
 
 ### Global Reset Register
 
 An MMIO or I/O port register and mask that can be written to that traps into FW to initiate an in-band reset and reconfigures the eSPI config space back to defaults. Any pending transactions are lost and controller is in fresh state.
 
-### 
 
 ### VWire Channel
 
@@ -138,7 +137,6 @@ All interrupts come through a single GPE. The status register is read until no n
 
 When a VWire event is read it will be removed from the FIFO. If events are not read until VWIRE_AVAIL is no longer set in the status, the interrupt and GPE should be triggered again.
 
-### 
 
 ### Peripheral Channel
 
@@ -147,8 +145,6 @@ There can be multiple sub-channels exposed via a single peripheral channel. Each
 The doorbell register when written will trigger a peripheral channel transfer of the data length specified by the Length field in the PCC Shared Memory Region.
 
 On systems where MMIO accesses automatically generate peripheral transactions the doorbell can be set to 0 and the Command register should point to the shared buffer command field indicating the bits to indicate command completion.
-
-## 
 
 ## Sample ACPI Definition for the eSPI PCC Device
 
@@ -278,53 +274,29 @@ PCC communication uses independent subspaces, shared memory, a doorbell protocol
 
 CCC = Command Complete Check register
 
-### Type 3 Initiator Call Flow: Host 🡪 eSPI Device
+### Initiator/Responder Call Flow: Host 🡪 eSPI Device
 
-| Step | Host / Initiator | eSPI Device / EC |
-|----|----|----|
-| 1 | While(CCC_REG & CCC_MASK) == 0 | Set CCC_REG command complete bit to advertise to OS Channel is free |
-| 2 | Initialize **PCC3**: write **C3SG**, clear stale completion/error state, set **C3FL**, set **C3LN** to the total valid message length, and write the eSPI operation to **C3CM**. | No action; the controller must not consume the request before the doorbell. |
-| 3 | Copy the request packet into **C3DT**. Complete all shared-memory writes and issue the required memory barrier before notifying hardware. | No action. |
-| 4 | Ring the Type 3 doorbell by writing **DB00 = 1** at **0xFEDC1008**. | Detect new valid command claim PCC3, validate Signature/Flags/Length/Command, and reject malformed or oversized messages. |
-| 5 | Wait for completion using the platform interrupt when available; otherwise poll the Type 3 completion bit in **GSTA** using the PCCT nominal latency and maximum access rate. | Read data to local buffer to process and mark as completed. |
+```mermaid
+sequenceDiagram
+    participant OSPM
+    participant EC as eSPI Controller / EC
 
-#### Type 3 Sequence Summary
+    OSPM->>EC: Wait PCC3 complete
+    OSPM->>EC: Clear PCC3 complete
+    OSPM->>EC: Write header + request
+    OSPM->>EC: Memory barrier
+    OSPM->>EC: Trigger Doorbell
 
-OSPM           eSPI Controller / EC  
- \|-- Lock PCC3 ------------------\>\|  
- \|-- Write header + request -----\>\|  
- \|-- Memory barrier -------------\>\|  
- \|-- DB00 = 1 -------------------\>\|  
- \|                  Validate and execute eSPI request  
- \|\<-- Response in PCC4 -----------\|  
- \|\<-- Completion interrupt/status-\|  
- \|-- Populate + Read barrier ------\>\|  
- \|-- Clear completion; Trigger NP_AVAIL ----\>\|
+    Note right of EC: Read PCC3 request
 
-\|-- Trigger VWire for Host Notify 🡪 \|
+    EC-->>OSPM: Set PCC3 complete
+    EC-->>OSPM: Wait PCC4 complete
+    EC-->>OSPM: Clear PCC4 complete
+    EC-->>OSPM: Write Header + Response
+    EC-->>OSPM: Trigger VWire/Interrupt
 
-### 
+    Note left of OSPM: Notification PCC4
+    Note left of OSPM: Process PCC4 response
 
-### Type 4 Response Call Flow: EC Initiates a Platform Notification
-
-| Step | eSPI Controller / EC Initiator | OSPM / Responder |
-|----|----|----|
-| 1 | Wait until the Type 4 platform-acknowledge state indicates that **PCC4** is free and no earlier notification remains unacknowledged. | Keep the Type 4 interrupt handler registered for PCC subspace ID 1. |
-| 2 | Initialize **PCC4**: write **C4SG**, set notification flags in **C4FL**, set **C4LN**, write the notification command to **C4CM**, and copy the event or response packet into **C4DT**. | No action while the platform owns the shared region. |
-| 3 | Complete all writes, then set the Type 4 notification/completion state in **GSTA** and assert the platform interrupt described by the Type 4 PCCT entry. | Receive the interrupt and identify PCC4 as the notifying subspace from its Type 4 completion/notification status. |
-| 4 | Do not modify PCC4 again until OSPM acknowledges the notification. | First clear any stale platform-acknowledge interrupt state, then issue a read barrier and validate Signature, Flags, Length, and Command. |
-| 5 | Wait for the acknowledgement register write. | Copy and dispatch the payload from **C4DT** to the appropriate eSPI consumer. If the payload is a response to an earlier logical operation, correlate it using the command-defined transaction identifier. |
-| 6 | Observe the acknowledgement, deassert the Type 4 interrupt/notification state, and release PCC4 for reuse. | Acknowledge the platform notification by writing **AK00 = 1** at **0xFEDC100C**. |
-| 7 | Optionally record protocol or payload errors in the platform-defined status bits before returning the channel to idle. | Complete deferred processing outside the interrupt context and report any validation or protocol error to the client. |
-
-#### 
-
-#### Type 4 Sequence Summary
-
-eSPI Controller / EC       OSPM  
- \|-- Wait for PCC4 free ----------\>\|  
- \|-- Write header + notification -\>\|  
- \|-- Publish status + interrupt ---\>\|  
- \|                            Validate and consume PCC4  
- \|\<-- AK00 = 1 --------------------\|  
- \|-- Clear notification; free ----\>\|
+    OSPM->>EC: Set PCC4 complete
+```

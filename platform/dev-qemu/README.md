@@ -2,8 +2,8 @@
 A platform targeting QEMU RISCV using mock embedded-services.
 
 It runs on the custom ODP `ec` machine, which exposes the EC's I2C-target and GPIO lines as
-sockets that external programs (such as another QEMU instance) can connect to, alongside a PTY for
-the UART.
+sockets that external programs (such as another QEMU instance) can connect to. UART uses a PTY by
+default and can instead use a stable socket for QEMU co-simulation.
 
 ## Prerequisites
 - [Docker](https://docs.docker.com/get-docker/) — `qemu-ec.sh` pulls a prebuilt
@@ -32,6 +32,9 @@ programs (such as another QEMU instance) can connect to:
 - I2C target: `/tmp/qemu-ec-i2c.sock`
 - GPIO: `/tmp/qemu-ec-gpio.sock`
 
+Set `EC_UART_SOCK` to replace the UART PTY with another socket, for example
+`EC_UART_SOCK=/tmp/qemu-ec-uart.sock cargo run --release`.
+
 ## Configuration
 `qemu-ec.sh` reads the following environment variables:
 
@@ -41,3 +44,4 @@ programs (such as another QEMU instance) can connect to:
 | `ODP_QEMU_TAG` | (pinned in `qemu-ec.sh`) | Tag of the odp-qemu-builder GHCR image to pull. |
 | `EC_I2C_SOCK`  | `/tmp/qemu-ec-i2c.sock`  | Path for the I2C-target socket.                 |
 | `EC_GPIO_SOCK` | `/tmp/qemu-ec-gpio.sock` | Path for the GPIO socket.                       |
+| `EC_UART_SOCK` | (unset)                  | UART socket path; when unset, use a PTY.        |

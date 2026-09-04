@@ -9,8 +9,8 @@
 #      (GPIO + I2C target sockets). The binary is pulled once from the
 #      `odp-qemu-builder` image published on GHCR and cached under `target/`.
 #   2. Launches QEMU on the `ec` machine, exposing the EC's I2C-target and GPIO
-#      lines as UNIX-domain sockets that external programs can connect to, plus
-#      a PTY for the UART.
+#      lines as UNIX-domain sockets that external programs can connect to. UART
+#      uses a PTY by default or a stable socket when EC_UART_SOCK is set.
 #   3. Routes the defmt log stream: in the normal (interactive) path the
 #      semihosting output is piped straight into `defmt-print`; in the headless
 #      path (`DEFMT_LOG=off`) QEMU is run raw with no logging.
@@ -27,6 +27,7 @@
 #   ODP_QEMU_TAG  Tag of the GHCR image to pull.
 #   EC_I2C_SOCK   Path for the I2C-target socket (default: /tmp/qemu-ec-i2c.sock).
 #   EC_GPIO_SOCK  Path for the GPIO socket (default: /tmp/qemu-ec-gpio.sock).
+#   EC_UART_SOCK  Optional path for a UART socket (default: unset, use a PTY).
 
 set -euo pipefail
 
@@ -43,6 +44,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ODP_QEMU_TAG="${ODP_QEMU_TAG:-sha-7e461b3}"
 EC_I2C_SOCK="${EC_I2C_SOCK:-/tmp/qemu-ec-i2c.sock}"
 EC_GPIO_SOCK="${EC_GPIO_SOCK:-/tmp/qemu-ec-gpio.sock}"
+EC_UART_SOCK="${EC_UART_SOCK:-}"
 
 # GHCR image that publishes the prebuilt QEMU (with `ec` machine support).
 QEMU_IMAGE="ghcr.io/opendevicepartnership/odp-qemu-builder/qemu:${ODP_QEMU_TAG}"
@@ -107,15 +109,31 @@ fi
 #
 # - `-machine ec`            EC board exposing the I2C-target and GPIO sockets.
 # - `-bios none`             dev-qemu is a bare-metal kernel; no firmware needed.
-# - `-serial pty`            UART0 is bridged to a PTY for terminal/ec-test-cli.
-# - `-chardev socket,...`    The I2C-target and GPIO lines as UNIX sockets that
-#                            external programs can connect to (server=on).
+# - `-serial pty`            By default, UART0 uses a PTY for terminal/ec-test-cli.
+# - `-chardev socket,...`    The I2C-target, GPIO, and optional UART lines as UNIX
+#                            sockets that external programs can connect to.
 QEMU_ARGS=(
     -machine ec
     -bios none
     -nographic
     -monitor none
-    -serial pty
+)
+
+if [[ -n "$EC_UART_SOCK" ]]; then
+    if [[ -e "$EC_UART_SOCK" && ! -S "$EC_UART_SOCK" ]]; then
+        echo "error: EC_UART_SOCK points to an existing non-socket: $EC_UART_SOCK" >&2
+        exit 1
+    fi
+    rm -f -- "$EC_UART_SOCK"
+    QEMU_ARGS+=(
+        -chardev "socket,id=ec-uart0,path=${EC_UART_SOCK},server=on,wait=off"
+        -serial "chardev:ec-uart0"
+    )
+else
+    QEMU_ARGS+=(-serial pty)
+fi
+
+QEMU_ARGS+=(
     -chardev "socket,id=ec-i2c-target,path=${EC_I2C_SOCK},server=on,wait=off"
     -chardev "socket,id=ec-gpio0,path=${EC_GPIO_SOCK},server=on,wait=off"
     -kernel "$ELF"
@@ -125,6 +143,9 @@ QEMU_ARGS=(
 # raw. The "char device redirected to /dev/pts/N" line goes to stdout where
 # callers (integration-test.sh) grep it.
 if [[ "${DEFMT_LOG:-}" == "off" ]]; then
+    if [[ -n "$EC_UART_SOCK" ]]; then
+        printf 'char device redirected to %s (label serial0)\n' "$EC_UART_SOCK"
+    fi
     exec "$QEMU_BIN" "${QEMU_ARGS[@]}"
 fi
 
@@ -140,12 +161,15 @@ if ! command -v defmt-print >/dev/null 2>&1; then
     exit 1
 fi
 
-# With `-serial pty`, QEMU prints a single "char device redirected to
-# /dev/pts/N (label serial0)" line on stdout before any semihosting data. Peel
-# that first line off to stderr (so the PTY path stays visible) and feed the
-# remaining bytes to defmt-print.
-"$QEMU_BIN" "${QEMU_ARGS[@]}" | {
-    IFS= read -r ptsline
-    printf '%s\n' "$ptsline" >&2
-    defmt-print -e "$ELF"
-}
+if [[ -n "$EC_UART_SOCK" ]]; then
+    printf 'char device redirected to %s (label serial0)\n' "$EC_UART_SOCK" >&2
+    "$QEMU_BIN" "${QEMU_ARGS[@]}" | defmt-print -e "$ELF"
+else
+    # With `-serial pty`, QEMU prints one announcement line before any
+    # semihosting data. Keep the PTY visible and decode the remaining bytes.
+    "$QEMU_BIN" "${QEMU_ARGS[@]}" | {
+        IFS= read -r ptsline
+        printf '%s\n' "$ptsline" >&2
+        defmt-print -e "$ELF"
+    }
+fi

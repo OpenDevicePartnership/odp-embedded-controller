@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1788545388181,
+  "lastUpdate": 1788545397069,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1382,6 +1382,36 @@ window.BENCHMARK_DATA = {
             "value": 58.55,
             "unit": "KiB",
             "extra": "RAM Size: 8.62 KiB\nDependency Count: 335\nVersion: rustc 1.98.0 (88d9e12ae 2026-08-18)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77b14e71c516e3658c8ed565ef2f91bfcf9b119b",
+          "message": "Add option for explicit UART socket (#44)",
+          "timestamp": "2026-09-04T11:08:03-07:00",
+          "tree_id": "1ba9e754d801f9aa8b33095010b38c778234bbed",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/77b14e71c516e3658c8ed565ef2f91bfcf9b119b"
+        },
+        "date": 1788545396118,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 58.5,
+            "unit": "KiB",
+            "extra": "RAM Size: 8.62 KiB\nDependency Count: 335\nVersion: rustc 1.98.1 (48a229cea 2026-09-01)"
           }
         ]
       }

@@ -19,4 +19,5 @@ work towards a more robust solution that will handle routing, larger
 packets and security in a common way across OS’s and across SV
 architectures. 
 
-![EC connections to apps](media/odp_arch.png)
+See the [CPU-to-Embedded-Controller Architecture](README.md#cpu-to-embedded-controller-architecture) for the supported
+software stacks and transport paths.

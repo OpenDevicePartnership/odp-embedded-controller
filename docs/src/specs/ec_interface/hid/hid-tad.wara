@@ -1,0 +1,511 @@
+# Authored with Waratah: https://github.com/microsoft/hidtools
+# ----------------------------------------------------------------------------
+[[usagePage]]
+id = 0x01
+name = "Generic Desktop"
+
+[[usagePage.usage]]
+id = 0x14
+name = "System Wake Timer"
+types = ['CA']
+
+[[usagePage.usage]]
+id = 0x15
+name = "System Real Time Clock"
+types = ['CA']
+
+[[usagePage.usage]]
+id = 0xF0
+name = "Timer Expiration: External Power"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0xF1
+name = "Timer Expiration: Internal Power"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0xF2
+name = "Power Source Change Minimum Expiration"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0xF3
+name = "Lowest System Wakeable Power State"
+types = ['NAry']
+
+[[usagePage.usage]]
+id = 0xF4
+name = "S1"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0xF5
+name = "S2"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0xF6
+name = "S3"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0xF7
+name = "S4"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0xF8
+name = "S5"
+types = ['Sel']
+
+[[usagePage]]
+id = 0x06
+name = "Generic Device Controls"
+
+[[usagePage.usage]]
+id = 0x50
+name = "Vendor Current State"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x51
+name = "Current State"
+types = ['NAry']
+
+[[usagePage.usage]]
+id = 0x52
+name = "Cleared"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0x53
+name = "Failed"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0x54
+name = "Running"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0x55
+name = "Expired"
+types = ['Sel']
+
+[[usagePage.usage]]
+id = 0x56
+name = "Signaled"
+types = ['Sel']
+
+[[usagePage]]
+id = 0x13
+name = "Time and Date"
+
+[[usagePage.usage]]
+id = 0x1
+name = "Year"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x2
+name = "Month"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x3
+name = "Day"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x4
+name = "Hour"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x5
+name = "Minute"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x6
+name = "Second"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x7
+name = "Millisecond"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x10
+name = "Time Zone Offset From UTC"
+types = ['DV']
+
+[[usagePage.usage]]
+id = 0x11
+name = "Daylight Savings Time Observed"
+types = ['DF']
+
+[[usagePage.usage]]
+id = 0x12
+name = "Daylight Savings Time Active"
+types = ['DF']
+
+[[applicationCollection]]
+usage = ['Generic Desktop', 'System Wake Timer']
+    [[applicationCollection.featureReport]]
+    id = 1
+
+        # Indicate the lowest power-state of the system that this timer may trigger a wake.
+        # If system goes to a lower power-state, regardless of timer settings, will NOT trigger a wake.
+        [[applicationCollection.featureReport.logicalCollection]]
+        usage = ['Generic Desktop', 'Lowest System Wakeable Power State']
+
+            [[applicationCollection.featureReport.logicalCollection.arrayItem]]
+            usageRange = ['Generic Desktop', 'S3', 'S5']
+            reportFlags = ['constant']
+
+    [[applicationCollection.outputReport]]
+    id = 1
+        # Configures the Wake-Timer.
+        # Null values (e.g. 0) clears the timer configuration.
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Generic Desktop', 'Timer Expiration: External Power']
+        logicalValueRange = [1, 2147483647]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Generic Desktop', 'Timer Expiration: Internal Power']
+        logicalValueRange = [1, 2147483647]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Generic Desktop', 'Power Source Change Minimum Expiration']
+        logicalValueRange = [5, 10]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+    [[applicationCollection.inputReport]]
+    id = 1
+
+        # Null values (e.g. 0) indicates the configuration has not been set.
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Generic Desktop', 'Timer Expiration: External Power']
+        logicalValueRange = [1, 2147483647]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Generic Desktop', 'Timer Expiration: Internal Power']
+        logicalValueRange = [1, 2147483647]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Generic Desktop', 'Power Source Change Minimum Expiration']
+        logicalValueRange = [5, 10]
+        unit = 'second'
+        reportFlags = ['nullstate']
+
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Generic Device Controls', 'Current State']
+
+            [[applicationCollection.inputReport.logicalCollection.arrayItem]]
+            usages = [ ['Generic Device Controls', 'Cleared'],
+            ['Generic Device Controls', 'Failed'],
+            ['Generic Device Controls', 'Expired'],
+            ['Generic Device Controls', 'Signaled'],
+            ['Generic Device Controls', 'Running']]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Generic Device Controls', 'Vendor Current State']
+        sizeInBits = 4
+        logicalValueRange = 'maxUnsignedSizeRange'
+
+[[applicationCollection]]
+usage = ['Generic Desktop', 'System Real Time Clock']
+
+    [[applicationCollection.outputReport]]
+    id = 3
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Year']
+        logicalValueRange = [1900,9999]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Month']
+        logicalValueRange = [1,12]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Day']
+        logicalValueRange = [1,31]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Hour']
+        logicalValueRange = [0,23]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Minute']
+        logicalValueRange = [0,59]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Second']
+        logicalValueRange = [0,59]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Millisecond']
+        logicalValueRange = [0,999]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Time Zone Offset From UTC']
+        logicalValueRange = [-720, 840]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Daylight Savings Time Observed']
+        logicalValueRange = [0,1]
+
+        [[applicationCollection.outputReport.variableItem]]
+        usage = ['Time and Date', 'Daylight Savings Time Active']
+        logicalValueRange = [0,1]
+
+    [[applicationCollection.inputReport]]
+    id = 3
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Year']
+        logicalValueRange = [1900,9999]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Month']
+        logicalValueRange = [1,12]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Day']
+        logicalValueRange = [1,31]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Hour']
+        logicalValueRange = [0,23]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Minute']
+        logicalValueRange = [0,59]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Second']
+        logicalValueRange = [0,59]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Millisecond']
+        logicalValueRange = [0,999]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Time Zone Offset From UTC']
+        logicalValueRange = [-720, 840]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Daylight Savings Time Observed']
+        logicalValueRange = [0,1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Time and Date', 'Daylight Savings Time Active']
+        logicalValueRange = [0,1]
+
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Generic Device Controls', 'Current State']
+
+            [[applicationCollection.inputReport.logicalCollection.arrayItem]]
+            usages = [ ['Generic Device Controls', 'Failed'],
+            ['Generic Device Controls', 'Running']]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Generic Device Controls', 'Vendor Current State']
+        sizeInBits = 4
+        logicalValueRange = 'maxUnsignedSizeRange'
+
+# **Sample descriptor:**
+# 0x05, 0x01, // UsagePage(Generic Desktop[0x0001])
+# 0x09, 0x14, // UsageId(System Wake Timer[0x0014])
+# 0xA1, 0x01, // Collection(Application)
+# 0x85, 0x01, // ReportId(1)
+# 0x09, 0xF3, // UsageId(Lowest System Wakeable Power State[0x00F3])
+# 0xA1, 0x02, // Collection(Logical)
+# 0x19, 0xF6, // UsageIdMin(S3[0x00F6])
+# 0x29, 0xF8, // UsageIdMax(S5[0x00F8])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x25, 0x03, // LogicalMaximum(3)
+# 0x95, 0x01, // ReportCount(1)
+# 0x75, 0x02, // ReportSize(2)
+# 0xB1, 0x01, // Feature(Constant, Array, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0xC0, // EndCollection()
+# 0x75, 0x06, // ReportSize(6)
+# 0xB1, 0x03, // Feature(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0xF0, // UsageId(Timer Expiration: External Power[0x00F0])
+# 0x66, 0x01, 0x10, // Unit('second', SiLinear, Seconds:1)
+# 0x27, 0xFF, 0xFF, 0xFF, 0x7F, // LogicalMaximum(2,147,483,647)
+# 0x75, 0x1F, // ReportSize(31)
+# 0x91, 0x42, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, NonVolatile, BitField)
+# 0x75, 0x01, // ReportSize(1)
+# 0x91, 0x03, // Output(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0xF1, // UsageId(Timer Expiration: Internal Power[0x00F1])
+# 0x75, 0x1F, // ReportSize(31)
+# 0x91, 0x42, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, NonVolatile, BitField)
+# 0x09, 0xF2, // UsageId(Power Source Change Minimum Expiration\[0x00F2\])
+# 0x15, 0x05, // LogicalMinimum(5)
+# 0x25, 0x0A, // LogicalMaximum(10)
+# 0x75, 0x04, // ReportSize(4)
+# 0x91, 0x42, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, NonVolatile, BitField)
+# 0x75, 0x05, // ReportSize(5)
+# 0x91, 0x03, // Output(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0xF0, // UsageId(Timer Expiration: External Power\[0x00F0\])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x27, 0xFF, 0xFF, 0xFF, 0x7F, // LogicalMaximum(2,147,483,647)
+# 0x75, 0x1F, // ReportSize(31)
+# 0x81, 0x42, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, BitField)
+# 0x75, 0x01, // ReportSize(1)
+# 0x81, 0x03, // Input(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0xF1, // UsageId(Timer Expiration: Internal Power\[0x00F1\])
+# 0x75, 0x1F, // ReportSize(31)
+# 0x81, 0x42, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, BitField)
+# 0x75, 0x01, // ReportSize(1)
+# 0x81, 0x03, // Input(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x85, 0x02, // ReportId(2)
+# 0x09, 0xF2, // UsageId(Power Source Change Minimum Expiration\[0x00F2\])
+# 0x15, 0x05, // LogicalMinimum(5)
+# 0x25, 0x0A, // LogicalMaximum(10)
+# 0x75, 0x04, // ReportSize(4)
+# 0x91, 0x42, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NullState, NonVolatile, BitField)
+# 0x91, 0x03, // Output(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x05, 0x06, // UsagePage(Generic Device Controls\[0x0006\])
+# 0x09, 0x51, // UsageId(Current State\[0x0051\])
+# 0xA1, 0x02, // Collection(Logical)
+# 0x09, 0x52, // UsageId(Cleared\[0x0052\])
+# 0x09, 0x53, // UsageId(Failed\[0x0053\])
+# 0x09, 0x55, // UsageId(Expired\[0x0055\])
+# 0x09, 0x56, // UsageId(Signaled\[0x0056\])
+# 0x09, 0x54, // UsageId(Running\[0x0054\])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x25, 0x05, // LogicalMaximum(5)
+# 0x75, 0x03, // ReportSize(3)
+# 0x81, 0x00, // Input(Data, Array, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0xC0, // EndCollection()
+# 0x09, 0x50, // UsageId(Vendor Current State\[0x0050\])
+# 0x65, 0x00, // Unit(None)
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x0F, // LogicalMaximum(15)
+# 0x75, 0x04, // ReportSize(4)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x75, 0x01, // ReportSize(1)
+# 0x81, 0x03, // Input(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0xC0, // EndCollection()
+# 0x05, 0x01, // UsagePage(Generic Desktop\[0x0001\])
+# 0x09, 0x15, // UsageId(System Real Time Clock\[0x0015\])
+# 0xA1, 0x01, // Collection(Application)
+# 0x85, 0x03, // ReportId(3)
+# 0x05, 0x13, // UsagePage(Time and Date\[0x0013\])
+# 0x09, 0x01, // UsageId(Year\[0x0001\])
+# 0x16, 0x6C, 0x07, // LogicalMinimum(1,900)
+# 0x26, 0x0F, 0x27, // LogicalMaximum(9,999)
+# 0x75, 0x0E, // ReportSize(14)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x02, // UsageId(Month\[0x0002\])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x25, 0x0C, // LogicalMaximum(12)
+# 0x75, 0x04, // ReportSize(4)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x03, // UsageId(Day\[0x0003\])
+# 0x25, 0x1F, // LogicalMaximum(31)
+# 0x75, 0x05, // ReportSize(5)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x04, // UsageId(Hour\[0x0004\])
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x17, // LogicalMaximum(23)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x05, // UsageId(Minute\[0x0005\])
+# 0x09, 0x06, // UsageId(Second\[0x0006\])
+# 0x25, 0x3B, // LogicalMaximum(59)
+# 0x95, 0x02, // ReportCount(2)
+# 0x75, 0x06, // ReportSize(6)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x07, // UsageId(Millisecond\[0x0007\])
+# 0x26, 0xE7, 0x03, // LogicalMaximum(999)
+# 0x95, 0x01, // ReportCount(1)
+# 0x75, 0x0A, // ReportSize(10)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x10, // UsageId(Time Zone Offset From UTC\[0x0010\])
+# 0x16, 0x30, 0xFD, // LogicalMinimum(-720)
+# 0x26, 0x48, 0x03, // LogicalMaximum(840)
+# 0x75, 0x0B, // ReportSize(11)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x11, // UsageId(Daylight Savings Time Observed\[0x0011\])
+# 0x09, 0x12, // UsageId(Daylight Savings Time Active\[0x0012\])
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x01, // LogicalMaximum(1)
+# 0x95, 0x02, // ReportCount(2)
+# 0x75, 0x01, // ReportSize(1)
+# 0x91, 0x02, // Output(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x95, 0x01, // ReportCount(1)
+# 0x91, 0x03, // Output(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+# 0x09, 0x01, // UsageId(Year\[0x0001\])
+# 0x16, 0x6C, 0x07, // LogicalMinimum(1,900)
+# 0x26, 0x0F, 0x27, // LogicalMaximum(9,999)
+# 0x75, 0x0E, // ReportSize(14)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x02, // UsageId(Month\[0x0002\])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x25, 0x0C, // LogicalMaximum(12)
+# 0x75, 0x04, // ReportSize(4)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x03, // UsageId(Day\[0x0003\])
+# 0x25, 0x1F, // LogicalMaximum(31)
+# 0x75, 0x05, // ReportSize(5)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x04, // UsageId(Hour\[0x0004\])
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x17, // LogicalMaximum(23)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x05, // UsageId(Minute\[0x0005\])
+# 0x09, 0x06, // UsageId(Second\[0x0006\])
+# 0x25, 0x3B, // LogicalMaximum(59)
+# 0x95, 0x02, // ReportCount(2)
+# 0x75, 0x06, // ReportSize(6)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x07, // UsageId(Millisecond\[0x0007\])
+# 0x26, 0xE7, 0x03, // LogicalMaximum(999)
+# 0x95, 0x01, // ReportCount(1)
+# 0x75, 0x0A, // ReportSize(10)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x10, // UsageId(Time Zone Offset From UTC\[0x0010\])
+# 0x16, 0x30, 0xFD, // LogicalMinimum(-720)
+# 0x26, 0x48, 0x03, // LogicalMaximum(840)
+# 0x75, 0x0B, // ReportSize(11)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x09, 0x11, // UsageId(Daylight Savings Time Observed\[0x0011\])
+# 0x09, 0x12, // UsageId(Daylight Savings Time Active\[0x0012\])
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x01, // LogicalMaximum(1)
+# 0x95, 0x02, // ReportCount(2)
+# 0x75, 0x01, // ReportSize(1)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x05, 0x06, // UsagePage(Generic Device Controls\[0x0006\])
+# 0x09, 0x51, // UsageId(Current State\[0x0051\])
+# 0xA1, 0x02, // Collection(Logical)
+# 0x09, 0x53, // UsageId(Failed\[0x0053\])
+# 0x09, 0x54, // UsageId(Running\[0x0054\])
+# 0x15, 0x01, // LogicalMinimum(1)
+# 0x25, 0x02, // LogicalMaximum(2)
+# 0x95, 0x01, // ReportCount(1)
+# 0x75, 0x02, // ReportSize(2)
+# 0x81, 0x00, // Input(Data, Array, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0xC0, // EndCollection()
+# 0x09, 0x50, // UsageId(Vendor Current State\[0x0050\])
+# 0x15, 0x00, // LogicalMinimum(0)
+# 0x25, 0x0F, // LogicalMaximum(15)
+# 0x75, 0x04, // ReportSize(4)
+# 0x81, 0x02, // Input(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0x75, 0x03, // ReportSize(3)
+# 0x81, 0x03, // Input(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
+# 0xC0, // EndCollection()

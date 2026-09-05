@@ -1,18 +1,9 @@
-# Secure EC Services Overview
+# ACPI to FFA Services Overview
 
-In this section we review a system design where the EC communication is
-in the secure world running in a dedicated SP. In a system without
-secure world or where communication to EC is not desired to be secure
-all the ACPI functions can be mapped directly to data from the EC
-operation region.
+In this section we review a system design where the EC communication 
+is in the secure world running in a dedicated SP. 
 
-The following github projects provide sample implementations of this interface:
-
-[ACPI EC samples, Kernel mode test driver, User mode test driver](https://github.com/opendevicepartnership/ec-test-app)<br>
-[Sample Secure Partition Service for EC services in RUST](https://github.com/opendevicepartnership/haf-ec-service)<br>
-[RUST crate for FFA implementation in secure partition](https://github.com/opendevicepartnership/ffa)<br>
-
-The following GUID’s have been designed to represent each service
+The following GUID’s have been designed to represent each service 
 operating in the secure partition for EC.
 
 | EC Service Name       | Service GUID                         | Description
@@ -38,11 +29,11 @@ operating in the secure partition for EC.
 
 This section covers the components involved in sending a command to EC
 through the FFA flow in windows. This path is specific to ARM devices
-and a common solution with x64 is still being worked out. Those will
-continue through the non-secure OperationRegion in the near term.
+for x86 devices should use HID or direct access. Those will
+continue through the non-secure OperationRegion.
 
 ![A diagram of a computer security system Description automatically
-generated](media/image1.png)
+generated](../media/image1.png)
 
 ARM has a standard for calling into the secure world through SMC’s and
 targeting a particular service running in secure world via a UUID. The
@@ -232,7 +223,7 @@ corresponding service must use to trigger given notification going forward.
 ```
 
 ![A diagram of a application Description automatically
-generated](media/image2.png)
+generated](../media/image2.png)
 
 In the above example we indicate that the OS will handle 2 different
 notification events for UUID 330c1273-fde5-4757-9819-5b6539037502 which
@@ -248,7 +239,7 @@ SP.
 Please refer to ARM documentation for full details on Inter-partition
 protocol DEN0077A_Firmware_Framework_Arm_A-profile_1.3
 
-<h3>Input</h3>
+### Input
 
 | Parameter  | Register  | Value                        |
 | ---------- | --------- | -------------------------------- |
@@ -267,7 +258,7 @@ protocol DEN0077A_Firmware_Framework_Arm_A-profile_1.3
 
 
 
-<h3>Output</h3>
+### Output
 
 | Parameter  | Register  | Value                        |
 | ---------- | --------- | -------------------------------- |
@@ -364,7 +355,7 @@ so both ACPI and the EC service must be designed either with shared
 memory buffer or a further notify data packet.
 
 ![A diagram of a service Description automatically
-generated](media/image3.png)
+generated](../media/image3.png)
 
 ## Runtime Requests
 
@@ -379,7 +370,7 @@ interface where the OS will resume the SP thread after the timeout
 specified. The following is sample call sequence.
 
 ![A diagram of a company's process Description automatically
-generated](media/image4.png)
+generated](../media/image4.png)
 
 ### FFA Example Data Flow
 
@@ -387,7 +378,7 @@ For an example let’s take the battery status request _BST and follow
 data through.
 
 ![A screenshot of a computer Description automatically
-generated](media/image5.png)
+generated](../media/image5.png)
 
 ```
 FFA_REQ_PACKET req = {
@@ -430,8 +421,7 @@ typedef struct _FFA_INTERFACE {
 FFA is in charge of sending the SMC over to the secure world and routing
 to the correct service based on UUID.
 
-![A diagram of a computer Description automatically
-generated](media/image6.png)
+![A diagram of a computer Description automatically generated](../media/image6.png)
 
 ```
 X0 = SEND_DIRECT_REQ2 SMC command ID
@@ -624,7 +614,7 @@ buffers defined in previous section and existing ACPI and FFA
 functionality.
 
 ![A diagram of a service Description automatically
-generated](media/image7.png)
+generated](../media/image7.png)
 
 Inside of our FFA functions rather than copying our data payload into
 the direct registers we define a queue in shared memory and populate the
@@ -634,7 +624,7 @@ is then used by the service to locate the request in the TX queue. We
 define a separate queue for RX and TX so we don’t need to synchronize
 between OS and secure partition.
 
-![](media/image8.png)
+![](../media/image8.png)
 
 ### ACPI Structures and Methods for Asynchronous
 

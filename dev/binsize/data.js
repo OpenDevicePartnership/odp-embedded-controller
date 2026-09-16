@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1789530613143,
+  "lastUpdate": 1789530643787,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1495,6 +1495,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/c845fde29f9a7aa59c6fd4f31d6c854cc1c01e90"
         },
         "date": 1789529648156,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 58.5,
+            "unit": "KiB",
+            "extra": "RAM Size: 8.62 KiB\nDependency Count: 335\nVersion: rustc 1.98.1 (48a229cea 2026-09-01)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "philweber@microsoft.com",
+            "name": "philgweber",
+            "username": "philgweber"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4758e3d30a774b94df3b7b0028f83841fc9c217",
+          "message": "Clean up HUTRR document headers (#45)\n\n* Restructured the EC spec to include HID\n\n* Address EC specification review feedback\n\nRepair the restructured mdBook navigation and local image links. Clean up the HID descriptor sources so they remain valid Waratah/TOML and correct the reviewed report types and documentation text.\n\nAssisted-by: GitHub Copilot:gpt-5.6-sol\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n* Fix flow diagrams and missing media\n\n* Add mermaid support\n\n* Updated to match latest docx documentation\n\n* Cleaned up headers on the HUTRR docs\n\n---------\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\nCo-authored-by: pgweber <pgweber.mail@gmail.com>",
+          "timestamp": "2026-09-15T20:48:30-07:00",
+          "tree_id": "2d76fd3696bcee2fd50954d84f24816b278609f5",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f4758e3d30a774b94df3b7b0028f83841fc9c217"
+        },
+        "date": 1789530642792,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

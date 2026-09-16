@@ -78,28 +78,31 @@ The current ACPI design is implemented with 3 I/O ports and two interrupt signal
 
 The following is a list of issues with the current ACPI eSPI EC definition that we are seeking to address:
 
-1.  Based on I/O port definition only works on x86
+1.  Current ACPI definition is based on I/O port definition only works on architectures that support I/O ports
 2.  Only works for flat memory mapped layout, does not work well with packet-based transactions
-3.  Very inefficient throughput for larger transfers of data that doesn’t take advantage of the actual eSPI protocol
-4.  Does not expose VWire and GPIO extension ability to OS
-5.  Single set of ports cannot define multiple channels
-6.  Need secure and non-secure channels ideally without having two physical connections.
+3.  Very inefficient throughput for larger transfers of data, it doesn’t take advantage of the actual eSPI protocol ability to send larger packets
+4.  Limited VWire support for SMI and SCI, want IRQ and GPIO expansion ability
+5.  I/O port model does not allow for easy expansion to multiple channels and protection/securing of channels
 
 ## eSPI Proposal over PCC
 
-Existing ACPI specification is available for defining channel based communication through PCC.
+Existing ACPI specifications are available for defining channel-based communication through PCC.
 
 [14. Platform Communications Channel (PCC) — ACPI Specification 6.5 documentation](https://uefi.org/specs/ACPI/6.5/14_Platform_Communications_Channel.html)
 
-Recommendation is to define a hardware interface that is compatible with PCC Type 3 and 4 that allows us to create inbox ACPI based or driver based handling of communication with the channel.
+Recommendation is to define a hardware interface that is compatible with PCC Type 3 and 4 that allows us to create inbox ACPI based or driver-based handling of communication with the channel.
+
+Keep PCC Type 0 for a bi-directional flat mapped memory region as existing today and support backward compatible EC’s that are not packet based.
 
 ## Hardware Resources
 
-For a given eSPI controller each controller has some global regi
+Each eSPI controller consists of channel independent registers, VWire, Peripheral, OOB and Flash Channels. Each of these sections is optional and only present if defined via a resource entry.
 
 ### Channel Independent Config
 
-Optionally specify MMIO region where the CONFIG registers as defined in the eSPI specification are mapped. These are read-only and allow the OS to read the ID of eSPI controller and Channel configuration to provide any workarounds for specific controllers. Each register is 32-bits and is direct accessed by MMIO operation.
+An optional Memory32Fixed region can be defined in the ESPI \_CRS that identifies non-channel independent register configuration as defined in the eSPI specification.
+
+If no resources are defined, then it is presumed that the BIOS or firmware will configure the channels as necessary to operate with the PCC regions defined.
 
 | Start (Hex) | End (Hex) | Register Name                               |
 |-------------|-----------|---------------------------------------------|
@@ -120,31 +123,45 @@ Optionally specify MMIO region where the CONFIG registers as defined in the eSPI
 | 050         | 7FF       | Reserved                                    |
 | 800         | FFF       | Platform Specific registers                 |
 
-### Global Status Register
+### Status Registers
 
-An MMIO or I/O port that can be read which returns the global status of the eSPI based on the definition of the eSPI controller.
+The eSPI status register is processed directly by the controller hardware itself and as such isn’t directly exposed. However, the PCC specification requires a doorbell and command complete register for each PCC channel that allows flow control.
 
-<img src="../media/espi_status.png" />
+**Doorbell** – Requires a single bit in a register or I/O port to indicate when the host has finished writing the data and the device can read the data from the peripheral memory.
+
+**Command Complete** – Requires a single bit in a register or I/O port to indicate that the device has finished processing the data and the host can overwrite it with new data.
+
+**Error Status** – Optional, reports errors to the OS if error recovery isn’t implemented fully in the controller itself.
+
+On existing platforms recommendation is to use an I/O port for each of these. Each bit within the I/O port represents the state for the corresponding channel allowing 8-channels. The mask and values can be programmed via PCC so this isn’t required but a suggested implementation to allow existing hardware to function.
 
 ### Global Reset Register
 
-An MMIO or I/O port register and mask that can be written to that traps into FW to initiate an in-band reset and reconfigures the eSPI config space back to defaults. Any pending transactions are lost and controller is in fresh state.
-
+Optional, an MMIO or I/O port register and mask that can be written to that traps into FW to initiate an in-band reset and reconfigures the eSPI config space back to defaults. Any pending transactions are lost, and the controller is in a fresh state.
 
 ### VWire Channel
 
-All interrupts come through a single GPE. The status register is read until no new VWIRE_AVAIL is set. The actual VWire event is described by an MMIO resource that is 16-bits long. The upper 8-bits is the Index and lower 8-bits is the data as described in the eSPI protocol specification.
+The eSPI controller should decode VWires and allow a configuration that maps at least 16 IRQ’s from index 0 to hard coded SIRQ’s or vectors. These may either be directed to ACPI or the OS may choose to directly register an ISR for these interrupts. The meaning behind these interrupts and what to do in response to them is implementation defined.
 
-When a VWire event is read it will be removed from the FIFO. If events are not read until VWIRE_AVAIL is no longer set in the status, the interrupt and GPE should be triggered again.
+How many IRQ’s are supported and their mapping should be defined in the \_CRS of the eSPI device.
 
+System events with indexes 2-7 should be supported via legacy ACPI interface with SCI and SMI support.
+
+Optional support for GPIO expansion via index 128-255 can be defined as well. The details of how those are reported and defining structures need to be decided via MMIO or I/O definitions in future revision.
 
 ### Peripheral Channel
 
-There can be multiple sub-channels exposed via a single peripheral channel. Each sub-channel must have a corresponding PCC table defining the channel details and the address of the MMIO region. Type 3 and Type 4 tables should be used for bi-directional packet based communication.
+There can be multiple sub-channels exposed via a single peripheral channel. Each sub-channel must have a corresponding PCC table defining the channel details and the address of the MMIO region. For packet-based communication there must be two PCC tables defined:
+
+**Type 3** – Initiator table to describe all the communication from the host to the device.
+
+**Type 4** – Responder table to describe all the communication from the device to the host.
+
+For legacy flat mapped memory space which just uses direct memory updates and is not packet based, this region can be directly accessed as MMIO or SystemMemory. Type 0 PCC region may also be used to describe the memory if a doorbell mechanism or more signaling is required.
 
 The doorbell register when written will trigger a peripheral channel transfer of the data length specified by the Length field in the PCC Shared Memory Region.
 
-On systems where MMIO accesses automatically generate peripheral transactions the doorbell can be set to 0 and the Command register should point to the shared buffer command field indicating the bits to indicate command completion.
+On systems where MMIO accesses automatically generate peripheral transactions, the doorbell can be set to 0. The command complete register will still need to point to an MMIO or I/O space location to indicate the state of data transfer.
 
 ## Sample ACPI Definition for the eSPI PCC Device
 
@@ -155,11 +172,8 @@ The sample separates the namespace device definition from the PCCT subspace reco
 | Resource | Base Address | Length | Purpose |
 |----|----|----|----|
 | Channel-independent configuration | 0xFEDC0000 | 0x1000 | Read-only eSPI identification and channel capability/configuration registers. |
-| Global status register | 0xFEDC1000 | 0x4 | 32-bit controller status, including implementation-defined pending/available indications. |
-| Global reset register | 0xFEDC1004 | 0x4 | 32-bit reset control; this example uses bit 0 as the in-band eSPI reset request. |
-| Doorbell register | 0xFEDC1008 | 0x4 | Bit 0 rings the selected eSPI peripheral channel. |
-| Type 4 acknowledge register | 0xFEDC100C | 0x4 | Bit 0 acknowledges a platform notification on the Type 4 subspace. |
-| VWire FIFO register | 0xFEDC1010 | 0x4 | 32-bit read FIFO. Reading returns the next queued VWire event and removes it from the FIFO. |
+| Global Doorbell Register | 0xFEDC1000 | 0x4 | Doorbell status, allows 32-channels, bit 0-31 represents doorbell status for each channel. |
+| Global Command Complete Register | 0xFEDC1004 | 0x4 | Command complete status for 32-channels, one bit per channel. |
 | PCC Type 3 shared memory | 0xFEDC2000 | 0x400 | 1024-byte extended master subspace for OS-initiated bidirectional peripheral traffic. |
 | PCC Type 4 shared memory | 0xFEDC2400 | 0x400 | 1024-byte extended slave subspace for platform-initiated bidirectional peripheral traffic. |
 

@@ -1,25 +1,3 @@
-Request \#:        HUTRR120
-Title:            RTC & System Wake Timer
-Spec Release:    1.7
-Requester:        Phil Weber
-Company:          Microsoft
-------------------
-Pages Affected:  Time and Date (0x13) (*New Page*)
-Generic Desktop (0x01)
-Generic Device Controls (0x06)
-------------------
-Current Status:   In Review
-Priority:         Normal
-------------------
-Required Voter:   QC
-Required Voter:   Intel
-Required Voter:   Dell
-------------------
-
-Voting Begins:    \<Filled by HID-Chairman\>
-Voting Ends:      \<Filled by HID-Chairman\>
-Voting Result:    \<Filled by HID-Chairman\>
-
 **Summary:**
 
 Add new Usages to support configuring a system's onboard RTC (Real-Time-Clock) and System Wake Timer.

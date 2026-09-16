@@ -1,24 +1,3 @@
-Request #:        HUTRR TBD
-Title:            Control Method Battery
-Spec Release:     HID Usage Tables 1.7
-Received:         <Filled by HID Chair>
-Requester:        Phil Weber
-Company:          Microsoft
-------------------
-Pages Affected:   Battery System Page (0x85)
-Values Checked:   0x0100-0x0186
-------------------
-Current Status:   Draft
-Priority:         Normal
-Submitted:        <TBD>
-------------------
-Required Voter:   <TBD>
-Required Voter:   <TBD>
-Required Voter:   <TBD>
-------------------
-Voting Begins:    <Filled by HID Chair>
-Voting Ends:      <Filled by HID Chair>
-Voting Result:    <Filled by HID Chair>
 
 
 Summary

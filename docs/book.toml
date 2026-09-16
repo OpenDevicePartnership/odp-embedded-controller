@@ -10,6 +10,7 @@ build-dir = "book"
 [output.html]
 git-repository-url = "https://github.com/OpenDevicePartnership/odp-embedded-controller"
 edit-url-template = "https://github.com/OpenDevicePartnership/odp-embedded-controller/edit/main/docs/{path}"
+additional-js = ["mermaid-init.js"]
 
 [output.html.fold]
 enable = true

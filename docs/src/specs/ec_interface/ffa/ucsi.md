@@ -33,12 +33,12 @@ these commands:
     
       - Negotiated Power Level Change
 
-![Diagram of USB Type-C software components.](media/image10.png)
+![Diagram of USB Type-C software components.](../media/image10.png)
 
 ## UCSI ACPI Interface
 
 ![A diagram of a memory Description automatically
-generated](media/image11.png)
+generated](../media/image11.png)
 
 ### Shared Mailbox Interface
 

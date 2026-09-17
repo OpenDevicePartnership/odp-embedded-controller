@@ -20,6 +20,63 @@ Specification 6.5 documentation
 | EC_TAS_SET_CWS = 0x5 | Clear Wake Status                                 |
 | EC_TAS_SET_STV = 0x6 | Set Timer value for given timer                   |
 | EC_TAS_GET_TIV = 0x7 | Get Timer value remaining for given timer         |
+| EC_TAS_SET_STP = 0x8 | Set expired timer policy for given timer          |
+| EC_TAS_GET_TIP = 0x9 | Get expired timer policy for given timer          |
+
+## Relay-backed FF-A command layout
+
+The service UUID is `23ea63ed-b593-46ea-b027-8924df88e92f`. In an FF-A
+Direct Request v2 payload, byte 0 is the command and arguments start at byte 1.
+Response data starts at payload byte 0. These correspond to ACPI `BUFF`
+offsets 32, 33, and 32 respectively; they are not an EC peripheral-memory map.
+All multibyte argument and response fields are little-endian.
+
+The secure-world handler forwards commands through the existing ODP relay
+(service ID `0x0B`, MCTP message type `0x7D`). The ODP header is big-endian
+and carries the command separately from the body. The implemented command
+and response IDs are defined in
+[`time-alarm-service-relay`](https://github.com/OpenDevicePartnership/embedded-services/blob/main/time-alarm-service-relay/src/serialization.rs).
+
+| Command | Argument bytes | EC success response ID / body |
+| --- | --- | --- |
+| 1 / _GCP | None | 1 / u32 capabilities |
+| 2 / _GRT | None | 2 / 16-byte ACPI timestamp |
+| 3 / _SRT | 16-byte ACPI timestamp | 6 / empty |
+| 4 / _GWS | u32 timer ID | 3 / u32 wake status |
+| 5 / _CWS | u32 timer ID | 6 / empty |
+| 6 / _STV | u32 timer ID, u32 seconds | 6 / empty |
+| 7 / _TIV | u32 timer ID | 5 / u32 seconds |
+| 8 / _STP | u32 timer ID, u32 policy seconds | 6 / empty |
+| 9 / _TIP | u32 timer ID | 4 / u32 policy seconds |
+
+Timer ID 0 selects AC; 1 selects DC. The expired-timer policy controls the
+delay after returning to the correct power source when a timer expired on
+the wrong source: 0 means immediately, and `0xFFFFFFFF` means never.
+Other u32 values specify the delay in seconds. `_CWS` clears only the selected
+timer's status, not its policy or the other timer's status.
+
+For setters (3, 5, 6, 8), the SP converts an empty EC success response into
+a u32 status at FF-A response offset 0: 0 for success, the EC error
+discriminant for a remote failure, or `0xFFFFFFFF` for a local, transport,
+or protocol failure. The current EC service error is 1 (unspecified failure).
+FF-A framework status (`STAT` in the examples) is separate: successful
+FF-A delivery alone does not establish command success.
+Scalar getter failures return `0xFFFFFFFF`; `_GRT` failures return an
+all-zero invalid timestamp. A policy value of `0xFFFFFFFF` is also valid,
+so an isolated `_TIP` read cannot distinguish that policy from a failure.
+
+The timestamp body contains year (u16, offset 0), month/day/hour/minute/second
+(bytes 2..6), padding/valid (byte 7), milliseconds (u16, offset 8), timezone
+(i16, offset 10), daylight (byte 12), and three reserved zero bytes (13..15).
+For `_SRT`, byte 7 is padding and should be 0; for successful `_GRT`, it is
+the valid byte, 1. The current shared relay serializer also emits 1 for
+`_SRT`; the EC decoder accepts either. The SP forwards the input bytes
+unchanged rather than normalizing that compatibility difference.
+
+These synchronous commands do not establish physical wake or asynchronous
+notification delivery. Power-source/wake integration and notification routing
+remain separate work; an EC triggered-wake status bit is bookkeeping, not
+proof that the host resumed.
 
 ## EC_TAS_GET_GCP
 
@@ -88,16 +145,16 @@ Method (_GRT) {
     CreateField(BUFF,128,128,UUID) // UUID of service
     CreateByteField(BUFF,32, CMDD) // In – First byte of command
     CreateWordField(BUFF,32,GRT0)  // Out Year
-    CreateByteField(BUFF,36,GRT1)  // Out Month
-    CreateByteField(BUFF,37,GRT2)  // Out Day
-    CreateByteField(BUFF,38,GRT3)  // Out Hour
-    CreateByteField(BUFF,39,GRT4)  // Out Minute
-    CreateByteField(BUFF,40,GRT5)  // Out Second
-    CreateByteField(BUFF,41,GRT6)  // Out Valid
-    CreateWordField(BUFF,42,GRT7)  // Out milliseconds
-    CreateWordField(BUFF,44,GRT8)  // Out Timezone
-    CreateByteField(BUFF,46,GRT9)  // Out Daylight
-    CreateField(BUFF,376,24,PAD0)  // Out 3 bytes padding
+    CreateByteField(BUFF,34,GRT1)  // Out Month
+    CreateByteField(BUFF,35,GRT2)  // Out Day
+    CreateByteField(BUFF,36,GRT3)  // Out Hour
+    CreateByteField(BUFF,37,GRT4)  // Out Minute
+    CreateByteField(BUFF,38,GRT5)  // Out Second
+    CreateByteField(BUFF,39,GRT6)  // Out Valid
+    CreateWordField(BUFF,40,GRT7)  // Out milliseconds
+    CreateWordField(BUFF,42,GRT8)  // Out Timezone
+    CreateByteField(BUFF,44,GRT9)  // Out Daylight
+    CreateField(BUFF,360,24,PAD0)  // Out 3 bytes padding
 
 
     Store(0x2, CMDD) // EC_TAS_GET_GRT
@@ -139,6 +196,7 @@ Method (_SRT) {
     CreateField(BUFF,128,128,UUID) // UUID of service
     CreateByteField(BUFF,32, CMDD) // In – First byte of command
     CreateField(BUFF,264,128,SRTD)  // 16 bytes of data
+    CreateDwordField(BUFF,32,SRTS) // Out – Command status
 
     Store(0x3, CMDD) // EC_TAS_SET_SRT
     Store(ToUUID("23ea63ed-b593-46ea-b027-8924df88e92f"), UUID) // RTC
@@ -147,10 +205,10 @@ Method (_SRT) {
 
     If(LEqual(STAT,0x0) ) // Check FF-A successful?
     {
-      Return (One)
+      Return (SRTS)
     }
   }
-  Return(Zero)}
+  Return(Ones)
 }
 ```
 
@@ -223,7 +281,7 @@ Method (_CWS) {
     CreateField(BUFF,128,128,UUID) // UUID of service
     CreateByteField(BUFF,32, CMDD) // In – First byte of command
     CreateDwordField(BUFF,33, CWS1) // In – Dword for timer type AC/DC
-    CreateDwordField(BUFF,32,CWSD) // Out – Dword timer state
+    CreateDwordField(BUFF,32,CWSD) // Out – Command status
  
     Store(20, LENG)
     Store(0x5, CMDD) // EC_TAS_SET_CWS
@@ -236,7 +294,7 @@ Method (_CWS) {
       Return (CWSD)
     }
   } 
-  Return(Zero)
+  Return(Ones)
 }
 ```
 
@@ -267,7 +325,7 @@ Method (_STV) {
     CreateByteField(BUFF,32, CMDD) // In – First byte of command
     CreateDwordField(BUFF,33, STV1) // In – Dword for timer type AC/DC
     CreateDwordField(BUFF,37, STV2) // In – Dword Timer Value
-    CreateDwordField(BUFF,2,STVD) // Out – Dword timer state
+    CreateDwordField(BUFF,32,STVD) // Out – Command status
 
     Store(0x6, CMDD) // EC_TAS_SET_STV
     Store(Arg0,STV1)
@@ -280,7 +338,7 @@ Method (_STV) {
       Return (STVD)
     }
   }
-  Return(Zero)
+  Return(Ones)
 }
 ```
 

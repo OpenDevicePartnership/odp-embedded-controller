@@ -61,6 +61,9 @@ discriminant for a remote failure, or `0xFFFFFFFF` for a local, transport,
 or protocol failure. The current EC service error is 1 (unspecified failure).
 FF-A framework status (`STAT` in the examples) is separate: successful
 FF-A delivery alone does not establish command success.
+The ACPI methods must translate any nonzero SP status or FF-A failure to
+their specified failure value: `0xFFFFFFFF` for `_SRT`, and 1 for `_CWS`,
+`_STV`, and `_STP`. These method results are not raw transport error codes.
 Scalar getter failures return `0xFFFFFFFF`; `_GRT` failures return an
 all-zero invalid timestamp. A policy value of `0xFFFFFFFF` is also valid,
 so an isolated `_TIP` read cannot distinguish that policy from a failure.
@@ -68,10 +71,15 @@ so an isolated `_TIP` read cannot distinguish that policy from a failure.
 The timestamp body contains year (u16, offset 0), month/day/hour/minute/second
 (bytes 2..6), padding/valid (byte 7), milliseconds (u16, offset 8), timezone
 (i16, offset 10), daylight (byte 12), and three reserved zero bytes (13..15).
-For `_SRT`, byte 7 is padding and should be 0; for successful `_GRT`, it is
+For `_SRT`, byte 7 is padding (conventionally 0); for successful `_GRT`, it is
 the valid byte, 1. The current shared relay serializer also emits 1 for
 `_SRT`; the EC decoder accepts either. The SP forwards the input bytes
 unchanged rather than normalizing that compatibility difference.
+
+The shared decoder accepts milliseconds 0..999 and daylight values 0, 1,
+and 3. ACPI 6.6 still lists milliseconds 1..1000 and does not explicitly
+reserve daylight value 2. These decoder restrictions are implementation
+compatibility choices, not corrections to the published ACPI specification.
 
 These synchronous commands do not establish physical wake or asynchronous
 notification delivery. Power-source/wake integration and notification routing
@@ -139,34 +147,23 @@ Should return structure as defined by ACPI specification
 ### FFA ACPI Example
 ```
 Method (_GRT) {
+  Name(RBUF, Buffer(16){})
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp
     CreateField(BUFF,128,128,UUID) // UUID of service
     CreateByteField(BUFF,32, CMDD) // In – First byte of command
-    CreateWordField(BUFF,32,GRT0)  // Out Year
-    CreateByteField(BUFF,34,GRT1)  // Out Month
-    CreateByteField(BUFF,35,GRT2)  // Out Day
-    CreateByteField(BUFF,36,GRT3)  // Out Hour
-    CreateByteField(BUFF,37,GRT4)  // Out Minute
-    CreateByteField(BUFF,38,GRT5)  // Out Second
-    CreateByteField(BUFF,39,GRT6)  // Out Valid
-    CreateWordField(BUFF,40,GRT7)  // Out milliseconds
-    CreateWordField(BUFF,42,GRT8)  // Out Timezone
-    CreateByteField(BUFF,44,GRT9)  // Out Daylight
-    CreateField(BUFF,360,24,PAD0)  // Out 3 bytes padding
-
-
+    CreateField(BUFF,256,128,GRTD) // Out – 16-byte timestamp
     Store(0x2, CMDD) // EC_TAS_GET_GRT
     Store(ToUUID("23ea63ed-b593-46ea-b027-8924df88e92f"), UUID) // RTC
     Store(Store(BUFF, \_SB_.FFA0.FFAC), BUFF)
 
     If(LEqual(STAT,0x0) ) // Check FF-A successful?
     {
-      Return (Package() {GRT0,GRT1,GRT2,GRT3,GRT4,GRT5,GRT6,GRT7,GRT8,GRT9, PAD0})
+      Store(GRTD, RBUF)
     }
   }
-  Return(Package() {0,0,0,0,0,0,0,0,0,0,Buffer(){0,0,0}})
+  Return(RBUF)
 }
 ```
 
@@ -189,7 +186,7 @@ Should return structure as defined by ACPI specification
 
 ### FFA ACPI Example
 ```
-Method (_SRT) {
+Method (_SRT, 1) {
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp
@@ -203,12 +200,12 @@ Method (_SRT) {
     Store(Arg0, SRTD) // Copy over the RTC data
     Store(Store(BUFF, \_SB_.FFA0.FFAC), BUFF)
 
-    If(LEqual(STAT,0x0) ) // Check FF-A successful?
+    If(LAnd(LEqual(STAT,0), LEqual(SRTS,0)))
     {
-      Return (SRTS)
+      Return (Zero)
     }
   }
-  Return(Ones)
+  Return(0xFFFFFFFF)
 }
 ```
 
@@ -231,7 +228,7 @@ Should return structure as defined by ACPI specification
 
 ### FFA ACPI Example
 ```
-Method (_GWS) {
+Method (_GWS, 1) {
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp
@@ -274,7 +271,7 @@ Should return structure as defined by ACPI specification
 ### FFA ACPI Example
 
 ```
-Method (_CWS) {
+Method (_CWS, 1) {
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp
@@ -289,12 +286,12 @@ Method (_CWS) {
     Store(ToUUID("23ea63ed-b593-46ea-b027-8924df88e92f"), UUID) // RTC
     Store(Store(BUFF, \_SB_.FFA0.FFAC), BUFF)
 
-    If(LEqual(STAT,0x0) ) // Check FF-A successful?
+    If(LAnd(LEqual(STAT,0), LEqual(CWSD,0)))
     {
-      Return (CWSD)
+      Return (Zero)
     }
   } 
-  Return(Ones)
+  Return(One)
 }
 ```
 
@@ -317,7 +314,7 @@ Should return structure as defined by ACPI specification
 
 ### FFA ACPI Example
 ```
-Method (_STV) {
+Method (_STV, 2) {
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp
@@ -333,12 +330,12 @@ Method (_STV) {
     Store(ToUUID("23ea63ed-b593-46ea-b027-8924df88e92f"), UUID) // RTC
     Store(Store(BUFF, \_SB_.FFA0.FFAC), BUFF)
   
-    If(LEqual(STAT,0x0) ) // Check FF-A successful?
+    If(LAnd(LEqual(STAT,0), LEqual(STVD,0)))
     {
-      Return (STVD)
+      Return (Zero)
     }
   }
-  Return(Ones)
+  Return(One)
 }
 ```
 
@@ -362,7 +359,7 @@ Should return structure as defined by ACPI specification
 ### FFA ACPI Example
 
 ```
-Method (_TIV) {
+Method (_TIV, 1) {
   // Check to make sure FFA is available and not unloaded
   If(LEqual(\\_SB.FFA0.AVAL,One)) {
     CreateQwordField(BUFF,0,STAT) // Out – Status for req/rsp

@@ -64,9 +64,13 @@ FF-A delivery alone does not establish command success.
 The ACPI methods must translate any nonzero SP status or FF-A failure to
 their specified failure value: `0xFFFFFFFF` for `_SRT`, and 1 for `_CWS`,
 `_STV`, and `_STP`. These method results are not raw transport error codes.
-Scalar getter failures return `0xFFFFFFFF`; `_GRT` failures return an
-all-zero invalid timestamp. A policy value of `0xFFFFFFFF` is also valid,
-so an isolated `_TIP` read cannot distinguish that policy from a failure.
+At the FF-A service-payload level, scalar getter failures return
+`0xFFFFFFFF`; `_GRT` failures return an all-zero invalid timestamp. These
+are SP responses delivered by a successful FF-A call, not ACPI getter
+fallback values when FF-A is unavailable or `STAT` is nonzero. For that
+separate case, the `_GCP`, `_GWS`, and `_TIV` examples below return `Zero`.
+A policy value of `0xFFFFFFFF` is also valid, so an isolated `_TIP` read
+cannot distinguish that policy from a failure.
 
 The timestamp body contains year (u16, offset 0), month/day/hour/minute/second
 (bytes 2..6), padding/valid (byte 7), milliseconds (u16, offset 8), timezone

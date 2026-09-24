@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1790276084427,
+  "lastUpdate": 1790276093238,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -1555,6 +1555,36 @@ window.BENCHMARK_DATA = {
           "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/f4758e3d30a774b94df3b7b0028f83841fc9c217"
         },
         "date": 1789530642792,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 58.5,
+            "unit": "KiB",
+            "extra": "RAM Size: 8.62 KiB\nDependency Count: 335\nVersion: rustc 1.98.1 (48a229cea 2026-09-01)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7eaab28bd394159c0510e8c86e5d2d767d3d7a2f",
+          "message": "Clarify TimeAlarm relay and ACPI contracts (#47)\n\n* Clarify TimeAlarm relay command contract\n\nDocument the existing nine-command mapping, setter status, timestamp padding compatibility, and relevant FF-A sample offsets without adding wake or notification integration.\n\nAssisted-by: GitHub Copilot:gpt-6-astra\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n* Align examples with ACPI method semantics\n\nDistinguish method-specific failure values from relay status, return a timestamp buffer, and declare the required arguments. Document existing timestamp decoder compatibility restrictions.\n\nAssisted-by: GitHub Copilot:gpt-6-astra\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n* Distinguish getter failure layers\n\nClarify that SP response sentinels differ from the ACPI examples fallback policy when FF-A delivery fails or is unavailable.\n\nAssisted-by: GitHub Copilot:gpt-6-astra\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n---------\n\nCo-authored-by: Felipe Balbi <felipe.balbi@microsoft.com>\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
+          "timestamp": "2026-09-24T11:52:56-07:00",
+          "tree_id": "74e877d596230624d1692622a9f252a8d01307fb",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/7eaab28bd394159c0510e8c86e5d2d767d3d7a2f"
+        },
+        "date": 1790276092707,
         "tool": "customSmallerIsBetter",
         "benches": [
           {

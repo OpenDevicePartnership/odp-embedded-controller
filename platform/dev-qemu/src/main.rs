@@ -3,6 +3,7 @@
 
 mod board;
 mod hid;
+mod pcc;
 
 use board::Board;
 use defmt::info;
@@ -32,6 +33,7 @@ async fn main(spawner: Spawner) {
 
     let relay = platform_common::mock::init(spawner).await;
     spawner.spawn(uart_service(board.uart, relay).expect("Failed to spawn UART service task"));
+    spawner.spawn(pcc::task(board.espi).expect("Failed to spawn PCC ping task"));
 
     // Bring up a minimal HID-over-I2C device so a host (e.g. Windows) can
     // complete its initial HID handshake against the EC

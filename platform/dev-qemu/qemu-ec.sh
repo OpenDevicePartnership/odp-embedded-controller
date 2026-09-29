@@ -27,6 +27,8 @@
 #   ODP_QEMU_TAG  Tag of the GHCR image to pull.
 #   EC_I2C_SOCK   Path for the I2C-target socket (default: /tmp/qemu-ec-i2c.sock).
 #   EC_GPIO_SOCK  Path for the GPIO socket (default: /tmp/qemu-ec-gpio.sock).
+#   EC_ESPI_SOCK  Path for the eSPI-target socket (default: /tmp/qemu-ec-espi.sock;
+#                 set empty to disable).
 #   EC_UART_SOCK  Optional path for a UART socket (default: unset, use a PTY).
 
 set -euo pipefail
@@ -44,6 +46,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ODP_QEMU_TAG="${ODP_QEMU_TAG:-sha-7e461b3}"
 EC_I2C_SOCK="${EC_I2C_SOCK:-/tmp/qemu-ec-i2c.sock}"
 EC_GPIO_SOCK="${EC_GPIO_SOCK:-/tmp/qemu-ec-gpio.sock}"
+EC_ESPI_SOCK="${EC_ESPI_SOCK-/tmp/qemu-ec-espi.sock}"
 EC_UART_SOCK="${EC_UART_SOCK:-}"
 
 # GHCR image that publishes the prebuilt QEMU (with `ec` machine support).
@@ -110,7 +113,7 @@ fi
 # - `-machine ec`            EC board exposing the I2C-target and GPIO sockets.
 # - `-bios none`             dev-qemu is a bare-metal kernel; no firmware needed.
 # - `-serial pty`            By default, UART0 uses a PTY for terminal/ec-test-cli.
-# - `-chardev socket,...`    The I2C-target, GPIO, and optional UART lines as UNIX
+# - `-chardev socket,...`    The I2C-target, GPIO, eSPI, and optional UART lines as UNIX
 #                            sockets that external programs can connect to.
 QEMU_ARGS=(
     -machine ec
@@ -131,6 +134,15 @@ if [[ -n "$EC_UART_SOCK" ]]; then
     )
 else
     QEMU_ARGS+=(-serial pty)
+fi
+
+if [[ -n "$EC_ESPI_SOCK" ]]; then
+    if [[ -L "$EC_ESPI_SOCK" || ( -e "$EC_ESPI_SOCK" && ! -S "$EC_ESPI_SOCK" ) ]]; then
+        echo "error: EC_ESPI_SOCK must not name a symlink or non-socket: $EC_ESPI_SOCK" >&2
+        exit 1
+    fi
+    rm -f -- "$EC_ESPI_SOCK"
+    QEMU_ARGS+=(-chardev "socket,id=ec-espi-target,path=${EC_ESPI_SOCK},server=on,wait=off")
 fi
 
 QEMU_ARGS+=(

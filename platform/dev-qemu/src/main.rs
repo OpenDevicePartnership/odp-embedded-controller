@@ -30,11 +30,92 @@ async fn main(spawner: Spawner) {
     let p = embassy_qemu_riscv::init();
     let board = Board::init(p);
 
+    #[cfg(not(feature = "time-alarm-wake"))]
     let relay = platform_common::mock::init(spawner).await;
+    #[cfg(feature = "time-alarm-wake")]
+    let relay = {
+        use time_alarm_service_interface::{AcpiTimerId, AlarmTimerSeconds, TimeAlarmService};
+        #[cfg(not(feature = "time-alarm-power-input"))]
+        let source = match option_env!("ODP_WAKE_SOURCE") {
+            Some("ac") => AcpiTimerId::AcPower,
+            Some("dc") => AcpiTimerId::DcPower,
+            _ => panic!("Build the wake fixture with ODP_WAKE_SOURCE=ac or dc"),
+        };
+        let (relay, service) = platform_common::mock::init_with_time_alarm(spawner, |service| {
+            #[cfg(feature = "time-alarm-power-input")]
+            let source = {
+                assert!(
+                    board.power_input.is_initialized(),
+                    "TimeAlarm GPIO2 power input must be explicitly initialized"
+                );
+                power_source(&board.power_input)
+            };
+            info!("TimeAlarm wake source: {:?}", source);
+            for timer in [AcpiTimerId::AcPower, AcpiTimerId::DcPower] {
+                service
+                    .set_timer_value(timer, AlarmTimerSeconds::DISABLED)
+                    .expect("Failed to disable initial fixture alarm");
+            }
+            service.set_power_source(source);
+        })
+        .await;
+        spawner.spawn(time_alarm_wake(service, board.wake_gpio).expect("Failed to spawn TimeAlarm wake task"));
+        #[cfg(feature = "time-alarm-power-input")]
+        spawner.spawn(
+            time_alarm_power_input(service, board.power_input).expect("Failed to spawn TimeAlarm power input task"),
+        );
+        relay
+    };
     spawner.spawn(uart_service(board.uart, relay).expect("Failed to spawn UART service task"));
 
     // Bring up a minimal HID-over-I2C device so a host (e.g. Windows) can
     // complete its initial HID handshake against the EC
-    spawner.spawn(hid::host_task(board.i2c).expect("Failed to spawn HID host task"));
-    spawner.spawn(hid::device_task(board.gpio).expect("Failed to spawn HID device task"));
+    hid::init(spawner, board.i2c, board.gpio).await;
+}
+
+#[cfg(feature = "time-alarm-wake")]
+#[embassy_executor::task]
+async fn time_alarm_wake(
+    service: platform_common::mock::time_alarm::TimeAlarmService,
+    mut gpio: embassy_qemu_riscv::gpio::Output<'static>,
+) {
+    loop {
+        let requested = service.wait_for_wake_signal().await;
+        if requested {
+            gpio.set_high();
+        } else {
+            gpio.set_low();
+        }
+        info!("TimeAlarm wake requested: {}", requested);
+    }
+}
+
+#[cfg(feature = "time-alarm-power-input")]
+fn power_source(
+    input: &embassy_qemu_riscv::gpio::Input<'_, embassy_qemu_riscv::gpio::Async>,
+) -> time_alarm_service_interface::AcpiTimerId {
+    use time_alarm_service_interface::AcpiTimerId;
+    if input.is_high() {
+        AcpiTimerId::AcPower
+    } else {
+        AcpiTimerId::DcPower
+    }
+}
+
+#[cfg(feature = "time-alarm-power-input")]
+#[embassy_executor::task]
+async fn time_alarm_power_input(
+    service: platform_common::mock::time_alarm::TimeAlarmService,
+    mut input: embassy_qemu_riscv::gpio::Input<'static, embassy_qemu_riscv::gpio::Async>,
+) {
+    use time_alarm_service_interface::AcpiTimerId;
+    loop {
+        let source = power_source(&input);
+        service.set_power_source(source);
+        info!("TimeAlarm power input: {:?}", source);
+        match source {
+            AcpiTimerId::AcPower => input.wait_for_low().await,
+            AcpiTimerId::DcPower => input.wait_for_high().await,
+        }
+    }
 }

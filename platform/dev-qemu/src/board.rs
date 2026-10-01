@@ -13,6 +13,11 @@ bind_interrupts!(struct Irqs {
     I2C_TARGET => target::InterruptHandler<peripherals::I2C_TARGET>;
 });
 
+#[cfg(feature = "time-alarm-power-input")]
+bind_interrupts!(struct GpioIrqs {
+    GPIO => embassy_qemu_riscv::gpio::InterruptHandler;
+});
+
 /// Board IO for the dev-qemu platform.
 ///
 /// This minimal development board provides a UART interface for ODP service
@@ -24,6 +29,10 @@ pub struct Board {
     pub i2c: I2c<'static, I2cAsync>,
     /// Interrupt line the HID device drives to signal the host (active low).
     pub gpio: Output<'static>,
+    #[cfg(feature = "time-alarm-wake")]
+    pub wake_gpio: Output<'static>,
+    #[cfg(feature = "time-alarm-power-input")]
+    pub power_input: embassy_qemu_riscv::gpio::Input<'static, embassy_qemu_riscv::gpio::Async>,
 }
 
 impl BoardIo for Board {
@@ -41,6 +50,14 @@ impl BoardIo for Board {
         // Start high (since this is an active-low signal)
         let gpio = Output::new(p.GPIO0, Level::High);
 
-        Board { uart, i2c, gpio }
+        Board {
+            uart,
+            i2c,
+            gpio,
+            #[cfg(feature = "time-alarm-wake")]
+            wake_gpio: Output::new(p.GPIO1, Level::Low),
+            #[cfg(feature = "time-alarm-power-input")]
+            power_input: embassy_qemu_riscv::gpio::Input::new_async(p.GPIO2, GpioIrqs),
+        }
     }
 }

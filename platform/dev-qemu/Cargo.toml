@@ -40,6 +40,9 @@ style = "deny"
 [package.metadata.cargo-machete]
 ignored = ["riscv-rt"]
 
+[features]
+time-alarm-wake = ["dep:time-alarm-service-interface"]
+
 [dependencies]
 riscv-rt = "0.17.0"
 
@@ -64,6 +67,7 @@ hidi2c-target-service = { git = "https://github.com/OpenDevicePartnership/embedd
 ] }
 odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main" }
 platform-common = { path = "../platform-common", features = ["mock"] }
+time-alarm-service-interface = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", optional = true }
 
 static_cell = "2.1.0"
 typenum = "1.20"

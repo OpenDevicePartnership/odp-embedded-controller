@@ -52,6 +52,20 @@ Windows enumeration or full host wake integration testing. A back-to-back
 SET_POWER/RESET pair also checks that the HAL preserves transaction boundaries
 without an inter-command delay.
 
+## CPU retention-wake fixture
+
+Build with `ODP_WAKE_SOURCE=ac cargo build --release --features time-alarm-wake`
+or select `dc` explicitly. The feature requires one of those build-time
+values; a missing or invalid selection fails at startup rather than assuming
+a power source. Ordinary builds are unchanged.
+
+This test-only source selection is not hardware AC/DC detection. GPIO1 is an
+active-high wake-request level driven by the real TimeAlarm service; GPIO0
+remains the HID interrupt. Clear or disable the corresponding timers through
+the existing relay commands to release their wake latches. The CPU retention
+test harness connects the separate `ec-gpio1` channel to the host GPIO1 and
+verifies actual standby return; the EC log alone does not prove host resume.
+
 ## Sockets
 While `dev-qemu` is running, the `ec` machine exposes two sockets that external
 programs (such as another QEMU instance) can connect to:

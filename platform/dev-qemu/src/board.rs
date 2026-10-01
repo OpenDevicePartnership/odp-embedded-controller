@@ -24,6 +24,8 @@ pub struct Board {
     pub i2c: I2c<'static, I2cAsync>,
     /// Interrupt line the HID device drives to signal the host (active low).
     pub gpio: Output<'static>,
+    #[cfg(feature = "time-alarm-wake")]
+    pub wake_gpio: Output<'static>,
 }
 
 impl BoardIo for Board {
@@ -41,6 +43,12 @@ impl BoardIo for Board {
         // Start high (since this is an active-low signal)
         let gpio = Output::new(p.GPIO0, Level::High);
 
-        Board { uart, i2c, gpio }
+        Board {
+            uart,
+            i2c,
+            gpio,
+            #[cfg(feature = "time-alarm-wake")]
+            wake_gpio: Output::new(p.GPIO1, Level::Low),
+        }
     }
 }

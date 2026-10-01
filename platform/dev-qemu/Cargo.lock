@@ -29,7 +29,7 @@ dependencies = [
 [[package]]
 name = "battery-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "battery-service-interface",
  "defmt 0.3.100",
@@ -42,7 +42,7 @@ dependencies = [
 [[package]]
 name = "battery-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embedded-batteries-async",
@@ -51,7 +51,7 @@ dependencies = [
 [[package]]
 name = "battery-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "battery-service-interface",
  "defmt 0.3.100",
@@ -284,14 +284,14 @@ dependencies = [
  "defmt-semihosting",
  "embassy-executor 0.10.0",
  "embassy-qemu-riscv",
- "embassy-sync 0.8.0",
- "embedded-mcu-hal 0.3.0",
  "embedded-services",
- "hid-service",
+ "hidi2c-target-service",
+ "odp-service-common",
  "platform-common",
  "riscv-rt",
  "semihosting",
  "static_cell",
+ "typenum",
  "uart-service",
 ]
 
@@ -388,7 +388,7 @@ dependencies = [
 [[package]]
 name = "embassy-qemu-riscv"
 version = "0.2.1"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#60430f9284ecc00ca79fb3b3d5e23b851b7e0336"
+source = "git+https://github.com/dymk/qemu-riscv-rs?rev=7c149e827f13335962089e5d11d2a5432c487b1f#7c149e827f13335962089e5d11d2a5432c487b1f"
 dependencies = [
  "critical-section",
  "defmt 1.1.0",
@@ -629,7 +629,7 @@ dependencies = [
 [[package]]
 name = "embedded-services"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "bitfield 0.17.0",
  "cortex-m",
@@ -637,10 +637,14 @@ dependencies = [
  "defmt 0.3.100",
  "embassy-futures",
  "embassy-sync 0.8.0",
+ "generic-array",
+ "heapless 0.9.3",
  "mctp-rs",
+ "num_enum",
  "paste",
  "portable-atomic",
  "serde",
+ "typenum",
 ]
 
 [[package]]
@@ -696,6 +700,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "generic-array"
+version = "1.4.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "337d46834ee672ab3e48caca2cb0c78cc174fb12b3a68d0d88f99a0519a5e36e"
+dependencies = [
+ "rustversion",
+ "typenum",
+]
+
+[[package]]
 name = "hash32"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -731,16 +745,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
-name = "hid-service"
+name = "hidi2c-target-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#62d4ea9a87588c6096e1c2f149ac3263064cbde9"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
+ "embassy-futures",
  "embassy-sync 0.8.0",
  "embassy-time",
  "embedded-hal 1.0.0",
- "embedded-hal-async",
+ "embedded-mcu-hal 0.3.0",
  "embedded-services",
+ "generic-array",
+ "num_enum",
+ "odp-service-common",
+ "typenum",
+ "zerocopy",
 ]
 
 [[package]]
@@ -798,7 +818,7 @@ dependencies = [
 [[package]]
 name = "mctp-rs"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "bit-register 0.1.0 (git+https://github.com/OpenDevicePartnership/odp-utilities)",
  "crc",
@@ -873,7 +893,7 @@ dependencies = [
 [[package]]
 name = "odp-service-common"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "embedded-services",
  "static_cell",
@@ -938,14 +958,12 @@ checksum = "c33a9471896f1c69cecef8d20cbe2f7accd12527ce60845ff44c153bb2a21b49"
 [[package]]
 name = "power-policy-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
- "bitfield 0.17.0",
  "defmt 0.3.100",
  "embassy-sync 0.8.0",
  "embedded-batteries-async",
  "embedded-services",
- "num_enum",
 ]
 
 [[package]]
@@ -982,7 +1000,7 @@ dependencies = [
 [[package]]
 name = "qemu-riscv-pac"
 version = "0.1.0"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#60430f9284ecc00ca79fb3b3d5e23b851b7e0336"
+source = "git+https://github.com/dymk/qemu-riscv-rs?rev=7c149e827f13335962089e5d11d2a5432c487b1f#7c149e827f13335962089e5d11d2a5432c487b1f"
 dependencies = [
  "critical-section",
  "riscv",
@@ -1242,7 +1260,7 @@ dependencies = [
 [[package]]
 name = "thermal-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embassy-futures",
@@ -1259,7 +1277,7 @@ dependencies = [
 [[package]]
 name = "thermal-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embassy-time",
@@ -1270,7 +1288,7 @@ dependencies = [
 [[package]]
 name = "thermal-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embedded-services",
@@ -1311,7 +1329,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embassy-futures",
@@ -1327,7 +1345,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service-interface"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "bitfield 0.17.0",
  "defmt 0.3.100",
@@ -1339,7 +1357,7 @@ dependencies = [
 [[package]]
 name = "time-alarm-service-relay"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embedded-mcu-hal 0.3.0",
@@ -1410,9 +1428,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "typenum"
+version = "1.20.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20"
+
+[[package]]
 name = "uart-service"
 version = "0.1.0"
-source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#6d7dbbf71a7e386ae75949fa2b792392df0d857a"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#fddcad16b76774ceffa0389b3f3a077abec6a918"
 dependencies = [
  "defmt 0.3.100",
  "embassy-sync 0.8.0",

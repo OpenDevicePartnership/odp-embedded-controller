@@ -35,6 +35,5 @@ async fn main(spawner: Spawner) {
 
     // Bring up a minimal HID-over-I2C device so a host (e.g. Windows) can
     // complete its initial HID handshake against the EC
-    spawner.spawn(hid::host_task(board.i2c).expect("Failed to spawn HID host task"));
-    spawner.spawn(hid::device_task(board.gpio).expect("Failed to spawn HID device task"));
+    hid::init(spawner, board.i2c, board.gpio).await;
 }

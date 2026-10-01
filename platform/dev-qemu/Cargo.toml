@@ -36,16 +36,15 @@ suspicious = "deny"
 style = "deny"
 
 # The `embassy_executor::main` macro expands to code referencing `riscv_rt`,
-# and `embedded_services::define_static_buffer!` expands to code referencing
-# `embassy_sync`, but cargo-machete cannot see through either macro. Keep the
-# direct dependencies and tell machete to ignore them.
+# but cargo-machete cannot see through the macro.
 [package.metadata.cargo-machete]
-ignored = ["riscv-rt", "embassy-sync"]
+ignored = ["riscv-rt"]
 
 [dependencies]
 riscv-rt = "0.17.0"
 
-embassy-qemu-riscv = { git = "https://github.com/kurtjd/qemu-riscv-rs", features = [
+# Restore upstream after the I2C transaction-boundary fix is merged.
+embassy-qemu-riscv = { git = "https://github.com/dymk/qemu-riscv-rs", rev = "7c149e827f13335962089e5d11d2a5432c487b1f", features = [
     "defmt",
 ] }
 embassy-executor = { version = "0.10.0", features = [
@@ -60,14 +59,14 @@ embedded-services = { git = "https://github.com/OpenDevicePartnership/embedded-s
 uart-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
-hid-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+hidi2c-target-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
+odp-service-common = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main" }
 platform-common = { path = "../platform-common", features = ["mock"] }
-embedded-mcu-hal = "0.3.0"
 
 static_cell = "2.1.0"
-embassy-sync = "0.8.0"
+typenum = "1.20"
 defmt = "0.3.6"
 defmt-semihosting = "0.3.0"
 semihosting = { version = "0.1", features = ["panic-handler"] }

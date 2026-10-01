@@ -42,12 +42,13 @@ ignored = ["riscv-rt"]
 
 [features]
 time-alarm-wake = ["dep:time-alarm-service-interface"]
+time-alarm-power-input = ["time-alarm-wake"]
 
 [dependencies]
 riscv-rt = "0.17.0"
 
-# Restore upstream after the I2C transaction-boundary fix is merged.
-embassy-qemu-riscv = { git = "https://github.com/dymk/qemu-riscv-rs", rev = "7c149e827f13335962089e5d11d2a5432c487b1f", features = [
+# Restore upstream after the transaction-boundary fix and input-validity support are merged.
+embassy-qemu-riscv = { git = "https://github.com/dymk/qemu-riscv-rs", rev = "a1ff86d62c683928464bf310de7d8ad965d5bd9b", features = [
     "defmt",
 ] }
 embassy-executor = { version = "0.10.0", features = [

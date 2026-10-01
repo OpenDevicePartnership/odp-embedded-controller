@@ -30,11 +30,49 @@ async fn main(spawner: Spawner) {
     let p = embassy_qemu_riscv::init();
     let board = Board::init(p);
 
+    #[cfg(not(feature = "time-alarm-wake"))]
     let relay = platform_common::mock::init(spawner).await;
+    #[cfg(feature = "time-alarm-wake")]
+    let relay = {
+        use time_alarm_service_interface::{AcpiTimerId, AlarmTimerSeconds, TimeAlarmService};
+        let source = match option_env!("ODP_WAKE_SOURCE") {
+            Some("ac") => AcpiTimerId::AcPower,
+            Some("dc") => AcpiTimerId::DcPower,
+            _ => panic!("Build the wake fixture with ODP_WAKE_SOURCE=ac or dc"),
+        };
+        info!("TimeAlarm wake source: {:?}", source);
+        let (relay, service) = platform_common::mock::init_with_time_alarm(spawner, |service| {
+            for timer in [AcpiTimerId::AcPower, AcpiTimerId::DcPower] {
+                service
+                    .set_timer_value(timer, AlarmTimerSeconds::DISABLED)
+                    .expect("Failed to disable initial fixture alarm");
+            }
+            service.set_power_source(source);
+        })
+        .await;
+        spawner.spawn(time_alarm_wake(service, board.wake_gpio).expect("Failed to spawn TimeAlarm wake task"));
+        relay
+    };
     spawner.spawn(uart_service(board.uart, relay).expect("Failed to spawn UART service task"));
 
     // Bring up a minimal HID-over-I2C device so a host (e.g. Windows) can
     // complete its initial HID handshake against the EC
-    spawner.spawn(hid::host_task(board.i2c).expect("Failed to spawn HID host task"));
-    spawner.spawn(hid::device_task(board.gpio).expect("Failed to spawn HID device task"));
+    hid::init(spawner, board.i2c, board.gpio).await;
+}
+
+#[cfg(feature = "time-alarm-wake")]
+#[embassy_executor::task]
+async fn time_alarm_wake(
+    service: platform_common::mock::time_alarm::TimeAlarmService,
+    mut gpio: embassy_qemu_riscv::gpio::Output<'static>,
+) {
+    loop {
+        let requested = service.wait_for_wake_signal().await;
+        if requested {
+            gpio.set_high();
+        } else {
+            gpio.set_low();
+        }
+        info!("TimeAlarm wake requested: {}", requested);
+    }
 }

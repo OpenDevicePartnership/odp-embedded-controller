@@ -388,7 +388,7 @@ dependencies = [
 [[package]]
 name = "embassy-qemu-riscv"
 version = "0.2.1"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#60430f9284ecc00ca79fb3b3d5e23b851b7e0336"
+source = "git+https://github.com/kurtjd/qemu-riscv-rs#f010ade58d56ea0cee81920969410bd29bbd7a0f"
 dependencies = [
  "critical-section",
  "defmt 1.1.0",
@@ -982,7 +982,7 @@ dependencies = [
 [[package]]
 name = "qemu-riscv-pac"
 version = "0.1.0"
-source = "git+https://github.com/kurtjd/qemu-riscv-rs#60430f9284ecc00ca79fb3b3d5e23b851b7e0336"
+source = "git+https://github.com/kurtjd/qemu-riscv-rs#f010ade58d56ea0cee81920969410bd29bbd7a0f"
 dependencies = [
  "critical-section",
  "riscv",

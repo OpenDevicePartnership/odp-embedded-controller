@@ -244,7 +244,7 @@ On existing platforms recommendation is to use an I/O port for each of these. Ea
 
 ### Global Reset Register
 
-Optional, an MMIO or I/O port register and mask that can be written to that traps into FW to initiate an in-band reset and reconfigures the eSPI config space back to defaults. Any pending transactions are lost, and the controller is in a fresh state.
+Optional, an MMIO or I/O port register and mask that can be written to that traps into FW to initiate an in-band reset and reconfigures the eSPI config space back to defaults. Any pending transactions are lost, and the controller is in a fresh state. Generation changes and stale-message handling remain an [open question](#reset-and-stale-message-handling).
 
 ### VWire Channel
 
@@ -397,6 +397,8 @@ PlatformAckWrite = 0x00000001
 
 ## Proposed Recommendation
 
+The transport profiles in this document are function-neutral. Protocol-specific message formats and behavior are defined by separate overlays. HID is one possible use; see [HID over eSPI PCC](../hid/hid_over_espi_pcc.md).
+
 ### Synchronous Type 3 Requests and Responses
 
 The recommended baseline uses Type 3 as a synchronous, bidirectional request/response subspace. Bidirectional means that the request and response use the same region during different ownership phases; it does not permit the host and platform to write the region concurrently.
@@ -464,11 +466,11 @@ sequenceDiagram
     Host->>T3: Read response
 ```
 
-For this profile, Type 3 Command Complete means that the requested operation has completed and the response is available. Only one Type 3 transaction is outstanding on a subspace, so a transaction identifier is not required.
+For this profile, Type 3 Command Complete means that the requested operation has completed and the response is available. Only one Type 3 transaction is outstanding on a subspace, so a transaction identifier is not required. Timeout, error reporting, retry, and recovery behavior remain an [open question](#timeout-and-error-semantics).
 
 ### Independent Type 4 Notification
 
-Type 4 carries platform-initiated traffic such as HID Input reports, GPIO events, sensor notifications, or function-specific state changes. It may operate while a Type 3 command is in progress.
+Type 4 carries platform-initiated traffic such as input events, GPIO events, sensor notifications, or function-specific state changes. It may operate while a Type 3 command is in progress.
 
 ```mermaid
 sequenceDiagram
@@ -494,36 +496,36 @@ sequenceDiagram
     end
 ```
 
-The platform must queue notifications internally while Type 4 is owned by OSPM. It must not overwrite an unacknowledged notification.
+The platform must queue notifications internally while Type 4 is owned by OSPM. It must not overwrite an unacknowledged notification. Queue depth, overflow, ordering, and coalescing behavior remain an [open question](#notification-queue-semantics).
 
 ### Logical Sub-channel Allocation
 
-The recommended design does not require one pair for every EC subsystem. It recommends dedicated pairs for functions whose latency, isolation, security, or independent reset requirements justify them. For example, a latency-sensitive HID function can use a dedicated pair while battery, thermal, and fan functions share a generic EC pair or continue to use the legacy interface.
+The recommended design does not require one pair for every EC subsystem. It recommends dedicated pairs for functions whose latency, isolation, security, or independent reset requirements justify them. For example, a latency-sensitive input function can use a dedicated pair while battery, thermal, and fan functions share a generic EC pair or continue to use the legacy interface.
 
 ```mermaid
 flowchart TB
     subgraph Host["Host Drivers"]
         GH["Generic EC Driver"]
-        HH["HID Driver"]
+        LH["Latency-sensitive Driver"]
     end
 
     subgraph PCC["Logical PCC Sub-channels over one eSPI Peripheral Channel"]
         G3["Generic EC Type 3"]
         G4["Generic EC Type 4"]
-        H3["Dedicated HID Type 3"]
-        H4["Dedicated HID Type 4"]
+        L3["Dedicated Type 3"]
+        L4["Dedicated Type 4"]
     end
 
     subgraph EC["EC Functions"]
         GE["Battery / Thermal / Fan"]
-        HE["HID Function"]
+        LE["Latency-sensitive Function"]
     end
 
     GH --> G3 --> GE
     GE --> G4 --> GH
 
-    HH --> H3 --> HE
-    HE --> H4 --> HH
+    LH --> L3 --> LE
+    LE --> L4 --> LH
 ```
 
 Each pair consumes two PCCT subspaces, two shared-memory windows, Command Complete and doorbell state, and Type 4 interrupt-acknowledgment state. It does not consume another physical eSPI channel. Level-triggered Platform Interrupts may be shared when each subspace has a unique status and acknowledgment mask. The cost and availability of these resources on existing hardware remain an [open question](#pcc-resource-cost-and-in-market-device-capabilities).
@@ -545,10 +547,10 @@ flowchart LR
     subgraph Host["Host"]
         BUS["EC PCC Bus Driver"]
         BAT["Battery Client"]
-        HID["HID Client"]
+        INPUT["Input Client"]
         THM["Thermal Client"]
         BAT --> BUS
-        HID --> BUS
+        INPUT --> BUS
         THM --> BUS
     end
 
@@ -560,7 +562,7 @@ flowchart LR
     subgraph EC["Embedded Controller"]
         DISPATCH["Function Dispatcher"]
         SCHED["Priority and Fairness Policy"]
-        FUNCTIONS["Battery / HID / Thermal Functions"]
+        FUNCTIONS["Battery / Input / Thermal Functions"]
         DISPATCH --> SCHED --> FUNCTIONS
     end
 
@@ -568,7 +570,7 @@ flowchart LR
     FUNCTIONS --> T4 --> BUS
 ```
 
-This specialization reduces PCCT entries, shared-memory windows, and interrupt state, but all participating functions share the same Type 3 ownership token and Type 4 notification slot. The implementation must define scheduling priorities, quotas, and starvation prevention. A slow operation blocks other Type 3 users until its synchronous response is complete, so latency-sensitive functions such as HID may still require a dedicated pair.
+This specialization reduces PCCT entries, shared-memory windows, and interrupt state, but all participating functions share the same Type 3 ownership token and Type 4 notification slot. The implementation must define scheduling priorities, quotas, and starvation prevention. A slow operation blocks other Type 3 users until its synchronous response is complete, so a latency-sensitive function may still require a dedicated pair.
 
 ### Recommended Completion Semantics
 
@@ -578,13 +580,13 @@ This specialization reduces PCCT entries, shared-memory windows, and interrupt s
 | Short write with status | Synchronous Type 3 request and response |
 | Fire-and-forget write | Type 3 completes after the platform has safely consumed the data |
 | Unsolicited platform event | Type 4 notification |
-| Long-running operation, such as firmware-update erase, program, or verification | Prefer a separate asynchronous command defined by the function protocol; see alternatives below |
+| Long-running operation, such as flash erase or image validation | Prefer a separate asynchronous command defined by the function protocol; see alternatives below |
 
 ## Other Design Alternatives
 
 ### Decoupled Type 3 Requests and Type 4 Responses
 
-In the decoupled model, Type 3 Command Complete means only that the platform validated and copied the request. The final solicited response is later published through Type 4. This permits the Type 3 region to be released before a long-running operation, such as firmware-update erase, program, or verification, finishes, but it changes the transport interface from synchronous completion to asynchronous acceptance and completion.
+In the decoupled model, Type 3 Command Complete means only that the platform validated and copied the request. The final solicited response is later published through Type 4. This permits the Type 3 region to be released before a long-running operation, such as flash erase, image validation, or delayed readiness, finishes, but it changes the transport interface from synchronous completion to asynchronous acceptance and completion.
 
 Because solicited responses and unsolicited notifications share Type 4 in this model, every Type 4 message requires an explicit message class and transaction identifier:
 
@@ -594,6 +596,8 @@ Because solicited responses and unsolicited notifications share Type 4 in this m
 | Unsolicited notification | Notification | Reserved notification value; no Type 3 request is referenced |
 
 The message class distinguishes the two flows without relying on whether a transaction identifier happens to match an outstanding request. A transaction identifier must not be reused while its request is pending.
+
+Because Type 3 Command Complete reports acceptance in this profile, a failure discovered after acceptance must be returned as an in-band status in the matching Type 4 Response. The Type 3 ACPI Error Status cannot report the final result after the Type 3 subspace has been released.
 
 ```mermaid
 flowchart LR
@@ -662,11 +666,13 @@ sequenceDiagram
     Host->>T4: Set Command Complete
 ```
 
-This alternative requires message classes, transaction identifiers, request and response queues, queue-full behavior, acceptance and final-result timeouts, cancellation, reset generation handling, and response/notification scheduling. It is appropriate when operations are long-running and concurrent acceptance provides measurable benefit. It should not be the default completion model for short commands.
+This alternative requires message classes, transaction identifiers, request and response queues, queue-full behavior, acceptance and final-result timeouts, cancellation, reset generation handling, and response/notification scheduling. The unresolved correlation and cancellation rules are tracked under [Decoupled Request Lifecycle](#decoupled-request-lifecycle); generic queue, reset, timeout, and error rules are tracked in the corresponding open questions. This profile is appropriate when operations are long-running and concurrent acceptance provides measurable benefit. It should not be the default completion model for short commands.
 
 ### Type 3-Only Interrupt-and-Pull
 
-Resource-constrained systems may omit Type 4. The platform signals that an event is pending, and OSPM issues a Type 3 request to retrieve it.
+Resource-constrained systems may omit Type 4. This profile uses a Type 3 subspace plus a dedicated notification interrupt. When the platform queues an unsolicited event, it asserts the notification interrupt, and OSPM issues a Type 3 request to retrieve the event.
+
+The notification interrupt is separate from the Type 3 command-completion indication. A platform can implement it with a dedicated eSPI Interrupt Event VWire that the host eSPI controller maps to a GSI. The notification GSI and its trigger and polarity configuration must be advertised to the consuming driver through the platform's ACPI device description. Its availability as a wake source depends on the transport's [power-state and wake behavior](#power-state-and-wake-behavior).
 
 ```mermaid
 sequenceDiagram
@@ -676,14 +682,17 @@ sequenceDiagram
     participant T3 as Type 3 Region
 
     Function->>EC: Queue unsolicited event
-    EC-->>Host: Raise event interrupt or status indication
+    EC-->>Host: Assert dedicated notification VWire/GSI
     Host->>T3: Submit GET_PENDING_NOTIFICATION
     T3->>EC: Doorbell
     EC->>T3: Write next event and set complete
     Host->>T3: Read event
+    EC-->>Host: Deassert notification VWire when queue is empty
 ```
 
-This profile saves one shared-memory region and the Type 4 acknowledgment state, but adds an interrupt-to-request-to-response round trip for every event. It is suitable for low-rate events, not high-rate input or sensor data.
+For a level-triggered notification, the platform keeps the interrupt asserted while one or more events remain queued and deasserts it only after the host drains the queue. The binding must define acknowledgment behavior for other trigger modes. This profile saves one shared-memory region and the Type 4 acknowledgment state, but adds an interrupt-to-request-to-response round trip for every event. It is suitable for low-rate events, not high-rate input or sensor data.
+
+The response to `GET_PENDING_NOTIFICATION` requires an event-type discriminator so the function driver can interpret the returned payload. Event framing, queue arbitration, and interrupt behavior are tracked under [Type 3-Only Notification Retrieval](#type-3-only-notification-retrieval).
 
 ### Design Comparison
 
@@ -715,6 +724,42 @@ The profile must select one of these approaches:
 Can in-market ECs and eSPI controllers expose a Type 3/Type 4 pair, including two shared-memory windows, signaling state, and a Type 4 interrupt acknowledgment path, without hardware changes?
 
 The specification must determine the typical SRAM and controller-resource cost, identify capabilities that software can discover, and define a compatible profile for devices that support only one region or the legacy interface.
+
+### Notification Queue Semantics
+
+Which notifications require lossless delivery, which may be coalesced or dropped, and what minimum queue depth is required while Type 4 is unavailable?
+
+The specification must define ordering, overflow indication and recovery, interrupt assertion and acknowledgment, and whether these rules are transport-wide or selected by each function overlay.
+
+### Reset and Stale Message Handling
+
+How are in-flight requests, responses, and notifications invalidated across a transport, controller, or function reset?
+
+The specification must define how software detects a new transport generation, when ownership returns to its initial state, and how both endpoints discard stale data from the previous generation.
+
+### Power-State and Wake Behavior
+
+Which PCC regions, doorbells, and interrupt paths remain available in each ACPI power state, and which notification GSIs can wake the system?
+
+The specification must define how transport availability and wake capability are advertised, including the required ordering between wake signaling and shared-memory visibility.
+
+### Timeout and Error Semantics
+
+What timeout applies to ownership acquisition, request completion, notification acknowledgment, and any asynchronous final response?
+
+The specification must define where each error is reported, which endpoint performs recovery, and when retry is safe or requires an idempotent operation.
+
+### Decoupled Request Lifecycle
+
+How does the decoupled profile allocate and reuse transaction identifiers, cancel accepted requests, and reject late responses from a previous reset generation?
+
+The specification must define identifier width and exhaustion behavior, cancellation races, response handling after timeout, and the relationship between acceptance timeout, final-result timeout, and transport reset.
+
+### Type 3-Only Notification Retrieval
+
+How are queued notifications framed and arbitrated when both event retrieval and ordinary commands use the same Type 3 subspace?
+
+The specification must define the event-type discriminator, retrieval ordering, queue overflow behavior, interrupt acknowledgment or deassertion, and fairness between `GET_PENDING_NOTIFICATION` and ordinary requests.
 
 ## References
 

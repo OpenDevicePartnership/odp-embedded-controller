@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1791572360374,
+  "lastUpdate": 1791572379052,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -2224,6 +2224,36 @@ window.BENCHMARK_DATA = {
             "value": 70.99,
             "unit": "KiB",
             "extra": "RAM Size: 14.00 KiB\nDependency Count: 334\nVersion: rustc 1.98.1 (48a229cea 2026-09-01)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kdinelle@microsoft.com",
+            "name": "Kurtis Dinelle",
+            "username": "kurtjd"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "458962af336dd297f207b40689b6dafcc1011059",
+          "message": "dev-qemu: Incorporate HID time-alarm (#53)",
+          "timestamp": "2026-10-09T11:57:59-07:00",
+          "tree_id": "24d089ab458401bac9cc2b90ad40e3c8e3fe2b1e",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/458962af336dd297f207b40689b6dafcc1011059"
+        },
+        "date": 1791572378397,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.61,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.00 KiB\nDependency Count: 340\nVersion: rustc 1.99.0 (b940084d7 2026-09-28)"
           }
         ]
       }

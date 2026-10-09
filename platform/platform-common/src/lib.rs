@@ -26,7 +26,7 @@ macro_rules! impl_relay_handler {
             Thermal, 0x09,
                 thermal_service_relay::ThermalServiceRelayHandler<$thermal_service_ty>;
             TimeAlarm, 0x0B,
-                time_alarm_service_relay::TimeAlarmServiceRelayHandler<time_alarm_service::Service<'static>>;
+                time_alarm_service_relay::mctp::TimeAlarmServiceRelayHandler<time_alarm_service::Service<'static>>;
         );
     };
 }

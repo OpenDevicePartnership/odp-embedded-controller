@@ -24,12 +24,20 @@ pub async fn init(spawner: embassy_executor::Spawner) -> MockOdpRelayHandler {
 pub async fn init_with_time_alarm(
     spawner: embassy_executor::Spawner,
 ) -> (MockOdpRelayHandler, time_alarm_service::Service<'static>) {
+    init_with_time_alarm_configure(spawner, |_| {}).await
+}
+
+/// Configure TimeAlarm before its runner starts and retain its board control handle.
+pub async fn init_with_time_alarm_configure(
+    spawner: embassy_executor::Spawner,
+    configure: impl FnOnce(time_alarm::TimeAlarmService),
+) -> (MockOdpRelayHandler, time_alarm::TimeAlarmService) {
     embedded_services::info!("Initializing mock services...");
     embedded_services::init().await;
 
     let thermal = thermal::init(spawner).await;
     let battery = battery::init(spawner).await;
-    let tas = time_alarm::init(spawner).await;
+    let tas = time_alarm::init_with(spawner, configure).await;
 
     let relay = MockOdpRelayHandler::new(
         battery_service_relay::BatteryServiceRelayHandler::new(battery),

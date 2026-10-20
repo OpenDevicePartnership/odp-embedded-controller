@@ -25,6 +25,44 @@ E.g. to connect with [ec-test-app](https://github.com/OpenDevicePartnership/odp-
 To run without logging (skips `defmt-print`):
 `cargo run-headless`
 
+## CPU retention-wake fixture
+
+Build with `ODP_WAKE_SOURCE=ac cargo build --locked --release --features time-alarm-wake`
+or select `dc` explicitly. The feature requires one of those build-time
+values; a missing or invalid selection fails at startup rather than assuming
+a power source. Both alarms are disabled and the source is selected before
+the TimeAlarm runner starts. Ordinary builds retain their initialization policy.
+
+This test-only source selection is not hardware AC/DC detection. GPIO1 is an
+active-high wake-request level driven by the real TimeAlarm service; GPIO0
+remains the HID interrupt. HID-over-I2C and UART/MCTP continue to share that
+same TimeAlarm service. Clear or disable the corresponding timers through
+the existing relay commands to release their wake latches. The CPU retention
+test harness connects the separate `ec-gpio1` channel to the host GPIO1 and
+verifies actual standby return; the EC log alone does not prove host resume.
+
+## Emulated runtime AC/DC input
+
+`cargo build --release --features time-alarm-power-input` includes the wake
+output and uses GPIO2 (high = AC, low = DC) instead of `ODP_WAKE_SOURCE`.
+The input must be explicitly initialized by the QEMU model before startup;
+the firmware rejects an unset validity bit rather than assuming DC. Source
+selection happens before the TimeAlarm runner starts. Socket bytes alone do
+not establish validity.
+
+Use the GPIO2-enabled QEMU model with `input-reset-mask=4` and `input-reset=4`
+for cold AC, or `input-reset=0` for cold DC, and its `ec-gpio2` control socket.
+Raw bytes `01` and `00` select AC and DC at runtime. The dedicated input task
+resamples after opposite-level waits on the shared GPIO interrupt. This is a
+level interface, not an event counter: a transient that returns before the
+task samples it is not a recorded power-source change.
+
+The model retains the last valid source across control-socket disconnects
+and EC warm resets, and diagnoses malformed bytes. GPIO1 remains the wake
+output and GPIO0 remains the HID interrupt. The default build and the explicit
+construction-time `time-alarm-wake` fixture are unchanged. This emulated
+external input neither detects physical power nor reports Windows power state.
+
 ## Sockets
 While `dev-qemu` is running, the `ec` machine exposes two sockets that external
 programs (such as another QEMU instance) can connect to:

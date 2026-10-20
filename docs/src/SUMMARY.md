@@ -24,4 +24,5 @@
     - [HID EC Interface](specs/ec_interface/hid/README.md)
       - [HID Time and Alarm](specs/ec_interface/hid/HUTRR120-SystemWakeTimerAndRTC.md)
       - [HID Battery](specs/ec_interface/hid/HUTRR-DRAFT-Battery.md)
+      - [HID over eSPI PCC](specs/ec_interface/hid/hid_over_espi_pcc.md)
     - [eSPI PCC Specification](specs/ec_interface/espi/espi_pcc_draft.md)

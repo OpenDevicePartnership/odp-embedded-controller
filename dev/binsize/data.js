@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1792521773841,
+  "lastUpdate": 1792521781370,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -2314,6 +2314,36 @@ window.BENCHMARK_DATA = {
             "value": 71.61,
             "unit": "KiB",
             "extra": "RAM Size: 14.00 KiB\nDependency Count: 340\nVersion: rustc 1.99.0 (b940084d7 2026-09-28)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dymk@users.noreply.github.com",
+            "name": "Dylan Knutson",
+            "username": "dymk"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2abf7b68c5c1985868a513bddb5c9ec5d47bf957",
+          "message": "Select TimeAlarm source from emulated GPIO2 (#51)\n\n* Wire the QEMU TimeAlarm wake fixture\n\nConfigure an explicit AC or DC source before starting the timer runner\nand drive its latched wake level on GPIO1. Disable initial fixture alarms\nto keep startup idle-low and leave ordinary initialization unchanged.\n\nPreserve upstream's shared HID TimeAlarm and MCTP services and the\none-argument initializer. Pin the rebased library wake changes and retain\nthe HAL's zero-gap I2C transaction-boundary fix.\n\nAssisted-by: GitHub Copilot:gpt-6-astra\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n* Select TimeAlarm source from emulated GPIO2\n\nRequire an initialized input before starting the runner and track source changes with GPIO level interrupts. Preserve default builds and the construction-time wake fixtures.\n\nAssisted-by: GitHub Copilot:gpt-6-astra\n\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>\n\n---------\n\nCo-authored-by: Felipe Balbi <felipe.balbi@microsoft.com>\nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
+          "timestamp": "2026-10-20T11:41:12-07:00",
+          "tree_id": "d893b4ff0bc98cd475bb2e8e8fec5aef1e278308",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/2abf7b68c5c1985868a513bddb5c9ec5d47bf957"
+        },
+        "date": 1792521780233,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.91,
+            "unit": "KiB",
+            "extra": "RAM Size: 14.01 KiB\nDependency Count: 340\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
           }
         ]
       }

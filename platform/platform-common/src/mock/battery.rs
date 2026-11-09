@@ -8,8 +8,8 @@ use static_cell::StaticCell;
 
 /// The fuel gauge, behind a mutex so the service and the driving task can share it.
 type FuelGauge = Mutex<GlobalRawMutex, MockFuelGauge>;
-/// Two registered fuel gauges: battery `0` is a 3S pack, battery `1` a 2S pack.
-type Reg = bs::ArrayRegistration<'static, FuelGauge, 2>;
+const FUEL_GAUGE_COUNT: usize = if cfg!(feature = "dual-fuel-gauge") { 2 } else { 1 };
+type Reg = bs::ArrayRegistration<'static, FuelGauge, FUEL_GAUGE_COUNT>;
 pub type BatteryService = bs::Service<'static, Reg>;
 
 pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
@@ -18,14 +18,19 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
     static FUEL_GAUGE_0: StaticCell<FuelGauge> = StaticCell::new();
     let fuel_gauge_0: &'static FuelGauge = FUEL_GAUGE_0.init(Mutex::new(MockFuelGauge::new()));
 
-    static FUEL_GAUGE_1: StaticCell<FuelGauge> = StaticCell::new();
-    let fuel_gauge_1: &'static FuelGauge = FUEL_GAUGE_1.init(Mutex::new(MockFuelGauge::new_2s()));
+    let fuel_gauges = [
+        fuel_gauge_0,
+        #[cfg(feature = "dual-fuel-gauge")]
+        {
+            static FUEL_GAUGE_1: StaticCell<FuelGauge> = StaticCell::new();
+            let fuel_gauge_1: &'static FuelGauge = FUEL_GAUGE_1.init(Mutex::new(MockFuelGauge::new_2s()));
+            fuel_gauge_1
+        },
+    ];
 
-    let service = bs::Service::new(bs::ArrayRegistration {
-        fuel_gauges: [fuel_gauge_0, fuel_gauge_1],
-    });
+    let service = bs::Service::new(bs::ArrayRegistration { fuel_gauges });
 
-    for (battery_id, fuel_gauge) in [fuel_gauge_0, fuel_gauge_1].into_iter().enumerate() {
+    for (battery_id, fuel_gauge) in fuel_gauges.into_iter().enumerate() {
         bs::mock::init_state_machine(fuel_gauge)
             .await
             .expect("Failed to initialize battery state machine");
@@ -36,7 +41,7 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
     service
 }
 
-#[embassy_executor::task(pool_size = 2)]
+#[embassy_executor::task(pool_size = FUEL_GAUGE_COUNT)]
 pub async fn update_data_task(battery_id: u8, fuel_gauge: &'static FuelGauge) -> ! {
     let mut failures: u32 = 0;
     let mut count: usize = 0;

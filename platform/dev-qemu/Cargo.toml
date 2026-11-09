@@ -40,6 +40,7 @@ style = "deny"
 ignored = ["riscv-rt"]
 
 [features]
+dual-fuel-gauge = ["platform-common/dual-fuel-gauge"]
 time-alarm-wake = ["dep:time-alarm-service-interface"]
 time-alarm-power-input = ["time-alarm-wake"]
 

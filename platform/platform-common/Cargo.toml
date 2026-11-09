@@ -70,6 +70,7 @@ defmt = "0.3.6"
 ignored = ["defmt"]
 
 [features]
+dual-fuel-gauge = ["mock"]
 mock = [
     "battery-service/mock",
     "thermal-service/mock",

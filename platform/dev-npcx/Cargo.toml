@@ -35,6 +35,9 @@ perf = "deny"
 suspicious = "deny"
 style = "deny"
 
+[features]
+dual-fuel-gauge = ["platform-common/dual-fuel-gauge"]
+
 [dependencies]
 cortex-m = { version = "0.7.7", features = [
     "critical-section-single-core",

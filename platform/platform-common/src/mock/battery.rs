@@ -1,6 +1,6 @@
 use battery_service as bs;
 use bs::mock::MockFuelGauge;
-use bs::FuelGauge as _;
+use bs::{DefaultPowerPolicyRouting, FuelGauge as _};
 use embassy_sync::mutex::Mutex;
 use embassy_time::Timer;
 use embedded_services::{error, info, GlobalRawMutex};
@@ -9,7 +9,7 @@ use static_cell::StaticCell;
 /// The fuel gauge, behind a mutex so the service and the driving task can share it.
 type FuelGauge = Mutex<GlobalRawMutex, MockFuelGauge>;
 const FUEL_GAUGE_COUNT: usize = if cfg!(feature = "dual-fuel-gauge") { 2 } else { 1 };
-type Reg = bs::ArrayRegistration<'static, FuelGauge, FUEL_GAUGE_COUNT>;
+type Reg = bs::ArrayRegistration<'static, FuelGauge, FUEL_GAUGE_COUNT, DefaultPowerPolicyRouting>;
 pub type BatteryService = bs::Service<'static, Reg>;
 
 pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
@@ -28,7 +28,10 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
         },
     ];
 
-    let service = bs::Service::new(bs::ArrayRegistration { fuel_gauges });
+    let service = bs::Service::new(bs::ArrayRegistration {
+        fuel_gauges,
+        routing: DefaultPowerPolicyRouting,
+    });
 
     for (battery_id, fuel_gauge) in fuel_gauges.into_iter().enumerate() {
         bs::mock::init_state_machine(fuel_gauge)

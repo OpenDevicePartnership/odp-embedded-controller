@@ -9,7 +9,7 @@ use static_cell::StaticCell;
 /// The fuel gauge, behind a mutex so the service and the driving task can share it.
 type FuelGauge = Mutex<GlobalRawMutex, MockFuelGauge>;
 /// Two registered fuel gauges: battery `0` is a 3S pack, battery `1` a 2S pack.
-type Reg = bs::ArrayRegistration<'static, FuelGauge, 2>;
+type Reg = bs::ArrayRegistration<'static, FuelGauge, 2, bs::DefaultPowerPolicyRouting>;
 pub type BatteryService = bs::Service<'static, Reg>;
 
 pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
@@ -23,6 +23,7 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
 
     let service = bs::Service::new(bs::ArrayRegistration {
         fuel_gauges: [fuel_gauge_0, fuel_gauge_1],
+        routing: bs::DefaultPowerPolicyRouting,
     });
 
     for (battery_id, fuel_gauge) in [fuel_gauge_0, fuel_gauge_1].into_iter().enumerate() {

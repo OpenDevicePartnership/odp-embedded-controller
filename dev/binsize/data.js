@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794346272067,
+  "lastUpdate": 1794350989118,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -870,6 +870,36 @@ window.BENCHMARK_DATA = {
             "value": 55.73,
             "unit": "KiB",
             "extra": "RAM Size: 4.71 KiB\nDependency Count: 325\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matteotullo@microsoft.com",
+            "name": "Matteo Tullo",
+            "username": "tullom"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "237a7b85f588b9809c0e8d873dea7b4c6b32c3a4",
+          "message": "chore(deps): update embedded-services (#57)\n\nUpdate battery registration with power-policy routing.\n\nShare TimeAlarm wake config and GPIO handling so other platforms\ncan reuse the logic without depending on QEMU's HAL.",
+          "timestamp": "2026-11-10T15:48:46-07:00",
+          "tree_id": "aa3d670eaa0c460093b03d3d5dbc1250f59ac535",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/237a7b85f588b9809c0e8d873dea7b4c6b32c3a4"
+        },
+        "date": 1794350988178,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 56.02,
+            "unit": "KiB",
+            "extra": "RAM Size: 4.73 KiB\nDependency Count: 328\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
           }
         ]
       }

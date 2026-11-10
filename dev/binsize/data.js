@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794346220087,
+  "lastUpdate": 1794346224928,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -840,6 +840,36 @@ window.BENCHMARK_DATA = {
             "value": 55.66,
             "unit": "KiB",
             "extra": "RAM Size: 5.11 KiB\nDependency Count: 325\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matteotullo@microsoft.com",
+            "name": "Matteo Tullo",
+            "username": "tullom"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8329cda2cc777ff5da3ed1207adebfb942a7c568",
+          "message": "feat(mock): Make second fuel gauge opt-in (#56)",
+          "timestamp": "2026-11-10T13:28:59-08:00",
+          "tree_id": "4072341ec2fdb4b846e4b82d884d3370c28afd77",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/8329cda2cc777ff5da3ed1207adebfb942a7c568"
+        },
+        "date": 1794346224305,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 55.73,
+            "unit": "KiB",
+            "extra": "RAM Size: 4.71 KiB\nDependency Count: 325\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
           }
         ]
       }

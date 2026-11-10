@@ -66,14 +66,19 @@ async fn time_alarm_wake(
     service: platform_common::mock::time_alarm::TimeAlarmService,
     mut gpio: embassy_qemu_riscv::gpio::Output<'static>,
 ) {
+    use time_alarm_service_interface::TimeAlarmService;
+    let mut wake_requested = service
+        .wake_requested_receiver()
+        .expect("TimeAlarm wake receiver unavailable");
+    let mut requested = wake_requested.get().await;
     loop {
-        let requested = service.wait_for_wake_signal().await;
         if requested {
             gpio.set_high();
         } else {
             gpio.set_low();
         }
         info!("TimeAlarm wake requested: {}", requested);
+        requested = wake_requested.changed().await;
     }
 }
 
@@ -95,7 +100,7 @@ async fn time_alarm_power_input(
     service: platform_common::mock::time_alarm::TimeAlarmService,
     mut input: embassy_qemu_riscv::gpio::Input<'static, embassy_qemu_riscv::gpio::Async>,
 ) {
-    use time_alarm_service_interface::AcpiTimerId;
+    use time_alarm_service_interface::{AcpiTimerId, TimeAlarmService};
     loop {
         let source = power_source(&input);
         service.set_power_source(source);

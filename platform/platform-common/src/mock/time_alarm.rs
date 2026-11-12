@@ -1,9 +1,11 @@
 use embedded_hal::digital::{InputPin, OutputPin};
 use embedded_hal_async::digital::Wait;
-use embedded_services::info;
+use embedded_services::{error, info};
 use static_cell::StaticCell;
 use time_alarm_service as tas;
 use time_alarm_service_interface::{AcpiTimerId, AlarmTimerSeconds, TimeAlarmService as _};
+
+use crate::mock::power_policy::MockPsuControl;
 
 pub type TimeAlarmService = tas::Service<'static>;
 
@@ -94,11 +96,20 @@ pub fn power_source<P: InputPin>(input: &mut P) -> Result<AcpiTimerId, P::Error>
 }
 
 /// Monitor AC/DC changes by resampling after opposite-level waits, returning any GPIO error.
-pub async fn monitor_power_input<P: InputPin + Wait>(service: TimeAlarmService, mut input: P) -> Result<(), P::Error> {
+///
+/// AC also plugs the mock adapter into `psu` and DC unplugs it, so battery `_PSR` follows the input.
+pub async fn monitor_power_input<P: InputPin + Wait>(
+    service: TimeAlarmService,
+    mut psu: MockPsuControl,
+    mut input: P,
+) -> Result<(), P::Error> {
     loop {
         let source = power_source(&mut input)?;
         service.set_power_source(source);
         info!("TimeAlarm power input: {:?}", source);
+        if let Err(e) = psu.set_attached(matches!(source, AcpiTimerId::AcPower)).await {
+            error!("Failed to update mock PSU: {:?}", e);
+        }
         match source {
             AcpiTimerId::AcPower => input.wait_for_low().await?,
             AcpiTimerId::DcPower => input.wait_for_high().await?,

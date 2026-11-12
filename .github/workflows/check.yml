@@ -336,7 +336,7 @@ jobs:
       EC_TEST_CLI_REV: 20347787
 
       # Tag of the prebuilt QEMU image pulled from the odp-qemu-builder GHCR package
-      ODP_QEMU_TAG: sha-7e461b3
+      ODP_QEMU_TAG: sha-f8af056
 
     steps:
       - uses: actions/checkout@v4
@@ -359,6 +359,8 @@ jobs:
           sudo apt-get update && sudo apt-get install -y
           libudev-dev
           libfdt1
+          libjpeg-turbo8
+          libpng16-16t64
 
       - name: Install ec-test-cli
         run: cargo install --git https://github.com/OpenDevicePartnership/odp-platform-common --locked --rev ${{ env.EC_TEST_CLI_REV }} ec-test-cli

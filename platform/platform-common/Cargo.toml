@@ -25,6 +25,12 @@ battery-service-interface = { package = "battery-service-interface", git = "http
 battery-service-relay = { package = "battery-service-relay", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",
 ] }
+power-policy-service = { package = "power-policy-service", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
+power-policy-interface = { package = "power-policy-interface", git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
+    "defmt",
+] }
 
 thermal-service = { git = "https://github.com/OpenDevicePartnership/embedded-services", branch = "main", features = [
     "defmt",

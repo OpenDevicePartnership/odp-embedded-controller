@@ -13,4 +13,9 @@ fn main() {
 
     println!("cargo:rustc-env=RISCV_RT_BASE_ISA=rv32i");
     println!("cargo:rerun-if-env-changed=RISCV_RT_BASE_ISA");
+
+    // qemu-ec.sh looks for this symbol to initialize GPIO2, which this feature's firmware requires.
+    if env::var_os("CARGO_FEATURE_TIME_ALARM_POWER_INPUT").is_some() {
+        println!("cargo:rustc-link-arg-bins=--defsym=__odp_qemu_ec_power_input=1");
+    }
 }

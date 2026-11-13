@@ -51,7 +51,8 @@ async fn init_time_alarm(
             Some("dc") => AcpiTimerId::DcPower,
             _ => panic!("Build the wake fixture with ODP_WAKE_SOURCE=ac or dc"),
         };
-        let (relay, service) = platform_common::mock::init_with_time_alarm_configure(spawner, |service| {
+        #[cfg_attr(not(feature = "time-alarm-power-input"), expect(unused_variables))]
+        let (relay, service, psu) = platform_common::mock::init_with_time_alarm_configure(spawner, |service| {
             #[cfg(feature = "time-alarm-power-input")]
             let source = {
                 assert!(
@@ -65,8 +66,9 @@ async fn init_time_alarm(
         .await;
         spawner.spawn(time_alarm_wake(service, wake_gpio).expect("Failed to spawn TimeAlarm wake task"));
         #[cfg(feature = "time-alarm-power-input")]
-        spawner
-            .spawn(time_alarm_power_input(service, power_input).expect("Failed to spawn TimeAlarm power input task"));
+        spawner.spawn(
+            time_alarm_power_input(service, psu, power_input).expect("Failed to spawn TimeAlarm power input task"),
+        );
         (relay, service)
     };
 
@@ -85,9 +87,10 @@ async fn time_alarm_wake(service: mock_time_alarm::TimeAlarmService, gpio: embas
 #[embassy_executor::task]
 async fn time_alarm_power_input(
     service: mock_time_alarm::TimeAlarmService,
+    psu: platform_common::mock::power_policy::MockPsuControl,
     input: embassy_qemu_riscv::gpio::Input<'static, embassy_qemu_riscv::gpio::Async>,
 ) {
-    mock_time_alarm::monitor_power_input(service, input)
+    mock_time_alarm::monitor_power_input(service, psu, input)
         .await
         .expect("TimeAlarm power input failed");
 }

@@ -1,6 +1,7 @@
 use battery_service as bs;
 use bs::mock::MockFuelGauge;
 use bs::{DefaultPowerPolicyRouting, FuelGauge as _};
+use embassy_sync::channel::{Channel, DynamicReceiver, DynamicSender};
 use embassy_sync::mutex::Mutex;
 use embassy_time::Timer;
 use embedded_services::{error, info, GlobalRawMutex};
@@ -12,7 +13,13 @@ const FUEL_GAUGE_COUNT: usize = if cfg!(feature = "dual-fuel-gauge") { 2 } else 
 type Reg = bs::ArrayRegistration<'static, FuelGauge, FUEL_GAUGE_COUNT, DefaultPowerPolicyRouting>;
 pub type BatteryService = bs::Service<'static, Reg>;
 
-pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
+/// Initialize the battery service, returning it with the sender for its power-policy notifications.
+pub async fn init(
+    spawner: embassy_executor::Spawner,
+) -> (
+    &'static BatteryService,
+    DynamicSender<'static, bs::PowerPolicyEventData>,
+) {
     info!("Initializing battery service...");
 
     static FUEL_GAUGE_0: StaticCell<FuelGauge> = StaticCell::new();
@@ -28,10 +35,11 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
         },
     ];
 
-    let service = bs::Service::new(bs::ArrayRegistration {
+    static SERVICE: StaticCell<BatteryService> = StaticCell::new();
+    let service: &'static BatteryService = SERVICE.init(bs::Service::new(bs::ArrayRegistration {
         fuel_gauges,
         routing: DefaultPowerPolicyRouting,
-    });
+    }));
 
     for (battery_id, fuel_gauge) in fuel_gauges.into_iter().enumerate() {
         bs::mock::init_state_machine(fuel_gauge)
@@ -41,7 +49,28 @@ pub async fn init(spawner: embassy_executor::Spawner) -> BatteryService {
             .spawn(update_data_task(battery_id as u8, fuel_gauge).expect("Failed to spawn battery update data task"));
     }
 
-    service
+    static POWER_POLICY_EVENTS: StaticCell<Channel<GlobalRawMutex, bs::PowerPolicyEventData, 4>> = StaticCell::new();
+    let power_policy_events = POWER_POLICY_EVENTS.init(Channel::new());
+    spawner.spawn(
+        power_policy_event_task(service, power_policy_events.dyn_receiver())
+            .expect("Failed to spawn battery power-policy event task"),
+    );
+
+    (service, power_policy_events.dyn_sender())
+}
+
+/// Apply power-policy notifications to the fuel gauges' cached external power state.
+#[embassy_executor::task]
+async fn power_policy_event_task(
+    service: &'static BatteryService,
+    events: DynamicReceiver<'static, bs::PowerPolicyEventData>,
+) -> ! {
+    loop {
+        let event = events.receive().await;
+        if let Err(e) = service.process_power_policy_event(&event).await {
+            error!("Battery power-policy event error: {:?}", e);
+        }
+    }
 }
 
 #[embassy_executor::task(pool_size = FUEL_GAUGE_COUNT)]

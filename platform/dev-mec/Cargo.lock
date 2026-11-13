@@ -996,6 +996,8 @@ dependencies = [
  "embedded-sensors-hal-async",
  "embedded-services",
  "odp-service-common",
+ "power-policy-interface",
+ "power-policy-service",
  "static_cell",
  "thermal-service",
  "thermal-service-interface",
@@ -1020,6 +1022,20 @@ dependencies = [
  "embassy-sync",
  "embedded-batteries-async",
  "embedded-services",
+]
+
+[[package]]
+name = "power-policy-service"
+version = "0.1.0"
+source = "git+https://github.com/OpenDevicePartnership/embedded-services?branch=main#695fae0a6eb505af74f72fe7c326911a4400beeb"
+dependencies = [
+ "defmt 0.3.100",
+ "embassy-futures",
+ "embassy-sync",
+ "embassy-time",
+ "embedded-services",
+ "heapless",
+ "power-policy-interface",
 ]
 
 [[package]]

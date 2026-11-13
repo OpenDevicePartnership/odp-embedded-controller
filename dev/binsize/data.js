@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1794351335907,
+  "lastUpdate": 1794602085135,
   "repoUrl": "https://github.com/OpenDevicePartnership/odp-embedded-controller",
   "entries": {
     "dev-npcx": [
@@ -900,6 +900,36 @@ window.BENCHMARK_DATA = {
             "value": 56.02,
             "unit": "KiB",
             "extra": "RAM Size: 4.73 KiB\nDependency Count: 328\nVersion: rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matteotullo@microsoft.com",
+            "name": "Matteo Tullo",
+            "username": "tullom"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "89f75c2e83020540dfb19440a502547f6558ab43",
+          "message": "feat(mock): Drive battery _PSR from power policy (#58)\n\nAdd a mock power policy so battery _PSR follows a mock wall adapter,\nplugged in and out by GPIO2 on dev-qemu. Bump QEMU to latest qemu-builder hash for\nGPIO2 and let qemu-ec.sh set it up for time-alarm-power-input builds.\n\nAssisted-by: GitHub Copilot:claude-opus-5.5",
+          "timestamp": "2026-11-13T12:33:27-08:00",
+          "tree_id": "465639c224cbcc33209bf3b234baf15cbcde276c",
+          "url": "https://github.com/OpenDevicePartnership/odp-embedded-controller/commit/89f75c2e83020540dfb19440a502547f6558ab43"
+        },
+        "date": 1794602084152,
+        "tool": "customSmallerIsBetter",
+        "benches": [
+          {
+            "name": "Binary Size",
+            "value": 71.32,
+            "unit": "KiB",
+            "extra": "RAM Size: 5.59 KiB\nDependency Count: 337\nVersion: rustc 1.100.0 (0ef1bc386 2026-11-09)"
           }
         ]
       }
